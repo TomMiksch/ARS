@@ -1,0 +1,10 @@
+In Phase1, Iowa Air plans to operate only Non stop flights to 5 cities in the
+United States; passengers should be able to pay using Visa/Master Card,
+and thereafter be able to query the system about their reservation. The
+airline schedules can be altered at any time and must be easy to change.
+Details of Aircraft are also captured. Assume standard features of Aircraft
+and schedules. Passengers should be able to print a receipt and also
+receive it as email. Iowa Air allows the passenger to change their
+reservation free of cost till 24 Hours before flight departure time. After that
+penalties occur but it will be handled through over the counter and
+telephone support process.
