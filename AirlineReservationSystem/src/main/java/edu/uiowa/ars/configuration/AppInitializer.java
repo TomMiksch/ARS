@@ -1,4 +1,4 @@
-package com.websystique.springmvc.configuration;
+package edu.uiowa.ars.configuration;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -8,16 +8,15 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-public class AppInitializer implements WebApplicationInitializer {
+public final class AppInitializer implements WebApplicationInitializer {
 
-	public void onStartup(ServletContext container) throws ServletException {
+	public void onStartup(final ServletContext container) throws ServletException {
 
-		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
+		final AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
 		ctx.register(AppConfig.class);
 		ctx.setServletContext(container);
 
-		ServletRegistration.Dynamic servlet = container.addServlet(
-				"dispatcher", new DispatcherServlet(ctx));
+		final ServletRegistration.Dynamic servlet = container.addServlet("dispatcher", new DispatcherServlet(ctx));
 
 		servlet.setLoadOnStartup(1);
 		servlet.addMapping("/");
