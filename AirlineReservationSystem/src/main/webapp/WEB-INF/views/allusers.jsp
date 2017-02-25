@@ -20,12 +20,14 @@ tr:first-child {
 	<h2>List of Users</h2>
 	<table>
 		<tr>
+			<td>User Type</td>
 			<td>First Name</td>
 			<td>Last Name</td>
 			<td>Email Address</td>
 		</tr>
 		<c:forEach items="${users}" var="user">
 			<tr>
+				<td>${user.userType}</td>
 				<td>${user.firstName}</td>
 				<td>${user.lastName}</td>
 				<td>${user.emailAddress}</td>

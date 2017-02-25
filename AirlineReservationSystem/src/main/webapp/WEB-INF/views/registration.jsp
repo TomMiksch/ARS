@@ -25,6 +25,11 @@
 		<form:input type="hidden" path="id" id="id" />
 		<table>
 			<tr>
+				<td><label for="userType">User Type: </label></td>
+				<td><form:select path="userType" items="${userTypes}"/></td>
+			</tr>
+		
+			<tr>
 				<td><label for="firstName">First Name: </label></td>
 				<td><form:input path="firstName" id="firstName" /></td>
 				<td><form:errors path="firstName" cssClass="error" /></td>

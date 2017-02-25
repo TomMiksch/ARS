@@ -1,6 +1,8 @@
 package edu.uiowa.ars.controller;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -45,6 +47,11 @@ public final class AppController {
 		final User user = new User();
 		model.addAttribute("user", user);
 		model.addAttribute("edit", false);
+		final Map<String,String> userTypes = new LinkedHashMap<>();
+		userTypes.put("Admin", "Admin");
+		userTypes.put("Employee", "Employee");
+		userTypes.put("Customer", "Customer");
+		model.addAttribute("userTypes", userTypes);
 		return "registration";
 	}
 
@@ -59,7 +66,7 @@ public final class AppController {
 		if (result.hasErrors()) {
 			return "registration";
 		}
-
+		
 		service.saveUser(user);
 
 		model.addAttribute("success", "User " + user.getFullName() + " registered successfully!");

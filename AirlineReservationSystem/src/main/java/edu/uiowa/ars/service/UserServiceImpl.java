@@ -1,6 +1,8 @@
 package edu.uiowa.ars.service;
 
+import java.util.Base64;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,11 +24,21 @@ public final class UserServiceImpl implements UserService {
 	}
 
 	public void saveUser(final User user) {
+		byte[] tempPass = new byte[16];
+		final Random random = new Random();
+		random.nextBytes(tempPass);
+		final String tempPassword = new String(Base64.getEncoder().encode(tempPass));
+		
+		user.setPassword(tempPassword);
 		dao.saveUser(user);
 
 		// If we correctly entered the user in the database, then send them
 		// an email.
-		SystemSupport.sendEmail(user.getEmailAddress(), "Test Subject", "Test Content", null, null);
+		SystemSupport.sendEmail(user.getEmailAddress(), "Test Subject", "Hello " + user.getFirstName() + ",<br>"
+				+ "Thank you for registering for an Iowa Air online account! We are pleased to have your business. "
+				+ "Please login to your Iowa Air account using the credentials listed below. You may update your password after login.<br><br>"
+				+ "Username: " + user.getEmailAddress() + "<br>"
+				+ "Password: " + user.getPassword() + "<br><br>Sincerely,<br>Iowa Air", null, null);
 	}
 
 	/*
@@ -38,9 +50,11 @@ public final class UserServiceImpl implements UserService {
 	public void updateUser(final User user) {
 		final User entity = dao.findById(user.getId());
 		if (entity != null) {
+			entity.setUserType(user.getUserType());
 			entity.setFirstName(user.getFirstName());
 			entity.setLastName(user.getLastName());
 			entity.setEmailAddress(user.getEmailAddress());
+			entity.setPassword(user.getPassword());
 		}
 	}
 

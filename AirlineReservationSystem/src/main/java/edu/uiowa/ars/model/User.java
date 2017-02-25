@@ -15,6 +15,9 @@ public final class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@Column(name = "USER_TYPE", nullable = false)
+	private String userType;
 
 	@Size(min = 1, max = 20)
 	@Column(name = "FIRST_NAME", nullable = false)
@@ -27,6 +30,9 @@ public final class User {
 	@Size(min = 3, max = 50)
 	@Column(name = "EMAIL", nullable = false)
 	private String emailAddress;
+	
+	@Column(name = "PASSWORD", nullable = false)
+	private String password;
 
 	public int getId() {
 		return id;
@@ -34,6 +40,14 @@ public final class User {
 
 	public void setId(final int id) {
 		this.id = id;
+	}
+	
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(final String userType) {
+		this.userType = userType;
 	}
 
 	public String getFirstName() {
@@ -58,6 +72,14 @@ public final class User {
 
 	public void setEmailAddress(final String emailAddress) {
 		this.emailAddress = emailAddress;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(final String password) {
+		this.password = password;
 	}
 
 	public String getFullName() {

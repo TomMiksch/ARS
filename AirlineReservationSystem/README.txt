@@ -14,10 +14,11 @@ Setting up the environment:
     "
     CREATE TABLE USER(
         id INT NOT NULL auto_increment, 
-        name VARCHAR(50) NOT NULL,
-        joining_date DATE NOT NULL,
-        salary DOUBLE NOT NULL,
-        ssn VARCHAR(30) NOT NULL UNIQUE,
+        user_type VARCHAR(10) NOT NULL,
+        first_name VARCHAR(20) NOT NULL,
+        last_name VARCHAR(20) NOT NULL,
+        email VARCHAR(50) NOT NULL,
+        password VARCHAR(40) NOT NULL,
         PRIMARY KEY (id)
     );
     "
