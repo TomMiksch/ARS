@@ -10,9 +10,9 @@ Setting up the environment:
     - CREATE DATABASE websystique;
 3. Switch to the websystique database as the active database for the current session
     - USE websystique;
-4. Add a table called 'EMPLOYEE' to the websystique database
+4. Add a table called 'USER' to the websystique database
     "
-    CREATE TABLE EMPLOYEE(
+    CREATE TABLE USER(
         id INT NOT NULL auto_increment, 
         name VARCHAR(50) NOT NULL,
         joining_date DATE NOT NULL,

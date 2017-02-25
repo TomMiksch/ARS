@@ -17,23 +17,23 @@ tr:first-child {
 
 
 <body>
-	<h2>List of Employees</h2>
+	<h2>List of Users</h2>
 	<table>
 		<tr>
 			<td>First Name</td>
 			<td>Last Name</td>
 			<td>Email Address</td>
 		</tr>
-		<c:forEach items="${employees}" var="employee">
+		<c:forEach items="${users}" var="user">
 			<tr>
-				<td>${employee.firstName}</td>
-				<td>${employee.lastName}</td>
-				<td>${employee.emailAddress}</td>
-				<td><a href="<c:url value='/delete-${employee.id}-employee' />">delete</a></td>
+				<td>${user.firstName}</td>
+				<td>${user.lastName}</td>
+				<td>${user.emailAddress}</td>
+				<td><a href="<c:url value='/delete-${user.id}-user' />">delete</a></td>
 			</tr>
 		</c:forEach>
 	</table>
 	<br />
-	<a href="<c:url value='/new' />">Add New Employee</a>
+	<a href="<c:url value='/new' />">Add New User</a>
 </body>
 </html>

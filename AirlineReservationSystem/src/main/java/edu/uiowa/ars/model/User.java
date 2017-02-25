@@ -9,8 +9,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "EMPLOYEE")
-public final class Employee {
+@Table(name = "USER")
+public final class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

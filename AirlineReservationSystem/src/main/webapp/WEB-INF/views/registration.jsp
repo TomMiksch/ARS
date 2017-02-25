@@ -7,7 +7,7 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Employee Registration Form</title>
+<title>User Registration Form</title>
 
 <style>
 .error {
@@ -21,7 +21,7 @@
 
 	<h2>Registration Form</h2>
 
-	<form:form method="POST" modelAttribute="employee">
+	<form:form method="POST" modelAttribute="user">
 		<form:input type="hidden" path="id" id="id" />
 		<table>
 			<tr>
@@ -56,6 +56,6 @@
 	</form:form>
 	<br />
 	<br /> Go back to
-	<a href="<c:url value='/list' />">List of All Employees</a>
+	<a href="<c:url value='/list' />">List of All Users</a>
 </body>
 </html>

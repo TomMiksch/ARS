@@ -13,66 +13,66 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import edu.uiowa.ars.model.Employee;
-import edu.uiowa.ars.service.EmployeeService;
+import edu.uiowa.ars.model.User;
+import edu.uiowa.ars.service.UserService;
 
 @Controller
 @RequestMapping("/")
 public final class AppController {
 
 	@Autowired
-	EmployeeService service;
+	UserService service;
 
 	@Autowired
 	MessageSource messageSource;
 
 	/*
-	 * This method will list all existing employees.
+	 * This method will list all existing users.
 	 */
 	@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
-	public String listEmployees(final ModelMap model) {
+	public String listUsers(final ModelMap model) {
 
-		final List<Employee> employees = service.findAllEmployees();
-		model.addAttribute("employees", employees);
-		return "allemployees";
+		final List<User> users = service.findAllUsers();
+		model.addAttribute("users", users);
+		return "allusers";
 	}
 
 	/*
-	 * This method will provide the medium to add a new employee.
+	 * This method will provide the medium to add a new user.
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
-	public String newEmployee(final ModelMap model) {
-		final Employee employee = new Employee();
-		model.addAttribute("employee", employee);
+	public String newUser(final ModelMap model) {
+		final User user = new User();
+		model.addAttribute("user", user);
 		model.addAttribute("edit", false);
 		return "registration";
 	}
 
 	/*
 	 * This method will be called on form submission, handling POST request for
-	 * saving employee in database. It also validates the user input
+	 * saving user in database. It also validates the user input
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
-	public String saveEmployee(@Valid final Employee employee, final BindingResult result, final ModelMap model) {
+	public String saveUser(@Valid final User user, final BindingResult result, final ModelMap model) {
 
 		// TODO should also check here if entered email is valid.
 		if (result.hasErrors()) {
 			return "registration";
 		}
 
-		service.saveEmployee(employee);
+		service.saveUser(user);
 
-		model.addAttribute("success", "Employee " + employee.getFullName() + " registered successfully!");
+		model.addAttribute("success", "User " + user.getFullName() + " registered successfully!");
 		return "success";
 	}
 
 	/*
-	 * This method will delete an employee by it's unique ID value from the
+	 * This method will delete an user by it's unique ID value from the
 	 * database.
 	 */
-	@RequestMapping(value = { "/delete-{id}-employee" }, method = RequestMethod.GET)
-	public String deleteEmployee(@PathVariable final String id) {
-		service.deleteEmployeeById(id);
+	@RequestMapping(value = { "/delete-{id}-user" }, method = RequestMethod.GET)
+	public String deleteUser(@PathVariable final String id) {
+		service.deleteUserById(id);
 		return "redirect:/list";
 	}
 }
