@@ -7,7 +7,7 @@
 
 
     <style>
-        .login{
+        login{
             position: fixed;
             top: calc(50%-75px);
             left: calc(50%-50px);
@@ -16,7 +16,7 @@
             padding: 10px;
         }
 
-        .login input [type=text]{
+        login input [type=text]{
             width: 250px;
             height: 30px;
             background: transparent;
@@ -28,7 +28,7 @@
             padding: 4px;
         }
 
-        .login input [type=password]{
+        login input [type=password]{
             width: 250px;
             height: 30px;
             background: transparent;
@@ -40,7 +40,7 @@
             padding: 4px;
         }
 
-        .login input [type=button]{
+        login input [type=button]{
             width: 250px;
             height: 30px;
             background: #fff;
@@ -54,19 +54,31 @@
         }
 
         h1{
-            color: green;
+            color: white;
         }
 
         body{
-            background-image: url (http://media.architecturaldigest.com/photos/5699802bc6772b7614567435/2:1/w_2560/new-york-city-guide.jpg);
+            position: fixed;
+            pverflow-y: scroll;
+            width: auto;
+            height: auto;
+            background-image: url("https://www.scienceabc.com/wp-content/uploads/2015/10/airplane.jpg");
             background-size: cover;
+            -webkit-filter: blur(0px);
         }
     </style>
 
 </head>
 <body>
     <div class="body"></div>
-    <h1>Login Page</h1>
+    <h1>Admin Login</h1>
+    <form name="login">
+    <div class="login">
+        <input type="text" placeholder="username" name="userid"><br>
+        <input type="password" placeholder="password" name="pswrd"><br>
+        <input type="button" onclick="check(this.form)" value="login"/>
+    </div>
+    </form>
 
 </body>
 </html>
