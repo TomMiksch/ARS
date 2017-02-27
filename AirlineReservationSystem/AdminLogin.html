@@ -7,6 +7,39 @@
 
 
     <style>
+        body{
+            position: fixed;
+            overflow-y: scroll;
+             width: 100%;
+                 top: 20px;
+                 left: 20px;
+                 right: 40px;
+                 bottom: 40px;
+                 width: auto;
+                 height: auto;
+            background-image: url("https://www.scienceabc.com/wp-content/uploads/2015/10/airplane.jpg");
+            background-size: cover;
+            -webkit-filter: blur(0px);
+        }
+
+        .header{
+            position: absolute;
+            top: calc(50% - 35px);
+            left: calc(50% - 255px);
+
+        }
+
+        .header div{
+            float: left;
+            color: #fff;
+            font-size: 40px;
+            font-weight: 200;
+        }
+
+        .header div span{
+            color: #F29E20 !important;
+        }
+
         login{
             position: absolute;
             top: calc(50%-75px);
@@ -53,24 +86,32 @@
             margin-top: 10px;
         }
 
+        .login input[type=text]:focus{
+            outline: none;
+            border: 1px solid rgba(255,255,255,0.9);
+        }
+
+        .login input[type=password]:focus{
+            outline: none;
+            border: 1px solid rgba(255,255,255,0.9);
+        }
+
+        .login input[type=button]:focus{
+            outline: none;
+        }
+
+        ::-webkit-input-placeholder{
+           color: rgba(255,255,255,0.6);
+        }
+
+        ::-moz-input-placeholder{
+           color: rgba(255,255,255,0.6);
+        }
+
         h1{
             color: white;
         }
 
-        body{
-            position: fixed;
-            overflow-y: scroll;
-             width: 100%;
-                 top: 20px;
-                 left: 20px;
-                 right: 40px;
-                 bottom: 40px;
-                 width: auto;
-                 height: auto;
-            background-image: url("https://www.scienceabc.com/wp-content/uploads/2015/10/airplane.jpg");
-            background-size: cover;
-            -webkit-filter: blur(0px);
-        }
     </style>
 
 </head>
@@ -84,6 +125,21 @@
         <input type="button" onclick="check(this.form)" value="login"/>
     </div>
     </form>
+
+    <script language="javascript">
+function check(form)
+{
+
+ if(form.userid.value == "admin" && form.pswrd.value == "team02")
+  {
+    window.open("pom.xml","_self")
+  }
+ else
+ {
+   alert("Username or password incorrect")
+  }
+}
+</script>
 
 </body>
 </html>
