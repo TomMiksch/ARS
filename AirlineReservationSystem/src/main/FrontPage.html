@@ -3,8 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome!</title>
+
+    <style>
+        body{
+            position: right;
+        }
+
+        header{
+            padding: 1em;
+            color: white;
+            clear: left;
+            text-align: right;
+        }
+
+        header input [type=button]{
+            width: 250px;
+            height: 30px;
+            background: #fff;
+            border: 1px solid #fff;
+            border-radius: 2px;
+            color: #a18d6c;
+            font-size: 16px;
+            font-weight: 400;
+            padding: 6px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-
+    <header>
+        <input type="button" onclick="check(this.form)" value="Admin Login"/>
+    </header>
 </body>
 </html>
