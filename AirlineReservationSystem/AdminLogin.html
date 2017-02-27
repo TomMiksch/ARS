@@ -86,26 +86,25 @@
             margin-top: 10px;
         }
 
-        .login input[type=text]:focus{
-            outline: none;
-            border: 1px solid rgba(255,255,255,0.9);
+        search{
+            position: absolute;
+            top: calc(50%-75px);
+            left: 400px;
+            height: 150px;
+            width: 350px;
+            padding: 10px;
         }
 
-        .login input[type=password]:focus{
-            outline: none;
-            border: 1px solid rgba(255,255,255,0.9);
-        }
-
-        .login input[type=button]:focus{
-            outline: none;
-        }
-
-        ::-webkit-input-placeholder{
-           color: rgba(255,255,255,0.6);
-        }
-
-        ::-moz-input-placeholder{
-           color: rgba(255,255,255,0.6);
+         search input [type=text]{
+            width: 250px;
+            height: 30px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 2px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 400;
+            padding: 4px;
         }
 
         h1{
@@ -124,6 +123,11 @@
         <input type="password" placeholder="password" name="pswrd"><br>
         <input type="button" onclick="check(this.form)" value="login"/>
     </div>
+    <form name="search">
+    <div class="search">
+        <input type="text" placeholder="search" name="search"/>
+    </div>
+    </form>
     </form>
 
     <script language="javascript">
