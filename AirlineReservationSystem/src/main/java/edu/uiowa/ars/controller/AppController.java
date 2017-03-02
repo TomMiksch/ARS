@@ -28,6 +28,49 @@ public final class AppController {
 	@Autowired
 	MessageSource messageSource;
 
+	/**
+	 * This method links the register.jsp file to the /register URL. This page
+	 * is for customers to register for an account.
+	 * 
+	 * @param model
+	 *            The map of data to be passed into the register.jsp.
+	 * @return register.jsp
+	 */
+	@RequestMapping(value = { "/register" }, method = RequestMethod.GET)
+	public String registerGet(final ModelMap model) {
+		final User user = new User();
+		model.addAttribute("user", user);
+		return "register";
+	}
+
+	/**
+	 * This method links the form submission on the /register page to further
+	 * action that should be taken with the user entered data.
+	 * 
+	 * @param user
+	 *            The object containing the resulting data from the form
+	 *            submission.
+	 * @param result
+	 *            The result of the POST data request.
+	 * @param model
+	 *            The map of data to be passed into resulting page.
+	 * @return success.jsp if successful. register.jsp otherwise.
+	 */
+	@RequestMapping(value = { "/register" }, method = RequestMethod.POST)
+	public String registerPost(@Valid final User user, final BindingResult result, final ModelMap model) {
+
+		if (result.hasErrors()) {
+			return "register";
+		}
+
+		// This user is a customer.
+		user.setUserType("Customer");
+		service.saveUser(user);
+
+		model.addAttribute("success", "User " + user.getFullName() + " registered successfully!");
+		return "success";
+	}
+
 	/*
 	 * This method will list all existing users.
 	 */
@@ -47,10 +90,9 @@ public final class AppController {
 		final User user = new User();
 		model.addAttribute("user", user);
 		model.addAttribute("edit", false);
-		final Map<String,String> userTypes = new LinkedHashMap<>();
+		final Map<String, String> userTypes = new LinkedHashMap<>();
 		userTypes.put("Admin", "Admin");
 		userTypes.put("Employee", "Employee");
-		userTypes.put("Customer", "Customer");
 		model.addAttribute("userTypes", userTypes);
 		return "registration";
 	}
@@ -66,7 +108,7 @@ public final class AppController {
 		if (result.hasErrors()) {
 			return "registration";
 		}
-		
+
 		service.saveUser(user);
 
 		model.addAttribute("success", "User " + user.getFullName() + " registered successfully!");
