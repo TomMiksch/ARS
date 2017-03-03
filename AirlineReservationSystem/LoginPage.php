@@ -46,8 +46,18 @@
 
  <form action = "LoginPage.php" method="post">
      <input type="text" placeholder="Username" name="username"><br><br>
-     <input type="text" placeholder="Password" name="password"><br><br>
-     <input type="submit" name="Login" value="Login"/>
+     <input type="password" placeholder="Password" name="password"><br><br>
+     <input type="submit" name="Login" value="Login"/><br><br>
+     <input type="button" onclick="check(this.form)" value="Create Account"/>
  </form>
+
+<script language="javascript">
+function check(form)
+{
+     $link = "<script>window.open('register.jsp','_self')</script>";
+
+     echo $link;
+}
+ </script>
  </body>
  </html>
