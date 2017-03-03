@@ -15,7 +15,7 @@
      if($check_user>0){
 
         if ($row["userType"] == "Admin"){
-            $link = "<script>window.open('registration.jsp','_self')</script>";
+            $link = "<script>window.open('AppController.java/new','_self')</script>";
 
             echo $link;
         }
@@ -54,9 +54,7 @@
 <script language="javascript">
 function check(form)
 {
-     $link = "<script>window.open('register.jsp','_self')</script>";
-
-     echo $link;
+     window.open('register.jsp','_self');
 }
  </script>
  </body>
