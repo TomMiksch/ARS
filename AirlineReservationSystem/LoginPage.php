@@ -3,25 +3,24 @@
  if(isset($_POST['Login'])){
      $username = mysqli_real_escape_string($con, $_POST['username']);
      $password = mysqli_real_escape_string($con, $_POST['password']);
-     $userType = "";
 
      $sel_user = "select * from userinfo where firstName='$username' AND lastName='$password'";
-
-     $sel_type = "select * from userinfo where userType='$userType'";
 
      $run_user = mysqli_query($con, $sel_user);
 
      $check_user = mysqli_num_rows($run_user);
 
+     echo "type ".$row['userType']."";
+
      if($check_user>0){
 
-        if (strcmp($userType,'Admin') == 0){
+        if (strcmp($sel_type,"Admin") == 0){
             $link = "<script>window.open('AdminLogin.html','_self')</script>";
 
             echo $link;
         }
-        else if (strcmp($userType,'User') == 0){
-            $link = "<script>alert(User!')</script>";
+        else if (strcmp($sel_type,'User') == 0){
+            $link = "<script>alert('User!')</script>";
 
             echo $link;
         }
