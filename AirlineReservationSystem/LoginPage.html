@@ -9,10 +9,11 @@ if(isset($_POST['Login'])){
 
     if($row = mysql_fetch_array($query)){
         $_SESSION['First Name'] = $row['First Name'];
+        header('Location:profile.php');
     }
-    else{
+    else
         $error1 = "Your username or password is incorrect";
-    }
+
 }
 ?>
 
