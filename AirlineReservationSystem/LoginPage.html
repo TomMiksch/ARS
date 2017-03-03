@@ -25,6 +25,12 @@ if(isset($_POST['Login'])){
 
 </head>
 <body>
+<?php
+    if(isset($error1){
+        echo $error1;
+    }
+?>
+
 <div class="login">
     <input type="text" placeholder="Username" name="username"><br><br>
     <input type="password" placeholder="Password" name="password"><br><br>
