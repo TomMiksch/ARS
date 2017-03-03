@@ -12,8 +12,6 @@
 
      $check_user = mysqli_num_rows($run_user);
 
-     echo "type ".$row['userType']."";
-
      if($check_user>0){
 
         if ($row["userType"] == "Admin"){
