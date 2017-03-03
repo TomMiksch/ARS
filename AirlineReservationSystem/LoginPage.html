@@ -28,11 +28,11 @@ if(isset($_POST['Login'])){
 <body>
 <?php
     if(isset($error1){
-        echo $error1;
+        alert("Username or password incorrect");
     }
 ?>
 
-<form action = "index.php" method="post">
+<form action = "LoginPage.html" method="post">
     <input type="text" placeholder="Username" name="username"><br><br>
     <input type="password" placeholder="Password" name="password"><br><br>
     <input type="submit" name="Login" value="Login"/>
