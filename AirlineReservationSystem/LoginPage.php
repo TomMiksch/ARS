@@ -8,19 +8,21 @@
 
      $run_user = mysqli_query($con, $sel_user);
 
+     $row = $run_user->fetch_assoc();
+
      $check_user = mysqli_num_rows($run_user);
 
      echo "type ".$row['userType']."";
 
      if($check_user>0){
 
-        if (strcmp($sel_type,"Admin") == 0){
-            $link = "<script>window.open('AdminLogin.html','_self')</script>";
+        if ($row["userType"] == "Admin"){
+            $link = "<script>window.open('registration.jsp','_self')</script>";
 
             echo $link;
         }
-        else if (strcmp($sel_type,'User') == 0){
-            $link = "<script>alert('User!')</script>";
+        else if ($row["userType"] == "User"){
+            $link = "<script>window.open('HelloUser.html','_self')</script>";
 
             echo $link;
         }
