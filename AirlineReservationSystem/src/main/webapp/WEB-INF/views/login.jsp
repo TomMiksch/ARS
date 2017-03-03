@@ -8,7 +8,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login page</title>
-
 <style>
 .error {
 	color: #ff0000;
@@ -26,13 +25,10 @@ body {
 <article id="login">
 	<h2 class="left gamma">ARS Log in</h2>
 
-    <!-- The following line I am not sure since this is jsp file not html file -->
-    <!-- I mimiced the path you have in your allusers.jsp -->
-    <!-- If it was html file, then you just need the file name -->
+<!--
     <form id="loginForm" method="post" action="<c:url value='/new' />">
 	<input type="hidden" name="previousPage" value="/homePage.do?locale=" />
     <input type="hidden" name="activeTab" id="loginForm.activeTab"/>
-<!-- Commented as we do not need to have this on this page
     <label for="loginForm.loginId">
         Username
 		<input type="text" name="loginId" maxlength="52" size="20" value="" id="loginForm.loginId" autocomplete="off" aria-required="true"/>
@@ -49,7 +45,7 @@ body {
 	</label>
 	
 	<div class="span12 pushLeft forgot-link-wrapper">
-		<p><span class="hidden-accessible">Reset your password?</span></a></p>
+		<p><span class="hidden-accessible">Reset your password?</span></p>
 	</div>
 	<div class="remember-submit-wrapper">
 		<div class="span6 pushLeft customComponent">
@@ -59,16 +55,40 @@ body {
 		        <span class="lbl left">Remember me</span>
 		    </label>
 		</div>
--->
 		<div class="span6 pushLeft">
 			<input type="submit" name="_button_go" value="Log in" class="btn btn-fullWidth" />
 		</div>
 	</div>
-</form>
+	</form>
+-->
+
+    <form:form method="POST" modelAttribute="user">
+	    <form:input type="hidden" path="id" id="id" />
+	    <table>
+		    <tr>
+			    <td><label for="firstName">First Name: </label></td>
+			    <td><form:input path="firstName" id="firstName" /></td>
+			    <td><form:errors path="firstName" cssClass="error" /></td>
+		    </tr>
+		    <tr>
+			    <td><label for="lastName">Last Name: </label></td>
+                            <td><form:input path="lastName" id="lastName" /></td>
+                            <td><form:errors path="lastName" cssClass="error" /></td>
+                    </tr>
+                    <tr>
+                            <td><label for="emailAddress">Email Address </label></td>
+                            <td><form:input path="emailAddress" id="emailAddress" /></td>
+                            <td><form:errors path="emailAddress" cssClass="error" /></td>
+                    </tr>
+                    <tr>
+                            <td colspan="3"><input type="submit" value="Register" /></td>
+                    </tr>
+             </table>
+     </form:form>
+
+
 </article>
 
-						</div>
-						<div class="span8 home-page-booking-widget no-margin">
 <div id="booking-module-tabs"
 	class="ui-tabs ui-widget ui-widget-content ui-corner-all">
 	<ul
@@ -93,8 +113,10 @@ body {
 			</a>
 		</li>
 	</ul>
-	<div id="aa-booking-module" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
-<form name="reservationFlightSearchForm" id="reservationFlightSearchForm" method="post" action="/booking/find-flights" class="zeta">
+</div>
+
+<div id="aa-booking-module" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+    <form name="reservationFlightSearchForm" id="reservationFlightSearchForm" method="post" action="/booking/find-flights" class="zeta">
     <input type="hidden" id="showMoreOptions" name="showMoreOptions" value="false" />
     <input type="hidden" id="fromSearchPage" name="fromSearchPage" value="true" />
     <div class="row-form">
@@ -208,7 +230,8 @@ body {
             </div>
         </div>
     </div>
-
+    </form>
+</div>
 <!-- The end of what Peter added -->
 
 
