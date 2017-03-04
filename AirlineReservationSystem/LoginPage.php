@@ -54,7 +54,7 @@
 <script language="javascript">
 function check(form)
 {
-     window.open('register.jsp','_self');
+     window.open('http://localhost:8080/register.jsp','_self');
 }
  </script>
  </body>
