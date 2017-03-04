@@ -15,7 +15,7 @@
      if($check_user>0){
 
         if ($row["userType"] == "Admin"){
-            $link = "<script>window.open('AppController.java/new','_self')</script>";
+            $link = "<script>window.open('http://localhost:8080/AppController.java/new','_self')</script>";
 
             echo $link;
         }
