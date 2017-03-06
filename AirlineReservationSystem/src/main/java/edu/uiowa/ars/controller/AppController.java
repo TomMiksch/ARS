@@ -72,25 +72,25 @@ public final class AppController {
 	}
 
 	/**
-	 * This method links the register.jsp file to the /login URL. This page
-	 * is for customers to register for an account.
+	 * This method links the register.jsp file to the /login URL. This page is
+	 * for customers to register for an account.
 	 * 
 	 * @param model
 	 *            The map of data to be passed into the login.jsp.
 	 * @return login.jsp
 	 */
-	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
-	public String registerGet(final ModelMap model) {
+	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
+	public String loginGet(final ModelMap model) {
 		final User user = new User();
 		model.addAttribute("user", user);
 		return "login";
 	}
-	
-	
+
 	/**
-	 * This method links the login home page which has many palce holders so far.
-	 * The template is AA.com 
-	 * This page pass the data to the data base and checks if there is a match
+	 * This method links the login home page which has many palce holders so
+	 * far. The template is AA.com This page pass the data to the data base and
+	 * checks if there is a match
+	 * 
 	 * @param user
 	 * @param result
 	 * @param model
@@ -98,7 +98,7 @@ public final class AppController {
 	 */
 
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
-	public String registerPost(@Valid final User user, final BindingResult result, final ModelMap model) {
+	public String loginPost(@Valid final User user, final BindingResult result, final ModelMap model) {
 
 		if (result.hasErrors()) {
 			return "register";
@@ -111,13 +111,11 @@ public final class AppController {
 		model.addAttribute("success", "User " + user.getFullName() + " registered successfully!");
 		return "success";
 	}
-	
-
 
 	/*
 	 * This method will list all existing users.
 	 */
-	@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/list" }, method = RequestMethod.GET)
 	public String listUsers(final ModelMap model) {
 
 		final List<User> users = service.findAllUsers();
