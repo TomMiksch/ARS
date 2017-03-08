@@ -87,7 +87,7 @@ public final class AppController {
 	}
 
 	/**
-	 * This method links the login home page which has many palce holders so
+	 * This method links the login home page which has many place holders so
 	 * far. The template is AA.com This page pass the data to the data base and
 	 * checks if there is a match
 	 * 

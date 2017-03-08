@@ -16,6 +16,12 @@
     <body>
         <h1>Log in</h1>
         
+        <form action = "LoginPage.php" method="post">
+            <input type="text" placeholder="Username" name="username"><br><br>
+            <input type="password" placeholder="Password" name="password"><br><br>
+            <input type="submit" name="Login" value="Login"/><br><br>
+        </form>
+        
         <a href="<c:url value='/list' />">List of All Users</a>
     </body>
 </html>
