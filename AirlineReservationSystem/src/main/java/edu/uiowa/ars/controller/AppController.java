@@ -171,6 +171,6 @@ public final class AppController {
         @RequestMapping(value = { "/loginpage" }, method = RequestMethod.GET)
         public String loginPage(final ModelMap model){
             
-            return "/loginpage"
+            return "loginpage"
         }
 }

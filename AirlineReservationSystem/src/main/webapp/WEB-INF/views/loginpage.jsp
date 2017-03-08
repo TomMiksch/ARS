@@ -16,12 +16,25 @@
     <body>
         <h1>Log in</h1>
         
-        <form action = "LoginPage.php" method="post">
-            <input type="text" placeholder="Username" name="username"><br><br>
-            <input type="password" placeholder="Password" name="password"><br><br>
-            <input type="submit" name="Login" value="Login"/><br><br>
-        </form>
+        <form:form method="POST" modelAttribute="user">
+	    <form:input type="hidden" path="id" id="id" />
+                <table>
+		    <tr>
+			<td><label for="userName">User Name: </label></td>
+                        <td><form:input path="userName" id="userName" /></td>
+                        <td><form:errors path="userName" cssClass="error" /></td>
+		    </tr>
+                    <tr>
+                        <td><label for="password">Password: </label></td>
+                        <td><form:input path="password" id="password" /></td>
+                        <td><form:errors path="password" cssClass="error" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><input type="submit" value="Log In" /></td>
+                    </tr>
+                </table>
+        </form:form>
         
-        <a href="<c:url value='/list' />">List of All Users</a>
+        <a href="<c:url value='/register' />">Create New Account</a>
     </body>
 </html>
