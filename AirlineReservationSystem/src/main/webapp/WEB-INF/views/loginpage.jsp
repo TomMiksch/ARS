@@ -14,6 +14,8 @@
         <title>Login</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Log in</h1>
+        
+        <a href="<c:url value='/list' />">List of All Users</a>
     </body>
 </html>

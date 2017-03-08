@@ -4,14 +4,17 @@
     Author     : Tom
 --%>
 
-<%@page contentType="text/html" pageEncoding="windows-1252"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-        <title>JSP Page</title>
+        <title>Sup, User</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Hello User!</h1>
     </body>
 </html>

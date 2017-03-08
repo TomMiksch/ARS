@@ -165,4 +165,12 @@ public final class AppController {
 		service.deleteUserById(id);
 		return "redirect:/list";
 	}
+        /*
+            Method that displays the login page
+        */
+        @RequestMapping(value = { "/loginpage" }, method = RequestMethod.GET)
+        public String loginPage(final ModelMap model){
+            
+            return "/loginpage"
+        }
 }
