@@ -181,6 +181,8 @@ public final class AppController {
 			return "loginpage";
 		}
                 
+                service.checkUser(user);
+                
                 if ("Admin".equals(user.getUserType())){
                     return "registration";
                 }
