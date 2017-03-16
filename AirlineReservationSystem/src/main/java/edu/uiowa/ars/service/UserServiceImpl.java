@@ -57,6 +57,10 @@ public final class UserServiceImpl implements UserService {
 			entity.setPassword(user.getPassword());
 		}
 	}
+        
+        public void checkUser(final User user){
+            
+        }
 
 	public List<User> findAllUsers() {
 		return dao.findAllUsers();

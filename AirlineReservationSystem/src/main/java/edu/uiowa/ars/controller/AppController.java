@@ -173,4 +173,14 @@ public final class AppController {
             
             return "loginpage";
         }
+        
+        @RequestMapping(value = { "/loginpage" }, method = RequestMethod.POST)
+	public String checkUser(@Valid final User user, final BindingResult result, final ModelMap model) {
+
+		if (result.hasErrors()) {
+			return "loginpage";
+		}
+                
+                return "hellouser";
+	}
 }
