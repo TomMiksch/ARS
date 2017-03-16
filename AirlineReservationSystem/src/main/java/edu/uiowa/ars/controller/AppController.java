@@ -181,6 +181,13 @@ public final class AppController {
 			return "loginpage";
 		}
                 
-                return "hellouser";
+                if ("Admin".equals(user.getUserType())){
+                    return "registration";
+                }
+                else if("Customer".equals(user.getUserType())){
+                    return "hellouser";
+                }
+                
+                return "loginpage";
 	}
 }
