@@ -181,8 +181,6 @@ public final class AppController {
 			return "loginpage";
 		}
                 
-                //service.checkUser(user);
-                
                 return "hellouser";
 	}
 }
