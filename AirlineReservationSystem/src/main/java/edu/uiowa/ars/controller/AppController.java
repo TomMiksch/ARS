@@ -126,7 +126,7 @@ public final class AppController {
 	/*
 	 * This method will provide the medium to add a new user.
 	 */
-	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/newish" }, method = RequestMethod.GET)
 	public String newUser(final ModelMap model) {
 		final User user = new User();
 		model.addAttribute("user", user);
