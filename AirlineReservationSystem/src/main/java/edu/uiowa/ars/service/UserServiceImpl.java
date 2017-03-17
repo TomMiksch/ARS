@@ -22,7 +22,7 @@ public final class UserServiceImpl implements UserService {
 	public User findById(final int id) {
 		return dao.findById(id);
 	}
-
+        @Override
 	public void saveUser(final User user) {
 		byte[] tempPass = new byte[16];
 		final Random random = new Random();
@@ -58,6 +58,7 @@ public final class UserServiceImpl implements UserService {
 		}
 	}
         
+        
         public void checkUser(final User user){
                 final User entity = dao.findById(user.getId());
                 if (entity != null){
@@ -65,6 +66,7 @@ public final class UserServiceImpl implements UserService {
                         
                     }
                 }
+                System.out.println("Did something");
         }
 
 	public List<User> findAllUsers() {

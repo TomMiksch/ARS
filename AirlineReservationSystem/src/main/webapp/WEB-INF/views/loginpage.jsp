@@ -20,9 +20,9 @@
 	    <form:input type="hidden" path="id" id="id" />
                 <table>
 		    <tr>
-			<td><label for="userName">User Name: </label></td>
-                        <td><form:input path="userName" id="userName" /></td>
-                        <td><form:errors path="userName" cssClass="error" /></td>
+			<td><label for="emailAddress">User Name: </label></td>
+                        <td><form:input path="emailAddress" id="emailAddress" /></td>
+                        <td><form:errors path="emailAddress" cssClass="error" /></td>
 		    </tr>
                     <tr>
                         <td><label for="password">Password: </label></td>

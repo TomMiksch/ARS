@@ -170,7 +170,8 @@ public final class AppController {
         */
         @RequestMapping(value = { "/loginpage" }, method = RequestMethod.GET)
         public String loginPage(final ModelMap model){
-            
+            final User user = new User();
+            model.addAttribute("user", user);
             return "loginpage";
         }
         
@@ -180,7 +181,7 @@ public final class AppController {
 		if (result.hasErrors()) {
 			return "loginpage";
 		}
-                
+                System.out.println("Controller");
                 service.checkUser(user);
                 
                 if ("Admin".equals(user.getUserType())){
