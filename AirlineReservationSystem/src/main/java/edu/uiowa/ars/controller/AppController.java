@@ -181,7 +181,7 @@ public final class AppController {
 		if (result.hasErrors()) {
 			return "loginpage";
 		}
-                System.out.println("Controller");
+                
                 service.checkUser(user);
                 
                 if ("Admin".equals(user.getUserType())){

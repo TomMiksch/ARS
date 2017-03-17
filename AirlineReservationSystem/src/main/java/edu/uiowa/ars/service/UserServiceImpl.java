@@ -59,14 +59,20 @@ public final class UserServiceImpl implements UserService {
 	}
         
         
-        public void checkUser(final User user){
+        public String checkUser(final User user){
                 final User entity = dao.findById(user.getId());
                 if (entity != null){
-                    if (user.getPassword() == entity.getPassword()){
-                        
+                    if (user.getPassword().equals(entity.getPassword())){
+                        if ("Admin".equals(entity.getUserType())){
+                            return "registration";
+                        }
+                        else if("Customer".equals(entity.getUserType())){
+                            return "hellouser";
+                        }
                     }
                 }
-                System.out.println("Did something");
+                
+                return "False";
         }
 
 	public List<User> findAllUsers() {
