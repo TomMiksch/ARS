@@ -191,6 +191,6 @@ public final class AppController {
                     return "hellouser";
                 }
                 
-                return "loginpage";
+                return "registration";
 	}
 }
