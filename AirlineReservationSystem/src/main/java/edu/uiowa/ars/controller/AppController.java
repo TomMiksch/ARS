@@ -97,7 +97,7 @@ public final class AppController {
 	 * @return success.jsp if successful. register.jsp otherwise.
 	 */
 
-	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.POST)
 	public String loginPost(@Valid final User user, final BindingResult result, final ModelMap model) {
 
 		if (result.hasErrors()) {
