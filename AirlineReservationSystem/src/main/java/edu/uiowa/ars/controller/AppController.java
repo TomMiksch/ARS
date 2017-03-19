@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.sql.*;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -182,21 +184,45 @@ public final class AppController {
 			return "loginpage";
 		}
                 
-                System.out.println(user.getPassword());
+               /* System.out.println(user.getPassword());
                 
                 service.checkUser(user);
                 
-                System.out.println(user.getEmailAddress());
-                
-                
-                
-                if ("Admin".equals(user.getUserType())){
-                    return "registration";
+                System.out.println(user.getEmailAddress());*/
+               try{
+                    String myURL = "jdbc:mysql://localhost/websystique";
+                    Connection conn = DriverManager.getConnection(myURL,"root", "Tombert1");
+                    String query = "SELECT * FROM user WHERE email = ?";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setString(1, user.getEmailAddress());
+                    Statement st = conn.createStatement();                 
+                    ResultSet rs;
+                    
+                    String email = user.getEmailAddress();
+                    
+                    rs = ps.executeQuery();
+                    while ( rs.next() ) {
+                        String userType = rs.getString("user_type");
+                        String userPass = rs.getString("password");
+                        if (userPass.equals(user.getPassword())){
+                            if ("Admin".equals(userType)){
+                                return "registration";
+                            }
+                            else if("Customer".equals(userType)){
+                                return "hellouser";
+                            }
+                        }
+                    }
+                conn.close();      
+                }catch(Exception e){
+                    System.err.println("Got an exception!");
+                    System.err.println(e.getMessage());
                 }
-                else if("Customer".equals(user.getUserType())){
-                    return "hellouser";
-                }
                 
-                return "registration";
+                return "loginpage";
 	}
 }
+/*
+yM/in8qIJQmv09VNYShNAQ==
+OLxktJR72A2Lg58HYtXqYQ==
+*/

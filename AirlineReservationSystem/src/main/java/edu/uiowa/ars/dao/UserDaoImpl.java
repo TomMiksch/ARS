@@ -5,6 +5,12 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.sql.DataSource;
+
 import edu.uiowa.ars.model.User;
 
 @Repository("userDao")
@@ -13,10 +19,6 @@ public final class UserDaoImpl extends AbstractDao<Integer, User> implements Use
 	public User findById(final int id) {
 		return getByKey(id);
 	}
-        
-        /*public User findUserByEmail(final String email){
-            return getSession().createQuery("select * from user where email = " + email);
-        }*/
 
 	public void saveUser(final User user) {
 		persist(user);
@@ -31,4 +33,6 @@ public final class UserDaoImpl extends AbstractDao<Integer, User> implements Use
 	public void deleteUserById(final String id) {
 		getSession().createSQLQuery("delete from User where id = " + id).executeUpdate();
 	}
+        
+        
 }
