@@ -184,14 +184,9 @@ public final class AppController {
 			return "loginpage";
 		}
                 
-               /* System.out.println(user.getPassword());
-                
-                service.checkUser(user);
-                
-                System.out.println(user.getEmailAddress());*/
                try{
                     String myURL = "jdbc:mysql://localhost/websystique";
-                    Connection conn = DriverManager.getConnection(myURL,"root", "Tombert1");
+                    Connection conn = DriverManager.getConnection(myURL,"myuser", "mypasswd");
                     String query = "SELECT * FROM user WHERE email = ?";
                     PreparedStatement ps = conn.prepareStatement(query);
                     ps.setString(1, user.getEmailAddress());
