@@ -20,7 +20,7 @@
 	    <form:input type="hidden" path="id" id="id" />
                 <table>
 		    <tr>
-			<td><label for="emailAddress">User Name: </label></td>
+			<td><label for="emailAddress">Email: </label></td>
                         <td><form:input path="emailAddress" id="emailAddress" /></td>
                         <td><form:errors path="emailAddress" cssClass="error" /></td>
 		    </tr>

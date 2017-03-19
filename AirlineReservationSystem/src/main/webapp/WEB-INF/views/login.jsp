@@ -62,6 +62,8 @@ body {
 	</form>
 -->
 
+    <a href="<c:url value='/loginpage' />">Log In Here</a>
+
     <form:form method="POST" modelAttribute="user">
 	    <form:input type="hidden" path="id" id="id" />
 	    <table>

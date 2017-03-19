@@ -8,6 +8,8 @@ public interface UserDao {
 
 	User findById(int id);
 
+       // void findUserByEmail(User user);
+
 	void saveUser(User user);
 
 	List<User> findAllUsers();

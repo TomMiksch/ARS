@@ -182,7 +182,13 @@ public final class AppController {
 			return "loginpage";
 		}
                 
+                System.out.println(user.getPassword());
+                
                 service.checkUser(user);
+                
+                System.out.println(user.getEmailAddress());
+                
+                
                 
                 if ("Admin".equals(user.getUserType())){
                     return "registration";

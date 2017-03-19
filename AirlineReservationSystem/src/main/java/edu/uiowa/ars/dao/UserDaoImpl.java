@@ -13,6 +13,10 @@ public final class UserDaoImpl extends AbstractDao<Integer, User> implements Use
 	public User findById(final int id) {
 		return getByKey(id);
 	}
+        
+        /*public User findUserByEmail(final String email){
+            return getSession().createQuery("select * from user where email = " + email);
+        }*/
 
 	public void saveUser(final User user) {
 		persist(user);
