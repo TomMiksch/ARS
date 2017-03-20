@@ -26,7 +26,7 @@
 		    </tr>
                     <tr>
                         <td><label for="password">Password: </label></td>
-                        <td><form:input path="password" id="password" /></td>
+                        <td><form:password path="password" id="password" /></td>
                         <td><form:errors path="password" cssClass="error" /></td>
                     </tr>
                     <tr>
