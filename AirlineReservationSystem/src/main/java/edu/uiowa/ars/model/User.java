@@ -1,5 +1,7 @@
 package edu.uiowa.ars.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,15 +36,16 @@ public final class User {
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
         
-        @Size(min = 10, max = 10)
+       /*
         @Column(name = "DOB", nullable = false)
-        private String dob;
+        private Date dob;*/
         
         @Column(name = "GENDER", nullable = false)
         private String gender;
         
+        @Size(min = 10, max = 10)
         @Column(name = "PHONE_NUMBER", nullable = false)
-        private int phoneNumber;
+        private String phoneNumber;
 
 	public int getId() {
 		return id;
@@ -92,13 +95,13 @@ public final class User {
 		this.password = password;
 	}
         
-        public String getDOB() {
+       /* public Date getDOB() {
             return dob;
         }
         
-        public void setDOB(final String dob) {
+        public void setDOB(final Date dob) {
             this.dob = dob;
-        }
+        }*/
         
         public String getGender() {
             return gender;
@@ -108,11 +111,11 @@ public final class User {
             this.gender = gender;
         }
         
-        public int getPhoneNumber() {
+        public String getPhoneNumber() {
             return phoneNumber;
         }
         
-        public void setPhoneNumber(final int phoneNumber) {
+        public void setPhoneNumber(final String phoneNumber) {
             this.phoneNumber = phoneNumber;
         }
 

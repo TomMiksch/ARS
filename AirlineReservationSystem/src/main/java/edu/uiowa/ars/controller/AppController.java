@@ -137,6 +137,10 @@ public final class AppController {
 		userTypes.put("Admin", "Admin");
 		userTypes.put("Employee", "Employee");
 		model.addAttribute("userTypes", userTypes);
+                final Map<String, String> genders = new LinkedHashMap<>();
+		genders.put("Male", "Male");
+		genders.put("Female", "Female");
+		model.addAttribute("genders", genders);
 		return "registration";
 	}
 

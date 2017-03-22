@@ -25,9 +25,9 @@ Setting up the environment:
 
 ****To add the dob, gender, and phone_number columns****
     ALTER TABLE user
-    ADD dob DATE NOT NULL,
-    ADD gender VARCHAR(6) NOT NULL,
-    ADD phone_number INT NOT NULL;
+    ADD COLUMN dob DATE NOT NULL,
+    ADD COLUMN gender VARCHAR(6) NOT NULL,
+    ADD COLUMN phone_number INT NOT NULL;
 ****                            
 5. Create user 'myuser' with password 'mypasswd'
     - CREATE USER 'myuser'@'localhost' IDENTIFIED BY 'mypasswd';
