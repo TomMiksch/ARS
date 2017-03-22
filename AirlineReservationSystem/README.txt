@@ -25,7 +25,7 @@ Setting up the environment:
 
 ****To add the dob, gender, and phone_number columns****
     ALTER TABLE user
-    ADD dob VARCHAR(10) NOT NULL,
+    ADD dob DATE NOT NULL,
     ADD gender VARCHAR(6) NOT NULL,
     ADD phone_number INT NOT NULL;
 ****                            
