@@ -33,6 +33,16 @@ public final class User {
 	
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
+        
+        @Size(min = 10, max = 10)
+        @Column(name = "DOB", nullable = false)
+        private String dob;
+        
+        @Column(name = "GENDER", nullable = false)
+        private String gender;
+        
+        @Column(name = "PHONE_NUMBER", nullable = false)
+        private String phoneNumber;
 
 	public int getId() {
 		return id;
