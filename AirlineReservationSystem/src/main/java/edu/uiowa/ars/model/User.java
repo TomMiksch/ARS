@@ -42,7 +42,7 @@ public final class User {
         private String gender;
         
         @Column(name = "PHONE_NUMBER", nullable = false)
-        private String phoneNumber;
+        private int phoneNumber;
 
 	public int getId() {
 		return id;
@@ -91,6 +91,30 @@ public final class User {
 	public void setPassword(final String password) {
 		this.password = password;
 	}
+        
+        public String getDOB() {
+            return dob;
+        }
+        
+        public void setDOB(final String dob) {
+            this.dob = dob;
+        }
+        
+        public String getGender() {
+            return gender;
+        }
+        
+        public void setGender(final String gender) {
+            this.gender = gender;
+        }
+        
+        public int getPhoneNumber() {
+            return phoneNumber;
+        }
+        
+        public void setPhoneNumber(final int phoneNumber) {
+            this.phoneNumber = phoneNumber;
+        }
 
 	public String getFullName() {
 		return firstName + " " + lastName;
