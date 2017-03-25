@@ -27,9 +27,9 @@ public final class UserServiceImpl implements UserService {
 		byte[] tempPass = new byte[16];
 		final Random random = new Random();
 		random.nextBytes(tempPass);
-		final String tempPassword = new String(Base64.getEncoder().encode(tempPass));
-		
-		user.setPassword(tempPassword);
+                String tempPassword = new String(Base64.getEncoder().encode(tempPass));
+		// Encryption with md5 
+		user.setPassword(SystemSupport.md5(tempPassword)); 
 		dao.saveUser(user);
 
 		// If we correctly entered the user in the database, then send them
@@ -38,7 +38,7 @@ public final class UserServiceImpl implements UserService {
 				+ "Thank you for registering for an Iowa Air online account! We are pleased to have your business. "
 				+ "Please login to your Iowa Air account using the credentials listed below. You may update your password after login.<br><br>"
 				+ "Username: " + user.getEmailAddress() + "<br>"
-				+ "Password: " + user.getPassword() + "<br><br>Sincerely,<br>Iowa Air", null, null);
+				+ "Password: " + tempPassword + "<br><br>Sincerely,<br>Iowa Air", null, null);
 	}
 
 	/*
