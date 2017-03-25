@@ -1,5 +1,6 @@
 package edu.uiowa.ars.controller;
 
+import edu.uiowa.ars.SystemSupport;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,15 +61,12 @@ public final class AppController {
 	 */
 	@RequestMapping(value = { "/register" }, method = RequestMethod.POST)
 	public String registerPost(@Valid final User user, final BindingResult result, final ModelMap model) {
-
 		if (result.hasErrors()) {
 			return "register";
 		}
-
 		// This user is a customer.
 		user.setUserType("Customer");
-		service.saveUser(user);
-
+		service.saveUser(user);         
 		model.addAttribute("success", "User " + user.getFullName() + " registered successfully!");
 		return "success";
 	}
@@ -105,7 +103,6 @@ public final class AppController {
 		if (result.hasErrors()) {
 			return "register";
 		}
-
 		// This user is a customer.
 		user.setUserType("Customer");
 		service.saveUser(user);
@@ -146,14 +143,11 @@ public final class AppController {
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
 	public String saveUser(@Valid final User user, final BindingResult result, final ModelMap model) {
-
 		// TODO should also check here if entered email is valid.
 		if (result.hasErrors()) {
 			return "registration";
 		}
-
 		service.saveUser(user);
-
 		model.addAttribute("success", "User " + user.getFullName() + " registered successfully!");
 		return "success";
 	}
@@ -167,6 +161,8 @@ public final class AppController {
 		service.deleteUserById(id);
 		return "redirect:/list";
 	}
+        
+        
         /*
             Method that displays the login page
         */
@@ -198,7 +194,7 @@ public final class AppController {
                     rs = ps.executeQuery();
                     while ( rs.next() ) {
                         String userType = rs.getString("user_type");
-                        String userPass = rs.getString("password");
+                        String userPass = SystemSupport.md5(rs.getString("password"));
                         if (userPass.equals(user.getPassword())){
                             if ("Admin".equals(userType)){
                                 return "registration";
@@ -217,7 +213,3 @@ public final class AppController {
                 return "loginpage";
 	}
 }
-/*
-yM/in8qIJQmv09VNYShNAQ==
-OLxktJR72A2Lg58HYtXqYQ==
-*/
