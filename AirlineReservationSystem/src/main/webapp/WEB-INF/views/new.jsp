@@ -47,18 +47,18 @@
 				<td><form:errors path="emailAddress" cssClass="error" /></td>
 			</tr>
                         
-                        <%--<tr>
+                        <tr>
 				<td><label for="dob">DOB: </label></td>
 				<td><form:input path="dob" id="dob" /></td>
 				<td><form:errors path="dob" cssClass="error" /></td>
-			</tr>--%>
+			</tr>
                         
-                        <tr>
+                        <%--<tr>
 				<td><label for="dob">DOB: </label></td>
-                                <fmt:formatDate value="${cForm.dob}" pattern="MM-dd-yyyy"/>
+                                <fmt:formatDate value="" pattern="yyyy-MM-dd"/>
                                 <td><form:input path="dob" id="dob" /></td>
 				<td><form:errors path="dob" cssClass="error" /></td>
-			</tr>
+			</tr>--%>
                         
                         <tr>
 				<td><label for="gender">Gender: </label></td>
