@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "USER")
 public final class User {
@@ -29,16 +31,20 @@ public final class User {
 	@Column(name = "LAST_NAME", nullable = false)
 	private String lastName;
 
-	@Size(min = 3, max = 50)
 	@Column(name = "EMAIL", nullable = false)
 	private String emailAddress;
 	
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
         
-        @Size(min = 1, max = 10)
+        /*@Size(min = 1, max = 10)
         @Column(name = "DOB", nullable = false)
-        private String dob;
+        private String dob;*/
+        
+        @Size(min = 10, max = 10)
+        @DateTimeFormat(pattern = "MM-dd-yyyy")
+        @Column(name = "DOB")
+        private Date dob;
         
         @Column(name = "GENDER", nullable = false)
         private String gender;
@@ -95,11 +101,19 @@ public final class User {
 		this.password = password;
 	}
         
-        public String getDob(){
+        /*public String getDob(){
             return dob;
         }
         
         public void setDob(final String dob){
+            this.dob = dob;
+        }*/
+        
+        public Date getDob(){
+            return dob;
+        }
+        
+        public void setDob(final Date dob){
             this.dob = dob;
         }
         

@@ -1,10 +1,12 @@
 package edu.uiowa.ars.controller;
 
+import edu.uiowa.ars.SystemSupport;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 
 import javax.validation.Valid;
 
@@ -16,6 +18,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+
 
 import edu.uiowa.ars.model.User;
 import edu.uiowa.ars.service.UserService;
@@ -29,6 +35,8 @@ public final class AppController {
 
 	@Autowired
 	MessageSource messageSource;
+
+	private static final String DEFAULT_MESSAGE_CODE = "SOME_DEFAULT";
 
 	/**
 	 * This method links the register.jsp file to the /register URL. This page
@@ -64,7 +72,6 @@ public final class AppController {
 	 */
 	@RequestMapping(value = { "/register" }, method = RequestMethod.POST)
 	public String registerPost(@Valid final User user, final BindingResult result, final ModelMap model) {
-
 		if (result.hasErrors()) {
                         final Map<String, String> genders = new LinkedHashMap<>();
                         genders.put("Male", "Male");
@@ -73,11 +80,17 @@ public final class AppController {
 			return "register";
 		}
 
+		// Check to see if any other users have the same email address.
+		final boolean duplicateEmail = service.findAllUsers().stream()
+				.anyMatch(currentUser -> currentUser.getEmailAddress().equalsIgnoreCase(user.getEmailAddress()));
+		if (duplicateEmail) {
+			result.rejectValue("emailAddress", DEFAULT_MESSAGE_CODE, "Email address already in use.");
+			return "register";
+		}
 		// This user is a customer.
 		user.setUserType("Customer");
 		service.saveUser(user);
-
-		model.addAttribute("success", "User " + user.getFullName() + " registered successfully!");
+		model.addAttribute("firstName", user.getFirstName());
 		return "success";
 	}
 
@@ -91,35 +104,7 @@ public final class AppController {
 	 */
 	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
 	public String loginGet(final ModelMap model) {
-		final User user = new User();
-		model.addAttribute("user", user);
 		return "login";
-	}
-
-	/**
-	 * This method links the login home page which has many place holders so
-	 * far. The template is AA.com This page pass the data to the data base and
-	 * checks if there is a match
-	 * 
-	 * @param user
-	 * @param result
-	 * @param model
-	 * @return success.jsp if successful. register.jsp otherwise.
-	 */
-
-	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.POST)
-	public String loginPost(@Valid final User user, final BindingResult result, final ModelMap model) {
-
-		if (result.hasErrors()) {
-			return "register";
-		}
-
-		// This user is a customer.
-		user.setUserType("Customer");
-		service.saveUser(user);
-
-		model.addAttribute("success", "User " + user.getFullName() + " registered successfully!");
-		return "success";
 	}
 
 	/*
@@ -149,7 +134,7 @@ public final class AppController {
 		genders.put("Male", "Male");
 		genders.put("Female", "Female");
 		model.addAttribute("genders", genders);
-		return "registration";
+		return "new";
 	}
 
 	/*
@@ -158,8 +143,6 @@ public final class AppController {
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
 	public String saveUser(@Valid final User user, final BindingResult result, final ModelMap model) {
-
-		// TODO should also check here if entered email is valid.
 		if (result.hasErrors()) {
                         final Map<String, String> userTypes = new LinkedHashMap<>();
                         userTypes.put("Admin", "Admin");
@@ -169,12 +152,19 @@ public final class AppController {
                         genders.put("Male", "Male");
                         genders.put("Female", "Female");
                         model.addAttribute("genders", genders);
-			return "registration";
+			return "new";
+		}
+
+		// Check to see if any other users have the same email address.
+		final boolean duplicateEmail = service.findAllUsers().stream()
+				.anyMatch(currentUser -> currentUser.getEmailAddress().equalsIgnoreCase(user.getEmailAddress()));
+		if (duplicateEmail) {
+			result.rejectValue("emailAddress", DEFAULT_MESSAGE_CODE, "Email address already in use.");
+			return "new";
 		}
 
 		service.saveUser(user);
-
-		model.addAttribute("success", "User " + user.getFullName() + " registered successfully!");
+		model.addAttribute("firstName", user.getFirstName());
 		return "success";
 	}
 
@@ -187,57 +177,56 @@ public final class AppController {
 		service.deleteUserById(id);
 		return "redirect:/list";
 	}
-        /*
-            Method that displays the login page
-        */
-        @RequestMapping(value = { "/loginpage" }, method = RequestMethod.GET)
-        public String loginPage(final ModelMap model){
-            final User user = new User();
-            model.addAttribute("user", user);
-            return "loginpage";
-        }
-        
-        @RequestMapping(value = { "/loginpage" }, method = RequestMethod.POST)
+
+	/*
+	 * Method that displays the login page
+	 */
+	@RequestMapping(value = { "/loginpage" }, method = RequestMethod.GET)
+	public String loginPage(final ModelMap model) {
+		final User user = new User();
+		model.addAttribute("user", user);
+		return "loginpage";
+	}
+
+	@RequestMapping(value = { "/loginpage" }, method = RequestMethod.POST)
 	public String checkUser(@Valid final User user, final BindingResult result, final ModelMap model) {
 
 		if (result.hasErrors()) {
 			return "loginpage";
 		}
-                
-               try{
-                    String myURL = "jdbc:mysql://localhost/websystique";
-                    Connection conn = DriverManager.getConnection(myURL,"myuser", "mypasswd");
-                    String query = "SELECT * FROM user WHERE email = ?";
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ps.setString(1, user.getEmailAddress());
-                    Statement st = conn.createStatement();                 
-                    ResultSet rs;
-                    
-                    String email = user.getEmailAddress();
-                    
-                    rs = ps.executeQuery();
-                    while ( rs.next() ) {
-                        String userType = rs.getString("user_type");
-                        String userPass = rs.getString("password");
-                        if (userPass.equals(user.getPassword())){
-                            if ("Admin".equals(userType)){
-                                return "registration";
-                            }
-                            else if("Customer".equals(userType)){
-                                return "hellouser";
-                            }
-                        }
-                    }
-                conn.close();      
-                }catch(Exception e){
-                    System.err.println("Got an exception!");
-                    System.err.println(e.getMessage());
-                }
-                
-                return "loginpage";
+
+		// Determine if this is a valid user login or not.
+		final User storedUser = service.getStoredUser(user);
+		if (storedUser != null) {
+			final String userType = storedUser.getUserType();
+			if ("Admin".equals(userType)) {
+                                final Map<String, String> userTypes = new LinkedHashMap<>();
+                                userTypes.put("Admin", "Admin");
+                                userTypes.put("Employee", "Employee");
+                                model.addAttribute("userTypes", userTypes);
+                                final Map<String, String> genders = new LinkedHashMap<>();
+                                genders.put("Male", "Male");
+                                genders.put("Female", "Female");
+                                model.addAttribute("genders", genders);
+				return "new";
+			} else if ("Customer".equals(userType)) {
+				return "hellouser";
+			}
+		} else {
+			System.err.println("Invalid login with username/password combination: \"" + user.getEmailAddress()
+					+ "\" and \"" + user.getPassword() + "\"");
+		}
+		// Indicate to the user that they have an invalid username/password
+		// combination.
+		result.reject("loginPageForm", "Invalid Username and/or Password.");
+		return "loginpage";
 	}
+        
+        @InitBinder
+        public void initBinder(WebDataBinder binder) {
+            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+            sdf.setLenient(true);
+            binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+            System.out.println(sdf + "1");
+        }
 }
-/*
-yM/in8qIJQmv09VNYShNAQ==
-OLxktJR72A2Lg58HYtXqYQ==
-*/

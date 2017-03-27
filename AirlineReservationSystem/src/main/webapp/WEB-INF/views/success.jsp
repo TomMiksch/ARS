@@ -8,10 +8,11 @@
 <title>Registration Confirmation Page</title>
 </head>
 <body>
-	message: ${success}
+	<h2>Registration Successful</h2>
+	Thank you, ${firstName} for registering an account with Iowa Air!
 	<br />
-	<br /> Go back to
-	<a href="<c:url value='/list' />">List of All Users</a>
+	<br /> Log in with your new account
+	<a href="<c:url value='/loginpage' />">here</a>
 
 </body>
 
