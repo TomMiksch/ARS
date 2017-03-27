@@ -36,6 +36,7 @@ public final class User {
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
         
+        @Size(min = 1, max = 10)
         @Column(name = "DOB", nullable = false)
         private String dob;
         
@@ -94,11 +95,11 @@ public final class User {
 		this.password = password;
 	}
         
-        public String getDOB() {
+        public String getDob(){
             return dob;
         }
         
-        public void setDOB(final String dob) {
+        public void setDob(final String dob){
             this.dob = dob;
         }
         

@@ -27,7 +27,7 @@ Setting up the environment:
     ALTER TABLE user
     ADD COLUMN dob VARCHAR(10) NOT NULL,
     ADD COLUMN gender VARCHAR(6) NOT NULL,
-    ADD COLUMN phone_number INT NOT NULL;
+    ADD COLUMN phone_number BIGINT NOT NULL;
 ****                            
 5. Create user 'myuser' with password 'mypasswd'
     - CREATE USER 'myuser'@'localhost' IDENTIFIED BY 'mypasswd';
