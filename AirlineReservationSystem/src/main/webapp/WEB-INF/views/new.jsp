@@ -42,7 +42,7 @@
 			</tr>
 
 			<tr>
-				<td><label for="emailAddress">Email Address </label></td>
+				<td><label for="emailAddress">Email Address: </label></td>
 				<td><form:input path="emailAddress" id="emailAddress" /></td>
 				<td><form:errors path="emailAddress" cssClass="error" /></td>
 			</tr>
