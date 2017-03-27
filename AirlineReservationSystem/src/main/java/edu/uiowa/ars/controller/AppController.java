@@ -42,6 +42,10 @@ public final class AppController {
 	public String registerGet(final ModelMap model) {
 		final User user = new User();
 		model.addAttribute("user", user);
+                final Map<String, String> genders = new LinkedHashMap<>();
+		genders.put("Male", "Male");
+		genders.put("Female", "Female");
+		model.addAttribute("genders", genders);
 		return "register";
 	}
 
@@ -62,6 +66,10 @@ public final class AppController {
 	public String registerPost(@Valid final User user, final BindingResult result, final ModelMap model) {
 
 		if (result.hasErrors()) {
+                        final Map<String, String> genders = new LinkedHashMap<>();
+                        genders.put("Male", "Male");
+                        genders.put("Female", "Female");
+                        model.addAttribute("genders", genders);
 			return "register";
 		}
 
