@@ -2,6 +2,7 @@ package edu.uiowa.ars.service;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +23,26 @@ public final class UserServiceImpl implements UserService {
 	public User findById(final int id) {
 		return dao.findById(id);
 	}
-        @Override
+
+	@Override
 	public void saveUser(final User user) {
 		byte[] tempPass = new byte[16];
 		final Random random = new Random();
 		random.nextBytes(tempPass);
-                String tempPassword = new String(Base64.getEncoder().encode(tempPass));
-		// Encryption with md5 
-		user.setPassword(SystemSupport.md5(tempPassword)); 
+		String tempPassword = new String(Base64.getEncoder().encode(tempPass));
+		// Encryption with md5
+		user.setPassword(SystemSupport.md5(tempPassword));
 		dao.saveUser(user);
 
 		// If we correctly entered the user in the database, then send them
 		// an email.
-		SystemSupport.sendEmail(user.getEmailAddress(), "Test Subject", "Hello " + user.getFirstName() + ",<br>"
-				+ "Thank you for registering for an Iowa Air online account! We are pleased to have your business. "
-				+ "Please login to your Iowa Air account using the credentials listed below. You may update your password after login.<br><br>"
-				+ "Username: " + user.getEmailAddress() + "<br>"
-				+ "Password: " + tempPassword + "<br><br>Sincerely,<br>Iowa Air", null, null);
+		SystemSupport.sendEmail(user.getEmailAddress(), "Test Subject",
+				"Hello " + user.getFirstName() + ",<br>"
+						+ "Thank you for registering for an Iowa Air online account! We are pleased to have your business. "
+						+ "Please login to your Iowa Air account using the credentials listed below. You may update your password after login.<br><br>"
+						+ "Username: " + user.getEmailAddress() + "<br>" + "Password: " + tempPassword
+						+ "<br><br>Sincerely,<br>Iowa Air",
+				null, null);
 	}
 
 	/*
@@ -64,5 +68,19 @@ public final class UserServiceImpl implements UserService {
 
 	public void deleteUserById(final String id) {
 		dao.deleteUserById(id);
+	}
+
+	public User getStoredUser(final User enteredUser) {
+		final String userName = enteredUser.getEmailAddress();
+		final Optional<User> existingUserOpt = findAllUsers().stream()
+				.filter(currentUser -> currentUser.getEmailAddress().equalsIgnoreCase(userName)).findAny();
+		if (existingUserOpt.isPresent()) {
+			final User existingUser = existingUserOpt.get();
+			final boolean result = existingUser.getPassword().equals(SystemSupport.md5(enteredUser.getPassword()));
+			if (result) {
+				return existingUser;
+			}
+		}
+		return null;
 	}
 }

@@ -27,7 +27,6 @@ public final class User {
 	@Column(name = "LAST_NAME", nullable = false)
 	private String lastName;
 
-	@Size(min = 3, max = 50)
 	@Column(name = "EMAIL", nullable = false)
 	private String emailAddress;
 	

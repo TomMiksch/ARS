@@ -15,4 +15,6 @@ public interface UserService {
 	List<User> findAllUsers();
 
 	void deleteUserById(String id);
+
+	User getStoredUser(final User enteredUser);
 }
