@@ -36,9 +36,8 @@ public final class User {
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
         
-       /*
         @Column(name = "DOB", nullable = false)
-        private Date dob;*/
+        private String dob;
         
         @Column(name = "GENDER", nullable = false)
         private String gender;
@@ -95,13 +94,13 @@ public final class User {
 		this.password = password;
 	}
         
-       /* public Date getDOB() {
+        public String getDOB() {
             return dob;
         }
         
-        public void setDOB(final Date dob) {
+        public void setDOB(final String dob) {
             this.dob = dob;
-        }*/
+        }
         
         public String getGender() {
             return gender;

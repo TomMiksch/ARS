@@ -48,16 +48,16 @@
 			</tr>
                         
                         <tr>
+				<td><label for="dob">DOB: </label></td>
+				<td><form:input path="dob" id="dob" /></td>
+				<td><form:errors path="dob" cssClass="error" /></td>
+			</tr>
+                        
+                        <tr>
 				<td><label for="gender">Gender: </label></td>
 				<td><form:select path="gender" items="${genders}"/></td>
 			</tr>
                         
-                        <%--<tr>
-				<td><label for="dob">DOB: </label></td>
-				<td><form:date path="dob" id="dob" /></td>
-				<td><form:errors path="dob" cssClass="error" /></td>
-			</tr>--%>
-
 			<tr>
 				<td><label for="phoneNumber">Phone Number: </label></td>
 				<td><form:input path="phoneNumber" id="phoneNumber" /></td>

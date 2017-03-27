@@ -153,6 +153,14 @@ public final class AppController {
 
 		// TODO should also check here if entered email is valid.
 		if (result.hasErrors()) {
+                        final Map<String, String> userTypes = new LinkedHashMap<>();
+                        userTypes.put("Admin", "Admin");
+                        userTypes.put("Employee", "Employee");
+                        model.addAttribute("userTypes", userTypes);
+                        final Map<String, String> genders = new LinkedHashMap<>();
+                        genders.put("Male", "Male");
+                        genders.put("Female", "Female");
+                        model.addAttribute("genders", genders);
 			return "registration";
 		}
 
