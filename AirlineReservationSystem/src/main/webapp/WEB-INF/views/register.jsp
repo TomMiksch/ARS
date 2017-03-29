@@ -48,7 +48,11 @@
                         
                         <tr>
 				<td><label for="gender">Gender: </label></td>
-				<td><form:select path="gender" items="${genders}"/></td>
+                                <td><select name = "Gender">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </td>
 			</tr>
                         
 			<tr>

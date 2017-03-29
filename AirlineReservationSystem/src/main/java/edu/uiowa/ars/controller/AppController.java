@@ -50,10 +50,6 @@ public final class AppController {
 	public String registerGet(final ModelMap model) {
 		final User user = new User();
 		model.addAttribute("user", user);
-                final Map<String, String> genders = new LinkedHashMap<>();
-		genders.put("Male", "Male");
-		genders.put("Female", "Female");
-		model.addAttribute("genders", genders);
 		return "register";
 	}
 
@@ -73,10 +69,6 @@ public final class AppController {
 	@RequestMapping(value = { "/register" }, method = RequestMethod.POST)
 	public String registerPost(@Valid final User user, final BindingResult result, final ModelMap model) {
 		if (result.hasErrors()) {
-                        final Map<String, String> genders = new LinkedHashMap<>();
-                        genders.put("Male", "Male");
-                        genders.put("Female", "Female");
-                        model.addAttribute("genders", genders);
 			return "register";
 		}
 
@@ -125,15 +117,6 @@ public final class AppController {
 	public String newUser(final ModelMap model) {
 		final User user = new User();
 		model.addAttribute("user", user);
-		model.addAttribute("edit", false);
-		final Map<String, String> userTypes = new LinkedHashMap<>();
-		userTypes.put("Admin", "Admin");
-		userTypes.put("Employee", "Employee");
-		model.addAttribute("userTypes", userTypes);
-                final Map<String, String> genders = new LinkedHashMap<>();
-		genders.put("Male", "Male");
-		genders.put("Female", "Female");
-		model.addAttribute("genders", genders);
 		return "new";
 	}
 
@@ -144,14 +127,6 @@ public final class AppController {
 	@RequestMapping(value = { "/new" }, method = RequestMethod.POST)
 	public String saveUser(@Valid final User user, final BindingResult result, final ModelMap model) {
 		if (result.hasErrors()) {
-                        final Map<String, String> userTypes = new LinkedHashMap<>();
-                        userTypes.put("Admin", "Admin");
-                        userTypes.put("Employee", "Employee");
-                        model.addAttribute("userTypes", userTypes);
-                        final Map<String, String> genders = new LinkedHashMap<>();
-                        genders.put("Male", "Male");
-                        genders.put("Female", "Female");
-                        model.addAttribute("genders", genders);
 			return "new";
 		}
 
@@ -200,14 +175,6 @@ public final class AppController {
 		if (storedUser != null) {
 			final String userType = storedUser.getUserType();
 			if ("Admin".equals(userType)) {
-                                final Map<String, String> userTypes = new LinkedHashMap<>();
-                                userTypes.put("Admin", "Admin");
-                                userTypes.put("Employee", "Employee");
-                                model.addAttribute("userTypes", userTypes);
-                                final Map<String, String> genders = new LinkedHashMap<>();
-                                genders.put("Male", "Male");
-                                genders.put("Female", "Female");
-                                model.addAttribute("genders", genders);
 				return "new";
 			} else if ("Customer".equals(userType)) {
 				return "hellouser";

@@ -26,7 +26,11 @@
 		<table>
 			<tr>
 				<td><label for="userType">User Type: </label></td>
-				<td><form:select path="userType" items="${userTypes}"/></td>
+                                <td><select name = "userType">
+                                        <option value="Admin">Admin</option>
+                                        <option value="Employee">Employee</option>
+                                    </select>
+                                </td>
 			</tr>
 		
 			<tr>
@@ -62,7 +66,11 @@
                         
                         <tr>
 				<td><label for="gender">Gender: </label></td>
-				<td><form:select path="gender" items="${genders}"/></td>
+                                <td><select name = "gender">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </td>
 			</tr>
                         
 			<tr>
