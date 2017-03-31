@@ -52,12 +52,48 @@
 			</tr>
                         
                         <tr>
+				<td><label for="dobY">Birth Year: </label></td>
+                                <td><select id="year" name="dobY">
+                                        <script>
+                                            var myDate = new Date();
+                                            var year = myDate.getFullYear();
+                                            for(var i = year - 18; i > year-100; i--){
+                                                    document.write('<option value="'+i+'">'+i+'</option>');
+                                            }
+                                        </script>
+                                    </select></td>
+			</tr>
+                        
+                        <tr>
+				<td><label for="dobM">Birth Month: </label></td>
+                                <td><select id="month" name="dobM">
+                                        <script>
+                                            for(var i = 1; i <= 12; i++){
+                                                document.write('<option value="'+i+'">'+i+'</option>');
+                                            }
+                                        </script>
+                                    </select></td>
+			</tr>
+                        
+                        <tr>
+				<td><label for="dobD">Birth Day: </label></td>
+                                <td><select id="day" name="dobD">
+                                        <script>
+                                            for(var i = 1; i <= 31; i++){
+                                                document.write('<option value="'+i+'">'+i+'</option>');
+                                            }
+                                        </script>
+                                    </select></td>
+			</tr>
+                        
+                        <%--<tr>
 				<td><label for="dob">DOB: </label></td>
 				<td><form:input path="dob" id="dob" /></td>
 				<td><form:errors path="dob" cssClass="error" /></td>
 			</tr>
                         
-                        <%--<tr>
+                        This is the shitty one
+                        <tr>
 				<td><label for="dob">DOB: </label></td>
                                 <fmt:formatDate value="" pattern="yyyy-MM-dd"/>
                                 <td><form:input path="dob" id="dob" /></td>
@@ -94,5 +130,8 @@
 	<br />
 	<br /> Go back to
 	<a href="<c:url value='/list' />">List of All Users</a>
+            
 </body>
 </html>
+
+

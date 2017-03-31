@@ -37,14 +37,17 @@ public final class User {
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
         
-        @Size(min = 10, max = 10)
-        @Column(name = "DOB", nullable = false)
-        private String dob;
+        @Size(min = 4, max = 4)
+        @Column(name = "DOBY", nullable = false)
+        private String dobY;
         
-        /*@Size(min = 10, max = 10)
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
-        @Column(name = "DOB")
-        private Date dob;*/
+        @Size(min = 1, max = 2)
+        @Column(name = "DOBM", nullable = false)
+        private String dobM;
+        
+        @Size(min = 1, max = 2)
+        @Column(name = "DOBD", nullable = false)
+        private String dobD;
         
         @Column(name = "GENDER", nullable = false)
         private String gender;
@@ -101,21 +104,29 @@ public final class User {
 		this.password = password;
 	}
         
-        public String getDob(){
-            return dob;
+        public String getDobY(){
+            return dobY;
         }
         
-        public void setDob(final String dob){
-            this.dob = dob;
+        public void setDobY(final String dobY){
+            this.dobY = dobY;
         }
         
-        /*public Date getDob(){
-            return dob;
+        public String getDobM(){
+            return dobM;
         }
         
-        public void setDob(final Date dob){
-            this.dob = dob;
-        }*/
+        public void setDobM(final String dobM){
+            this.dobM = dobM;
+        }
+        
+        public String getDobD(){
+            return dobD;
+        }
+        
+        public void setDobD(final String dobD){
+            this.dobD = dobD;
+        }
         
         public String getGender() {
             return gender;
