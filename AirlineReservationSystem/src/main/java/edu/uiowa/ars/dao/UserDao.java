@@ -1,16 +1,8 @@
 package edu.uiowa.ars.dao;
 
-import java.util.List;
-
 import edu.uiowa.ars.model.User;
 
-public interface UserDao {
+public interface UserDao extends EntityDao<User> {
 
 	User findById(int id);
-
-	void saveUser(User user);
-
-	List<User> findAllUsers();
-
-	void deleteUserById(String id);
 }

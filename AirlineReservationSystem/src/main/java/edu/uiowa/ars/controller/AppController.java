@@ -1,27 +1,20 @@
 package edu.uiowa.ars.controller;
 
-import edu.uiowa.ars.SystemSupport;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import java.sql.*;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import edu.uiowa.ars.model.User;
 import edu.uiowa.ars.service.UserService;
@@ -73,7 +66,7 @@ public final class AppController {
 		}
 
 		// Check to see if any other users have the same email address.
-		final boolean duplicateEmail = service.findAllUsers().stream()
+		final boolean duplicateEmail = service.findAllEntities().stream()
 				.anyMatch(currentUser -> currentUser.getEmailAddress().equalsIgnoreCase(user.getEmailAddress()));
 		if (duplicateEmail) {
 			result.rejectValue("emailAddress", DEFAULT_MESSAGE_CODE, "Email address already in use.");
@@ -81,7 +74,7 @@ public final class AppController {
 		}
 		// This user is a customer.
 		user.setUserType("Customer");
-		service.saveUser(user);
+		service.saveEntity(user);
 		model.addAttribute("firstName", user.getFirstName());
 		return "success";
 	}
@@ -94,20 +87,9 @@ public final class AppController {
 	 *            The map of data to be passed into the login.jsp.
 	 * @return login.jsp
 	 */
-	@RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
-	public String loginGet(final ModelMap model) {
-		return "login";
-	}
-
-	/*
-	 * This method will list all existing users.
-	 */
-	@RequestMapping(value = { "/list" }, method = RequestMethod.GET)
-	public String listUsers(final ModelMap model) {
-
-		final List<User> users = service.findAllUsers();
-		model.addAttribute("users", users);
-		return "allusers";
+	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+	public String homeGet(final ModelMap model) {
+		return "home";
 	}
 
 	/*
@@ -131,26 +113,16 @@ public final class AppController {
 		}
 
 		// Check to see if any other users have the same email address.
-		final boolean duplicateEmail = service.findAllUsers().stream()
+		final boolean duplicateEmail = service.findAllEntities().stream()
 				.anyMatch(currentUser -> currentUser.getEmailAddress().equalsIgnoreCase(user.getEmailAddress()));
 		if (duplicateEmail) {
 			result.rejectValue("emailAddress", DEFAULT_MESSAGE_CODE, "Email address already in use.");
 			return "new";
 		}
 
-		service.saveUser(user);
+		service.saveEntity(user);
 		model.addAttribute("firstName", user.getFirstName());
 		return "success";
-	}
-
-	/*
-	 * This method will delete an user by it's unique ID value from the
-	 * database.
-	 */
-	@RequestMapping(value = { "/delete-{id}-user" }, method = RequestMethod.GET)
-	public String deleteUser(@PathVariable final String id) {
-		service.deleteUserById(id);
-		return "redirect:/list";
 	}
 
 	/*
@@ -171,13 +143,13 @@ public final class AppController {
 		}
 
 		// Determine if this is a valid user login or not.
-		final User storedUser = service.getStoredUser(user);
+		final User storedUser = service.getStoredEntity(user);
 		if (storedUser != null) {
 			final String userType = storedUser.getUserType();
 			if ("Admin".equals(userType)) {
-				return "new";
+				return "redirect:/admin/home";
 			} else if ("Customer".equals(userType)) {
-				return "hellouser";
+				return "redirect:/hellouser";
 			}
 		} else {
 			System.err.println("Invalid login with username/password combination: \"" + user.getEmailAddress()
@@ -188,11 +160,11 @@ public final class AppController {
 		result.reject("loginPageForm", "Invalid Username and/or Password.");
 		return "loginpage";
 	}
-        
-        @InitBinder
-        public void initBinder(WebDataBinder binder) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            sdf.setLenient(true);
-            binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-        }
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sdf.setLenient(true);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+	}
 }

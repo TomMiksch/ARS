@@ -37,11 +37,11 @@ tr:first-child {
                                 <td>${user.dob}</td>
                                 <td>${user.gender}</td>
                                 <td>${user.phoneNumber}</td>
-				<td><a href="<c:url value='/delete-${user.id}-user' />">delete</a></td>
+				<td><a href="<c:url value='delete-${user.id}-user' />">delete</a></td>
 			</tr>
 		</c:forEach>
 	</table>
 	<br />
-	<a href="<c:url value='/new' />">Add New User</a>
+	<a href="<c:url value='addUser' />">Add User</a>
 </body>
 </html>

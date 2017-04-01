@@ -17,26 +17,25 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import java.security.MessageDigest;
 import javax.xml.bind.DatatypeConverter;
 
 public final class SystemSupport {
-    
-        public static String md5(String str) {
-            String result = null;
-            try {
-                MessageDigest digest = MessageDigest.getInstance("MD5");
-                byte[] hash = digest.digest(str.getBytes("UTF-8"));
-                return bytesToHex(hash);
-            } catch(Exception ex) {
-                ex.printStackTrace();
-            }
-            return result;
-        }
 
-         private static String bytesToHex(byte[] hash) {
-            return DatatypeConverter.printHexBinary(hash);
-        }
+	public static String md5(final String str) {
+		String result = null;
+		try {
+			MessageDigest digest = MessageDigest.getInstance("MD5");
+			byte[] hash = digest.digest(str.getBytes("UTF-8"));
+			return bytesToHex(hash);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return result;
+	}
+
+	private static String bytesToHex(final byte[] hash) {
+		return DatatypeConverter.printHexBinary(hash);
+	}
 
 	public static void sendEmail(final String address, final String subject, final String emailContent,
 			final File attachment, final String attachmentName) {

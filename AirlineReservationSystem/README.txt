@@ -6,10 +6,13 @@ Setting up the environment:
    (a) If you setup a user account while installing MySQL, go to the command line like so
        - mysql -u<your_user> -p
        - where '-p' means "enter user password after command to login"
+
 2. Create the 'websystique' database on the mysql command line
     - CREATE DATABASE websystique;
+
 3. Switch to the websystique database as the active database for the current session
     - USE websystique;
+
 4. Add a table called 'USER' to the websystique database
     "
     CREATE TABLE USER(
@@ -19,19 +22,30 @@ Setting up the environment:
         last_name VARCHAR(20) NOT NULL,
         email VARCHAR(50) NOT NULL,
         password VARCHAR(40) NOT NULL,
+        dob VARCHAR(10) NOT NULL,
+        gender VARCHAR(6) NOT NULL,
+        phone_number BIGINT NOT NULL,
+        PRIMARY KEY (id)
+    );
+    "
+    
+5. Add a table called 'AIRCRAFT' to the websystique database
+    "
+    CREATE TABLE AIRCRAFT(
+        id INT NOT NULL auto_increment,
+        symbol VARCHAR(10) NOT NULL,
+        aircraft_type VARCHAR(15) NOT NULL,
+        first_class_seats INT NOT NULL,
+        business_class_seats INT NOT NULL,
+        economy_class_seats INT NOT NULL,
         PRIMARY KEY (id)
     );
     "
 
-****To add the dob, gender, and phone_number columns****
-    ALTER TABLE user
-    ADD COLUMN dob VARCHAR(10) NOT NULL,
-    ADD COLUMN gender VARCHAR(6) NOT NULL,
-    ADD COLUMN phone_number BIGINT NOT NULL;
-****                            
-5. Create user 'myuser' with password 'mypasswd'
+6. Create user 'myuser' with password 'mypasswd'
     - CREATE USER 'myuser'@'localhost' IDENTIFIED BY 'mypasswd';
-6. Grant this user privileges on the current database
+
+7. Grant this user privileges on the current database
     - GRANT ALL ON websystique.* TO 'myuser'@'localhost';
 
 

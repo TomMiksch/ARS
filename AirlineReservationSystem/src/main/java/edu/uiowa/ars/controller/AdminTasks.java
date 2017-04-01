@@ -1,0 +1,136 @@
+package edu.uiowa.ars.controller;
+
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import edu.uiowa.ars.model.Aircraft;
+import edu.uiowa.ars.model.Aircraft.AircraftTypes;
+import edu.uiowa.ars.model.User;
+import edu.uiowa.ars.model.User.Genders;
+import edu.uiowa.ars.model.User.UserTypes;
+import edu.uiowa.ars.service.AircraftService;
+import edu.uiowa.ars.service.UserService;
+
+@Controller
+@RequestMapping("/admin")
+public final class AdminTasks {
+
+	@Autowired
+	AircraftService aircraftService;
+
+	@Autowired
+	UserService userService;
+
+	private static final String DEFAULT_MESSAGE_CODE = "SOME_DEFAULT";
+
+	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+	public String homeGet(final ModelMap model) {
+		return "admin/home";
+	}
+
+	@RequestMapping(value = { "/userList" }, method = RequestMethod.GET)
+	public String userListGet(final ModelMap model) {
+		final List<User> users = userService.findAllEntities();
+		model.addAttribute("users", users);
+		return "admin/userList";
+	}
+
+	@RequestMapping(value = { "/delete-{id}-user" }, method = RequestMethod.GET)
+	public String deleteUserGet(@PathVariable final String id) {
+		userService.deleteEntityById(id);
+		return "redirect:/admin/userList";
+	}
+
+	@RequestMapping(value = { "/addUser" }, method = RequestMethod.GET)
+	public String addUserGet(final ModelMap model) {
+		final User user = new User();
+		model.addAttribute("user", user);
+		final List<String> userTypes = UserTypes.getAllIdentifiers();
+		userTypes.remove(UserTypes.CUSOMTER.getIdentifier());
+		model.addAttribute("userTypes", userTypes);
+		model.addAttribute("genders", Genders.getAllIdentifiers());
+		return "admin/addUser";
+	}
+
+	@RequestMapping(value = { "/addUser" }, method = RequestMethod.POST)
+	public String addUserPost(@Valid final User user, final BindingResult result, final ModelMap model) {
+		if (result.hasErrors()) {
+			final List<String> userTypes = UserTypes.getAllIdentifiers();
+			userTypes.remove(UserTypes.CUSOMTER.getIdentifier());
+			model.addAttribute("userTypes", userTypes);
+			model.addAttribute("genders", Genders.getAllIdentifiers());
+			return "admin/addUser";
+		}
+
+		// Check to see if any other users have the same email address.
+		final boolean duplicateEmail = userService.findAllEntities().stream()
+				.anyMatch(currentUser -> userService.isEquivalentInDb(user, currentUser));
+		if (duplicateEmail) {
+			result.rejectValue("emailAddress", DEFAULT_MESSAGE_CODE, "Email address already in use.");
+			final List<String> userTypes = UserTypes.getAllIdentifiers();
+			userTypes.remove(UserTypes.CUSOMTER.getIdentifier());
+			model.addAttribute("userTypes", userTypes);
+			model.addAttribute("genders", Genders.getAllIdentifiers());
+			return "admin/addUser";
+		}
+
+		userService.saveEntity(user);
+		model.addAttribute("firstName", user.getFirstName());
+		return "redirect:/admin/userList";
+	}
+
+	@RequestMapping(value = { "/aircraftList" }, method = RequestMethod.GET)
+	public String aircraftListGet(final ModelMap model) {
+		final List<Aircraft> aircrafts = aircraftService.findAllEntities();
+		model.addAttribute("aircrafts", aircrafts);
+		return "admin/aircraftList";
+	}
+
+	@RequestMapping(value = { "/delete-{id}-aircraft" }, method = RequestMethod.GET)
+	public String deleteAircraftGet(@PathVariable final String id) {
+		aircraftService.deleteEntityById(id);
+		return "redirect:/admin/aircraftList";
+	}
+
+	@RequestMapping(value = { "/addAircraft" }, method = RequestMethod.GET)
+	public String addAircraftGet(final ModelMap model) {
+		final Aircraft aircraft = new Aircraft();
+		model.addAttribute("aircraft", aircraft);
+		model.addAttribute("aircraftTypes", AircraftTypes.getAllIdentifiers());
+		return "admin/addAircraft";
+	}
+
+	@RequestMapping(value = { "/addAircraft" }, method = RequestMethod.POST)
+	public String addAircraftPost(@Valid final Aircraft aircraft, final BindingResult result, final ModelMap model) {
+		if (result.hasErrors()) {
+			model.addAttribute("aircraftTypes", AircraftTypes.getAllIdentifiers());
+			return "admin/addAircraft";
+		}
+
+		// Check to see if any other aircraft have the same ID.
+		final boolean duplicateId = aircraftService.findAllEntities().stream()
+				.anyMatch(currentAircraft -> aircraftService.isEquivalentInDb(aircraft, currentAircraft));
+		if (duplicateId) {
+			result.rejectValue("symbol", DEFAULT_MESSAGE_CODE, "Aircraft symbol already in use.");
+			model.addAttribute("aircraftTypes", AircraftTypes.getAllIdentifiers());
+			return "admin/addAircraft";
+		}
+
+		aircraftService.saveEntity(aircraft);
+		return "redirect:/admin/aircraftList";
+	}
+
+	@RequestMapping(value = { "/addFlightRoute" }, method = RequestMethod.GET)
+	public String addFlightRouteGet(final ModelMap model) {
+		return "admin/addFlightRoute";
+	}
+}

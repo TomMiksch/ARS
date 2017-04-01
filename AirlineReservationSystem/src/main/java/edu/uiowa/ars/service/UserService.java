@@ -1,20 +1,6 @@
 package edu.uiowa.ars.service;
 
-import java.util.List;
-
 import edu.uiowa.ars.model.User;
 
-public interface UserService {
-
-	User findById(int id);
-
-	void saveUser(User user);
-
-	void updateUser(User user);
-
-	List<User> findAllUsers();
-
-	void deleteUserById(String id);
-
-	User getStoredUser(final User enteredUser);
+public interface UserService extends EntityManagementService<User> {
 }

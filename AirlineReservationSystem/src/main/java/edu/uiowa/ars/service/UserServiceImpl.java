@@ -25,14 +25,14 @@ public final class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void saveUser(final User user) {
+	public void saveEntity(final User user) {
 		byte[] tempPass = new byte[16];
 		final Random random = new Random();
 		random.nextBytes(tempPass);
 		String tempPassword = new String(Base64.getEncoder().encode(tempPass));
 		// Encryption with md5
 		user.setPassword(SystemSupport.md5(tempPassword));
-		dao.saveUser(user);
+		dao.saveEntity(user);
 
 		// If we correctly entered the user in the database, then send them
 		// an email.
@@ -51,7 +51,8 @@ public final class UserServiceImpl implements UserService {
 	 * proper values within transaction. It will be updated in db once
 	 * transaction ends.
 	 */
-	public void updateUser(final User user) {
+	@Override
+	public void updateEntity(final User user) {
 		final User entity = dao.findById(user.getId());
 		if (entity != null) {
 			entity.setUserType(user.getUserType());
@@ -62,25 +63,41 @@ public final class UserServiceImpl implements UserService {
 		}
 	}
 
-	public List<User> findAllUsers() {
-		return dao.findAllUsers();
+	@Override
+	public List<User> findAllEntities() {
+		return dao.findAllEntities();
 	}
 
-	public void deleteUserById(final String id) {
-		dao.deleteUserById(id);
+	@Override
+	public void deleteEntityById(final String id) {
+		dao.deleteEntityById(id);
 	}
 
-	public User getStoredUser(final User enteredUser) {
-		final String userName = enteredUser.getEmailAddress();
-		final Optional<User> existingUserOpt = findAllUsers().stream()
-				.filter(currentUser -> currentUser.getEmailAddress().equalsIgnoreCase(userName)).findAny();
-		if (existingUserOpt.isPresent()) {
-			final User existingUser = existingUserOpt.get();
-			final boolean result = existingUser.getPassword().equals(SystemSupport.md5(enteredUser.getPassword()));
-			if (result) {
-				return existingUser;
+	@Override
+	public boolean isEquivalentInDb(final User entered, final User db) {
+		final String enteredUsername = entered.getEmailAddress();
+		final String enteredPassword = entered.getPassword();
+
+		if ((enteredUsername != null) && (enteredPassword != null)) {
+			return enteredUsername.equals(db.getEmailAddress())
+					&& db.getPassword().equals(SystemSupport.md5(enteredPassword));
+		}
+		return false;
+	}
+
+	@Override
+	public User getStoredEntity(User enteredEntity) {
+		final List<User> allEntries = findAllEntities();
+		if ((allEntries == null) || (allEntries.isEmpty())) {
+			return null;
+		} else {
+			final Optional<User> result = allEntries.stream().filter(entry -> isEquivalentInDb(enteredEntity, entry))
+					.findAny();
+			if (result.isPresent()) {
+				return result.get();
+			} else {
+				return null;
 			}
 		}
-		return null;
 	}
 }

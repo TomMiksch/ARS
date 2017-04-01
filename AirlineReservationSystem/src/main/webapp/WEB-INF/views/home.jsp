@@ -7,7 +7,7 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login page</title>
+<title>Iowa Air</title>
 <style>
 .error {
 	color: #ff0000;
@@ -23,7 +23,7 @@ body {
 <!-- The begining of what Peter added for our login page -->
 
 <article id="login">
-	<h2 class="left gamma">ARS Log in</h2>
+	<h2 class="left gamma">Home</h2>
 
 <!--
     <form id="loginForm" method="post" action="<c:url value='/new' />">

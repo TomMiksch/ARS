@@ -1,6 +1,8 @@
 package edu.uiowa.ars.model;
 
-import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,16 +12,53 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 @Entity
 @Table(name = "USER")
 public final class User {
 
+	public enum UserTypes {
+		ADMINISTRATOR("Admin"),
+		EMPLOYEE("Employee"),
+		CUSOMTER("Customer");
+
+		private final String identifier;
+
+		UserTypes(final String identifier) {
+			this.identifier = identifier;
+		}
+
+		public String getIdentifier() {
+			return this.identifier;
+		}
+
+		public static List<String> getAllIdentifiers() {
+			return Stream.of(UserTypes.values()).map(UserTypes::getIdentifier).collect(Collectors.toList());
+		}
+	}
+
+	public enum Genders {
+		MALE("Male"),
+		FEMALE("Female");
+
+		private final String identifier;
+
+		Genders(final String identifier) {
+			this.identifier = identifier;
+		}
+
+		public String getIdentifier() {
+			return this.identifier;
+		}
+
+		public static List<String> getAllIdentifiers() {
+			return Stream.of(Genders.values()).map(Genders::getIdentifier).collect(Collectors.toList());
+		}
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name = "USER_TYPE", nullable = false)
 	private String userType;
 
@@ -33,25 +72,28 @@ public final class User {
 
 	@Column(name = "EMAIL", nullable = false)
 	private String emailAddress;
-	
+
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
-        
-        @Size(min = 10, max = 10)
-        @Column(name = "DOB", nullable = false)
-        private String dob;
-        
-        /*@Size(min = 10, max = 10)
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
-        @Column(name = "DOB")
-        private Date dob;*/
-        
-        @Column(name = "GENDER", nullable = false)
-        private String gender;
-        
-        @Size(min = 10, max = 10)
-        @Column(name = "PHONE_NUMBER", nullable = false)
-        private String phoneNumber;
+
+	@Size(min = 10, max = 10)
+	@Column(name = "DOB", nullable = false)
+	private String dob;
+
+	/*
+	 * @Size(min = 10, max = 10)
+	 * 
+	 * @DateTimeFormat(pattern = "yyyy-MM-dd")
+	 * 
+	 * @Column(name = "DOB") private Date dob;
+	 */
+
+	@Column(name = "GENDER", nullable = false)
+	private String gender;
+
+	@Size(min = 10, max = 10)
+	@Column(name = "PHONE_NUMBER", nullable = false)
+	private String phoneNumber;
 
 	public int getId() {
 		return id;
@@ -60,7 +102,7 @@ public final class User {
 	public void setId(final int id) {
 		this.id = id;
 	}
-	
+
 	public String getUserType() {
 		return userType;
 	}
@@ -92,7 +134,7 @@ public final class User {
 	public void setEmailAddress(final String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -100,38 +142,36 @@ public final class User {
 	public void setPassword(final String password) {
 		this.password = password;
 	}
-        
-        public String getDob(){
-            return dob;
-        }
-        
-        public void setDob(final String dob){
-            this.dob = dob;
-        }
-        
-        /*public Date getDob(){
-            return dob;
-        }
-        
-        public void setDob(final Date dob){
-            this.dob = dob;
-        }*/
-        
-        public String getGender() {
-            return gender;
-        }
-        
-        public void setGender(final String gender) {
-            this.gender = gender;
-        }
-        
-        public String getPhoneNumber() {
-            return phoneNumber;
-        }
-        
-        public void setPhoneNumber(final String phoneNumber) {
-            this.phoneNumber = phoneNumber;
-        }
+
+	public String getDob() {
+		return dob;
+	}
+
+	public void setDob(final String dob) {
+		this.dob = dob;
+	}
+
+	/*
+	 * public Date getDob(){ return dob; }
+	 * 
+	 * public void setDob(final Date dob){ this.dob = dob; }
+	 */
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(final String gender) {
+		this.gender = gender;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(final String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
 	public String getFullName() {
 		return firstName + " " + lastName;
