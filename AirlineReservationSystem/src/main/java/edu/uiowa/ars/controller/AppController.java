@@ -1,7 +1,14 @@
 package edu.uiowa.ars.controller;
 
+import edu.uiowa.ars.SystemSupport;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import java.sql.*;
 
 import javax.validation.Valid;
 
@@ -15,6 +22,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import edu.uiowa.ars.model.User;
 import edu.uiowa.ars.service.UserService;
@@ -151,9 +159,12 @@ public final class AppController {
 			} else if ("Customer".equals(userType)) {
 				return "redirect:/hellouser";
 			}
+                        
+                // Changed user.getPassword() to something else since 
+                // user.GetPassword will return a hashed password
 		} else {
 			System.err.println("Invalid login with username/password combination: \"" + user.getEmailAddress()
-					+ "\" and \"" + user.getPassword() + "\"");
+				+ "\"");
 		}
 		// Indicate to the user that they have an invalid username/password
 		// combination.
@@ -161,6 +172,54 @@ public final class AppController {
 		return "loginpage";
 	}
 
+        
+        /* 
+         * Reset password
+         * User user.phoneNumber as temporary password holder
+         * as can be seen from reset.jsp file
+        */
+        
+        @RequestMapping(value = { "/reset" }, method = RequestMethod.GET)
+	public String resetPasswd(final ModelMap model) {
+		final User user = new User();
+		model.addAttribute("user", user);
+		return "reset";
+	}
+        
+        @RequestMapping(value = { "/reset" }, method = RequestMethod.POST)
+	public String resetPw(@Valid final User user, final BindingResult result, final ModelMap model) {
+
+		if (result.hasErrors()) {
+			return "loginpage";
+		}
+                
+               try{
+                    String myURL = "jdbc:mysql://localhost/websystique";
+                    Connection conn = DriverManager.getConnection(myURL,"myuser", "mypasswd");
+                    String query = "SELECT * FROM user WHERE email = ?";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setString(1, user.getEmailAddress());         
+                    ResultSet rs;                    
+                  
+                    rs = ps.executeQuery();
+                    while ( rs.next() ) {
+                        
+                        String userPass = SystemSupport.md5(rs.getString("password"));
+                        String userNewPass = SystemSupport.md5(rs.getString("phoneNumber"));
+                        if (userPass.equals(user.getPassword())){
+                            user.setPassword(userNewPass);
+                            return "loginpage";
+                        }
+                    }
+                conn.close();      
+                }catch(Exception e){
+                    System.err.println("Got an exception!");
+                    System.err.println(e.getMessage());
+                }
+                
+                return "reset";
+	}
+        
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
