@@ -14,15 +14,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import edu.uiowa.ars.model.Aircraft;
 import edu.uiowa.ars.model.Aircraft.AircraftTypes;
+import edu.uiowa.ars.model.FlightRoute;
 import edu.uiowa.ars.model.User;
 import edu.uiowa.ars.model.User.Genders;
 import edu.uiowa.ars.model.User.UserTypes;
 import edu.uiowa.ars.service.AircraftService;
+import edu.uiowa.ars.service.FlightRouteService;
 import edu.uiowa.ars.service.UserService;
 
 @Controller
 @RequestMapping("/admin")
 public final class AdminTasks {
+
+	@Autowired
+	FlightRouteService flightRouteService;
 
 	@Autowired
 	AircraftService aircraftService;
@@ -129,8 +134,37 @@ public final class AdminTasks {
 		return "redirect:/admin/aircraftList";
 	}
 
+	@RequestMapping(value = { "/flightRouteList" }, method = RequestMethod.GET)
+	public String flightRouteListGet(final ModelMap model) {
+		final List<FlightRoute> flightRoutes = flightRouteService.findAllEntities();
+		model.addAttribute("flightRoutes", flightRoutes);
+		return "admin/flightRouteList";
+	}
+
+	@RequestMapping(value = { "/delete-{id}-flightRoute" }, method = RequestMethod.GET)
+	public String deleteFlightRouteGet(@PathVariable final String id) {
+		flightRouteService.deleteEntityById(id);
+		return "redirect:/admin/flightRouteList";
+	}
+
 	@RequestMapping(value = { "/addFlightRoute" }, method = RequestMethod.GET)
 	public String addFlightRouteGet(final ModelMap model) {
+		final FlightRoute flightRoute = new FlightRoute();
+		model.addAttribute("flightRoute", flightRoute);
+		model.addAttribute("aircrafts", aircraftService.getAllSymbols());
 		return "admin/addFlightRoute";
+	}
+
+	@RequestMapping(value = { "/addFlightRoute" }, method = RequestMethod.POST)
+	public String addFlightRoutePost(@Valid final FlightRoute flightRoute, final BindingResult result,
+			final ModelMap model) {
+		if (result.hasErrors()) {
+			model.addAttribute("aircrafts", aircraftService.getAllSymbols());
+			return "admin/addFlightRoute";
+		}
+
+		// TODO how should duplicates be checked for?
+		flightRouteService.saveEntity(flightRoute);
+		return "redirect:/admin/addFlightRoute";
 	}
 }

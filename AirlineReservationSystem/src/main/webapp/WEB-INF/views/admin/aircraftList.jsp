@@ -38,5 +38,7 @@ tr:first-child {
 	</table>
 	<br />
 	<a href="<c:url value='addAircraft' />">Add Aircraft</a>
+	<br /> Go back to
+	<a href="<c:url value='home' />">home</a>
 </body>
 </html>

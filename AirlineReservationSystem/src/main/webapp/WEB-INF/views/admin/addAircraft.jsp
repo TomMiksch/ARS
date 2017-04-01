@@ -56,5 +56,7 @@
 		</table>
 	</form:form>
 	<br />
+	<br /> Go back to
+	<a href="<c:url value='home' />">home</a>
 </body>
 </html>

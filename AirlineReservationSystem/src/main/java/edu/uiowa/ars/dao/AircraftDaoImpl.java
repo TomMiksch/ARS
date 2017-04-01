@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import edu.uiowa.ars.model.Aircraft;
 
 @Repository("aircraftDao")
-public final class AircraftDaoImpl extends AbstractDao<String, Aircraft> implements AircraftDao {
+public final class AircraftDaoImpl extends AbstractDao<Integer, Aircraft> implements AircraftDao {
 
 	public void saveEntity(final Aircraft user) {
 		persist(user);

@@ -2,6 +2,7 @@ package edu.uiowa.ars.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,5 +55,10 @@ public final class AircraftServiceImpl implements AircraftService {
 				return null;
 			}
 		}
+	}
+
+	@Override
+	public List<String> getAllSymbols() {
+		return findAllEntities().stream().map(Aircraft::getSymbol).collect(Collectors.toList());
 	}
 }

@@ -24,11 +24,11 @@ tr:first-child {
 			<td>First Name</td>
 			<td>Last Name</td>
 			<td>Email Address</td>
-                        <td>Birth Year</td>
-                        <td>Birth Month</td>
-                        <td>Birth Day</td>
-                        <td>Gender</td>
-                        <td>Phone Number</td>
+			<td>Birth Year</td>
+			<td>Birth Month</td>
+			<td>Birth Day</td>
+			<td>Gender</td>
+			<td>Phone Number</td>
 		</tr>
 		<c:forEach items="${users}" var="user">
 			<tr>
@@ -36,16 +36,18 @@ tr:first-child {
 				<td>${user.firstName}</td>
 				<td>${user.lastName}</td>
 				<td>${user.emailAddress}</td>
-                                <td>${user.dobY}</td>
-                                <td>${user.dobM}</td>
-                                <td>${user.dobD}</td>
-                                <td>${user.gender}</td>
-                                <td>${user.phoneNumber}</td>
+				<td>${user.dobY}</td>
+				<td>${user.dobM}</td>
+				<td>${user.dobD}</td>
+				<td>${user.gender}</td>
+				<td>${user.phoneNumber}</td>
 				<td><a href="<c:url value='delete-${user.id}-user' />">delete</a></td>
 			</tr>
 		</c:forEach>
 	</table>
 	<br />
 	<a href="<c:url value='addUser' />">Add User</a>
+	<br /> Go back to
+	<a href="<c:url value='home' />">home</a>
 </body>
 </html>
