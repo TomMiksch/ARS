@@ -42,6 +42,19 @@ Setting up the environment:
     );
     "
 
+****To drop any columns that need to be replaced****
+    ALTER TABLE user
+    DROP COLUMN dob,
+    DROP COLUMN gender,
+    DROP COLUMN phone_number;
+****To add the dob, gender, and phone_number columns****
+    ALTER TABLE user
+    ADD COLUMN dobY VARCHAR(4) NOT NULL,
+    ADD COLUMN dobM VARCHAR(2) NOT NULL,
+    ADD COLUMN dobD VARCHAR(2) NOT NULL,
+    ADD COLUMN gender VARCHAR(6) NOT NULL,
+    ADD COLUMN phone_number BIGINT NOT NULL;
+****                            
 6. Create user 'myuser' with password 'mypasswd'
     - CREATE USER 'myuser'@'localhost' IDENTIFIED BY 'mypasswd';
 

@@ -18,6 +18,7 @@
 </head>
 
 <body>
+	<h2>What would you like to do?</h2>
 	<br />Users:
 	<a href="<c:url value='userList' />">List</a>
 	<a href="<c:url value='addUser' />">Add</a>

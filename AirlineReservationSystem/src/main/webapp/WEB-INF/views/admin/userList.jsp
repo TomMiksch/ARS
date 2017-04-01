@@ -24,7 +24,9 @@ tr:first-child {
 			<td>First Name</td>
 			<td>Last Name</td>
 			<td>Email Address</td>
-                        <td>Date of Birth</td>
+                        <td>Birth Year</td>
+                        <td>Birth Month</td>
+                        <td>Birth Day</td>
                         <td>Gender</td>
                         <td>Phone Number</td>
 		</tr>
@@ -34,7 +36,9 @@ tr:first-child {
 				<td>${user.firstName}</td>
 				<td>${user.lastName}</td>
 				<td>${user.emailAddress}</td>
-                                <td>${user.dob}</td>
+                                <td>${user.dobY}</td>
+                                <td>${user.dobM}</td>
+                                <td>${user.dobD}</td>
                                 <td>${user.gender}</td>
                                 <td>${user.phoneNumber}</td>
 				<td><a href="<c:url value='delete-${user.id}-user' />">delete</a></td>
