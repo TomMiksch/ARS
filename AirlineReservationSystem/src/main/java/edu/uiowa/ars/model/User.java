@@ -85,7 +85,6 @@ public final class User {
 	@Column(name = "DOBM", nullable = false)
 	private String dobM;
 
-        @NotNull
 	@Size(min = 1, max = 2)
 	@Column(name = "DOBD", nullable = false)
 	private String dobD;
