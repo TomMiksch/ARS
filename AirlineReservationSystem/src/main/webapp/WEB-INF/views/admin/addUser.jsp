@@ -15,6 +15,59 @@
 }
 </style>
 
+<script>
+    function checkMonth(value){
+        var today = new Date();
+        var currentYear = today.getFullYear() - 18;
+        var max = 0;
+        if(value > 1000){
+            max = 12;
+            if (currentYear == value){
+                max = today.getMonth() + 1;
+            }
+
+            var monthList = "<option disabled selected>Month</option>";
+            for(var i = 1; i <= max; i++){
+                monthList += "<option>" + i + "</option>";
+            }
+            document.getElementById("month").innerHTML = monthList;
+            
+        }
+        
+    }
+    
+    function checkDay(year, month){
+        var max = 31;
+        var leap = year % 4;
+        var today = new Date();
+        
+        if(month == 2){
+            if(leap == 0){
+                max = 29;
+            }
+            else{
+                max = 28;
+            }
+        }
+        else if(month == 4 || month == 6 || month == 9 || month == 11){
+            max = 30;
+        }
+        else{
+            max = 31;
+        }
+            
+        if (year == today.getFullYear() - 18 && month == today.getMonth() + 1){
+            max = today.getDate();
+        }
+            
+        var dayList = "<option value='' disabled selected>Day</option>";
+        for(var i = 1; i <= max; i++){
+            dayList += "<option>" + i + "</option>"
+        }
+        document.getElementById("day").innerHTML = dayList;
+    }
+</script>
+
 </head>
 
 <body>
@@ -48,9 +101,29 @@
 			</tr>
                         
                         <tr>
-				<td><label for="dob">DOB: </label></td>
-				<td><form:input path="dob" id="dob" /></td>
-				<td><form:errors path="dob" cssClass="error" /></td>
+				<td><label for="dobY">Birth Year: </label></td>
+                                <td><select id="year" name="dobY" onchange="checkMonth(this.value)">
+                                        <option disabled selected>Year</option>
+                                        <script>
+                                            var myDate = new Date();
+                                            var year = myDate.getFullYear();
+                                            for(var i = year - 18; i > year-100; i--){
+                                                    document.write('<option value="'+i+'">'+i+'</option>');
+                                            }
+                                        </script>
+                                    </select></td>
+			</tr>
+                        
+                        <tr>
+				<td><label for="dobM">Birth Month: </label></td>
+                                <td><select id="month" name="dobM" onchange="checkDay(document.getElementById('year').value, this.value)">
+                                    </select></td>
+			</tr>
+                        
+                        <tr>
+				<td><label for="dobD">Birth Day: </label></td>
+                                <td><select id="day" name="dobD">
+                                    </select></td>
 			</tr>
                         
                         <tr>
