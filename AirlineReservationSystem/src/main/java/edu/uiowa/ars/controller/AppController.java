@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import edu.uiowa.ars.model.User;
 import edu.uiowa.ars.service.UserService;
 
+
 @Controller
 @RequestMapping("/")
 public final class AppController {
@@ -110,6 +111,13 @@ public final class AppController {
 		return "new";
 	}
 
+        @RequestMapping(value = { "/success" }, method = RequestMethod.GET)
+	public String success(final ModelMap model) {
+		final User user = new User();
+		model.addAttribute("user", user);
+		return "success";
+	}
+        
 	/*
 	 * This method will be called on form submission, handling POST request for
 	 * saving user in database. It also validates the user input
@@ -157,7 +165,7 @@ public final class AppController {
 			if ("Admin".equals(userType)) {
 				return "redirect:/admin/home";
 			} else if ("Customer".equals(userType)) {
-				return "redirect:/hellouser";
+				return "redirect:/home";
 			}
                         
                 // Changed user.getPassword() to something else since 
@@ -190,36 +198,31 @@ public final class AppController {
 	public String resetPw(@Valid final User user, final BindingResult result, final ModelMap model) {
 
 		if (result.hasErrors()) {
-			return "loginpage";
+			return "home";
 		}
-                
-               try{
-                    String myURL = "jdbc:mysql://localhost/websystique";
-                    Connection conn = DriverManager.getConnection(myURL,"myuser", "mypasswd");
-                    String query = "SELECT * FROM user WHERE email = ?";
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ps.setString(1, user.getEmailAddress());         
-                    ResultSet rs;                    
-                  
-                    rs = ps.executeQuery();
-                    while ( rs.next() ) {
-                        
-                        String userPass = SystemSupport.md5(rs.getString("password"));
-                        String userNewPass = SystemSupport.md5(rs.getString("phoneNumber"));
-                        if (userPass.equals(user.getPassword())){
-                            user.setPassword(userNewPass);
-                            return "loginpage";
-                        }
-                    }
-                conn.close();      
-                }catch(Exception e){
-                    System.err.println("Got an exception!");
-                    System.err.println(e.getMessage());
-                }
-                
-                return "reset";
+
+		// Determine if this is a valid user login or not.
+		User storedUser = service.getStoredEntity(user);
+		if (storedUser != null) {
+                    
+                    // If update password successfully, then redirect to loginpage
+                    storedUser.setPassword(SystemSupport.md5(user.getPasswordHolder()));
+                    service.updateEntity(storedUser);
+                    return "loginpage";
+           
+         
+                // Changed user.getPassword() to something else since 
+                // user.GetPassword will return a hashed password
+		} else {
+			System.err.println("Invalid login with username/password combination: \"" + user.getEmailAddress()
+				+ "\"");
+		}
+		// Indicate to the user that they have an invalid username/password
+		// combination.
+		result.reject("loginPageForm", "Invalid Username and/or Password.");
+		return "home";
 	}
-        
+
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

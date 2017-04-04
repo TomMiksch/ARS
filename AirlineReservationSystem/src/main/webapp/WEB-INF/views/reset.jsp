@@ -34,10 +34,9 @@
 				<td><label for="password">Old Password: </label></td>
 				<td><form:password path="password" id="password" /></td>
 			</tr>
-                        <!-- User phoneNumber as temporary holder -->
                         <tr>
-                                <td><label for=phoneNumber">New Password: </label> </td>
-                                <td><form:input type = "number" path="phoneNumber" id="phoneNumber" /></td>
+                                <td><label for=passwordHolder">New Password: </label> </td>
+                                <td><form:input path="passwordHolder" id="passwordHolder" /></td>
                         </tr>
 			<tr>
 				<td colspan="3"><input type="submit" value="Log In" /></td>
@@ -47,7 +46,7 @@
 
 	<br />
 	<br /> Go back to
-	<a href="<c:url value='/list' />">List of All Users</a>
+	<a href="<c:url value='/new' />"> Register Page </a>
             
 </body>
 </html>

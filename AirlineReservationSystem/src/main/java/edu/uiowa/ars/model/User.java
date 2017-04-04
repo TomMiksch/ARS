@@ -76,6 +76,9 @@ public final class User {
 
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
+        
+        @Column(name = "PASSWORDHOLDER", nullable = false)
+        private String passwordHolder;
 
 	@Size(min = 4, max = 4)
 	@Column(name = "DOBY", nullable = false)
@@ -143,6 +146,14 @@ public final class User {
 	public void setPassword(final String password) {
 		this.password = password;
 	}
+        
+        public String getPasswordHolder() {
+            return passwordHolder;
+        }
+        
+        public void setPasswordHolder(final String passwordHolder) {
+            this.passwordHolder = passwordHolder;
+        }
 
 	public String getDobY() {
 		return dobY;
