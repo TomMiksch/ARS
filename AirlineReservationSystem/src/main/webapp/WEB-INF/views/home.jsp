@@ -112,7 +112,7 @@ body {
 </div>
 
 <div id="aa-booking-module" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
-    <form name="reservationFlightSearchForm" id="reservationFlightSearchForm" method="post" action="/booking/find-flights" class="zeta">
+    <form name="reservationFlightSearchForm" id="reservationFlightSearchForm" method="post" modelAttribute="flightroute" action="flightSearchResult" class="zeta">
     <input type="hidden" id="showMoreOptions" name="showMoreOptions" value="false" />
     <input type="hidden" id="fromSearchPage" name="fromSearchPage" value="true" />
     <div class="row-form">

@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import edu.uiowa.ars.model.User;
 import edu.uiowa.ars.service.UserService;
+import edu.uiowa.ars.model.FlightRoute;
+import edu.uiowa.ars.service.FlightRouteService;
 
 @Controller
 @RequestMapping("/")
@@ -218,6 +220,13 @@ public final class AppController {
                 }
                 
                 return "reset";
+	}
+        
+        @RequestMapping(value = { "/searchResults" }, method = RequestMethod.GET)
+	public String flightRouteListGet(final ModelMap model) {
+		final List<FlightRoute> flightRoutes = flightRouteService.findAllEntities();
+		model.addAttribute("flightRoutes", flightRoutes);
+		return "flightSearchResult";
 	}
         
 	@InitBinder
