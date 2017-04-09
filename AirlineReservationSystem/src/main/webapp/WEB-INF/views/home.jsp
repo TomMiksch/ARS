@@ -18,6 +18,24 @@ body {
     -webkit-filter: blur(0px);
 }
 </style>
+
+<script>
+    var destinations = ['CID', 'ORD', 'ATL', 'SFO', 'LCY']
+    
+    function checkDest(value){
+        var destList = " <option disabled selected>Destination</option>";
+        for(var i = 0; i <= 4; i++){
+            if(destinations[i] != value){
+                destList += "<option value="+destinations[i]+">" + destinations[i] + "</option>";
+            }
+        }
+        document.getElementById("destination").innerHTML = destList;
+    }
+    
+    var today = new Date();
+    document.getElementsByName("departDate")[0].setAttribute('min', today);
+</script>
+
 </head>
 
 <!-- The begining of what Peter added for our login page -->
@@ -129,11 +147,18 @@ body {
                 <label for="reservationFlightSearchForm.originAirport">
                     From
                     <span class="icon-required" aria-hidden="true"></span><span class="hidden-accessible"> (required)</span>
-                    <input type="text" name="originAirport" value="CID" id="reservationFlightSearchForm.originAirport" class="aaAutoComplete" placeholder="City or airport" >
+                    <select name="originAirport" id="origin" onchange="checkDest(this.value)">
+                        <option disabled selected>Depart From</option>
+                        <option value="CID">CID</option>
+                        <option value="ORD">ORD</option>
+                        <option value="ATL">ATL</option>
+                        <option value="SFO">SFO</option>
+                        <option value="LCY">LCY</option>
+                    </select>
                 </label>
-                <a data-for="reservationFlightSearchForm.originAirport" class="widget aaAirportLookup" href="javascript:void(0);">
+                <%--<a data-for="reservationFlightSearchForm.originAirport" class="widget aaAirportLookup" href="javascript:void(0);">
                     <span class="icon icon-search" aria-hidden="true"></span> <span class="hidden-accessible">From airport look up</span>
-                </a>
+                </a>--%>
             </div>
         </div>
         <div class="span4">
@@ -141,11 +166,13 @@ body {
                 <label for="reservationFlightSearchForm.destinationAirport">
                     To
                     <span class="icon-required" aria-hidden="true"></span><span class="hidden-accessible">(required)</span>
-                    <input type="text" name="destinationAirport" value="" id="reservationFlightSearchForm.destinationAirport" class="aaAutoComplete"  placeholder="City or airport" >
+                    <select name="destinationAirport" id="destination">
+                        <option disabled selected>Destination</option>
+                    </select>
                 </label>
-                <a data-for="reservationFlightSearchForm.destinationAirport" class="widget aaAirportLookup" href="javascript:void(0);">
+                <%--<a data-for="reservationFlightSearchForm.destinationAirport" class="widget aaAirportLookup" href="javascript:void(0);">
                     <span class="icon icon-search" aria-hidden="true"></span> <span class="hidden-accessible">To airport look up</span>
-                </a>
+                </a>--%>
             </div>
          </div>
         <div class="span4">
@@ -175,18 +202,18 @@ body {
                 <label for="aa-leavingOn">
                     Depart <span class="icon-required" aria-hidden="true"></span><span class="hidden-accessible">, required.</span>
                     <span class="hidden-accessible">(date format mm/dd/yyyy)</span>
-                    <input class="aaDatePicker" id="aa-leavingOn" name="departDate" type="text" value="" placeholder="mm/dd/yyyy" />
+                    <input id="startTime" name="departDate" type="date"/>
                 </label>
             </div>
         </div>
         <div class="span4">
-            <div>
+            <%--<div>
                 <label for="aa-returningFrom" >
                     Return <span class="icon-required" aria-hidden="true"></span><span class="hidden-accessible">, required.</span>
                     <span class="hidden-accessible">(date format mm/dd/yyyy)</span>
                     <input class="aaDatePicker" id="aa-returningFrom" name="returnDate" type="text" value="" placeholder="mm/dd/yyyy" >
                 </label>
-            </div>
+            </div>--%>
         </div>
         <div class="span4">
             <label for="fhServiceClass" class="aa-display-none" >
