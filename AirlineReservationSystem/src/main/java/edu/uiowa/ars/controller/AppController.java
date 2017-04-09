@@ -38,6 +38,9 @@ public final class AppController {
 
 	@Autowired
 	MessageSource messageSource;
+        
+        @Autowired
+	FlightRouteService flightRouteService;
 
 	private static final String DEFAULT_MESSAGE_CODE = "SOME_DEFAULT";
 
@@ -99,8 +102,17 @@ public final class AppController {
 	 */
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public String homeGet(final ModelMap model) {
-		return "home";
+            return "home";
 	}
+        
+        @RequestMapping(value = { "/", "/home" }, method = RequestMethod.POST)
+	public String searchFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
+            if (result.hasErrors()) {
+		return "/";
+	    }
+            
+            return "flightSearchResult";
+        }
 
 	/*
 	 * This method will provide the medium to add a new user.
@@ -222,7 +234,7 @@ public final class AppController {
                 return "reset";
 	}
         
-        @RequestMapping(value = { "/searchResults" }, method = RequestMethod.GET)
+        @RequestMapping(value = { "/flightSearchResult" }, method = RequestMethod.GET)
 	public String flightRouteListGet(final ModelMap model) {
 		final List<FlightRoute> flightRoutes = flightRouteService.findAllEntities();
 		model.addAttribute("flightRoutes", flightRoutes);

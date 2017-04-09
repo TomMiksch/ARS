@@ -112,29 +112,27 @@ body {
 </div>
 
 <div id="aa-booking-module" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
-    <form name="reservationFlightSearchForm" id="reservationFlightSearchForm" method="post" modelAttribute="flightroute" action="flightSearchResult" class="zeta">
+    <form name="reservationFlightSearchForm" id="reservationFlightSearchForm" method="POST" modelAttribute="flightroute" action="flightSearchResult" class="zeta">
     <input type="hidden" id="showMoreOptions" name="showMoreOptions" value="false" />
     <input type="hidden" id="fromSearchPage" name="fromSearchPage" value="true" />
     <div class="row-form">
-        <div class="span7">
+        <%--<div class="span7">
             <ul role="radiogroup">
                 <li class="customComponent" role="radio" aria-checked="true">
                     <input type="radio" name="tripType" value="roundTrip" id="flightSearchForm.tripType.roundTrip" checked />
                     <label for="flightSearchForm.tripType.roundTrip" class="pillbox">
                         <span class="hidden-accessible">Search flights round trip</span>
-                        <span aria-hidden="true">Round trip</span>
                     </label>
                 </li>
                 <li class="customComponent" role="radio" aria-checked="false">
                     <input type="radio" name="tripType" value="oneWay" id="flightSearchForm.tripType.oneWay"  >
                     <label for="flightSearchForm.tripType.oneWay" class="pillbox">
                         <span class="hidden-accessible">Search flights one way</span>
-                        <span aria-hidden="true">One way</span>
                     </label>
                 </li>
                 
             </ul>
-        </div>
+        </div>--%>
     </div>
     <div class="row-form">
         <div class="span12">
@@ -201,7 +199,7 @@ body {
             <div>
                 <label for="aa-leavingOn">
                     Depart <span class="icon-required" aria-hidden="true"></span><span class="hidden-accessible">, required.</span>
-                    <span class="hidden-accessible">(date format mm/dd/yyyy)</span>
+                    <span class="datePicker">(date format mm/dd/yyyy)</span>
                     <input id="startTime" name="departDate" type="date"/>
                 </label>
             </div>
@@ -228,10 +226,10 @@ body {
         <div id="flightSearchFormSubmitButton" class="span4 ">
             <div>
                 <input type="submit" value="Search" id="flightSearchForm.button.reSubmit" class="btn btn-fullWidth">
-                <button id="flightSearchForm.button.vacationSubmit" type="button" class="btn btn-fullWidth is-hidden">
+                <%--<button id="flightSearchForm.button.vacationSubmit" type="button" class="btn btn-fullWidth is-hidden">
                     Search<span aria-hidden="true" class="icon-newpage"></span>
                     <span class="hidden-accessible">, Opens another site in a new window that may not meet accessibility guidelines.</span>
-                </button>
+                </button>--%>
             </div>
         </div>
     </div>
@@ -239,5 +237,36 @@ body {
 </div>
 <!-- The end of what Peter added -->
 
+<%--<body>
+	<h2>Search Flights</h2>
+	<form:form method="POST" modelAttribute="flightroute">
+		<form:input type="hidden" path="id" id="id" />
+		<table>
+                    <tr>
+                        <td><label for="origin">Depart From: </label></td>
+                        <td><select name="originAirport" id="origin" onchange="checkDest(this.value)">
+                            <option disabled selected>Depart From</option>
+                            <option value="CID">CID</option>
+                            <option value="ORD">ORD</option>
+                            <option value="ATL">ATL</option>
+                            <option value="SFO">SFO</option>
+                            <option value="LCY">LCY</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+			<td><label for="destination">Destination: </label></td>
+                        <td><select name="destinationAirport" id="destination">
+                            <option disabled selected>Destination</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+			<td colspan="3"><input type="submit" value="Submit" /></td>
+                    </tr>
+		</table>
+	</form:form>
+	<br />
+	<br /> Go back to
+	<a href="<c:url value='home' />">home</a>
+</body>--%>
 
 </html>
