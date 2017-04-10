@@ -20,13 +20,14 @@ body {
 </style>
 
 <script>
-    var destinations = ['CID', 'ORD', 'ATL', 'SFO', 'LCY']
+    var destinations = ['CID', 'ORD', 'ATL', 'SFO', 'LCY'];
+    
     
     function checkDest(value){
         var destList = " <option disabled selected>Destination</option>";
-        for(var i = 0; i <= 4; i++){
-            if(destinations[i] != value){
-                destList += "<option value="+destinations[i]+">"+destinations+"</option>";
+        for(var i = 0; i <= destinations.length - 1; i++){
+            if(destinations[i] !== value){
+                destList += "<option value="+destinations[i]+">"+destinations[i]+"</option>";
             }
         }
         document.getElementById("destination").innerHTML = destList;
@@ -161,7 +162,7 @@ body {
         </div>
         <div class="span4">
             <div class="position-relative margin-bottom">
-                <label for="reservationFlightSearchForm.destinationAirport">
+                <label for="destination">
                     To
                     <span class="icon-required" aria-hidden="true"></span><span class="hidden-accessible">(required)</span>
                     <select name="destination" id="destination">
@@ -175,9 +176,9 @@ body {
          </div>
         <div class="span4">
             <div class="margin-bottom">
-                        <label for="destination">
+                        <label for="passengers">
                             Number of passengers
-                            <select name="destination" onchange="calcTotalNoOfPsgrsOnHomePage('')" id="destination">
+                            <select name="passengers" onchange="calcTotalNoOfPsgrsOnHomePage('')" id="destination">
                                 <option value="1" >1</option>
                                 <option value="2" >2</option>
                                 <option value="3" >3</option>

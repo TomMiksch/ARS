@@ -28,6 +28,7 @@ import edu.uiowa.ars.model.User;
 import edu.uiowa.ars.service.UserService;
 import edu.uiowa.ars.model.FlightRoute;
 import edu.uiowa.ars.service.FlightRouteService;
+import javax.swing.JOptionPane;
 
 @Controller
 @RequestMapping("/")
@@ -238,7 +239,9 @@ public final class AppController {
         
         @RequestMapping(value = { "/flightSearchResult" }, method = RequestMethod.POST)
 	public String searchFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
-            System.out.println(flightRoute.getDestination());
+            if (flightRoute.getDestination() == null){
+                return "home";
+            }
             final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
             model.addAttribute("flightRoutes", flightRoutes);
             return "flightSearchResult";
