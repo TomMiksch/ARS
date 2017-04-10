@@ -1,3 +1,9 @@
+Airline Reservation System
+--------------------------
+Mallory Tollefson
+Thomas Miksch
+Peter Li
+
 Setting up the environment:
 --------------------------
 1. Install MySQL 
