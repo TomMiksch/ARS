@@ -25,7 +25,7 @@ public final class FlightRouteDaoImpl extends AbstractDao<Integer, FlightRoute> 
         @SuppressWarnings("unchecked")
 	public List<FlightRoute> findSelectedEntities(final FlightRoute entity) {
 		Criteria criteria = createEntityCriteria();
-                criteria.add(Restrictions.eq("origin", entity.getOrigin()));
+                //criteria.add(Restrictions.eq("origin", entity.getOrigin()));
                 criteria.add(Restrictions.eq("destination", entity.getDestination()));
 		return (List<FlightRoute>) criteria.list();
 	}

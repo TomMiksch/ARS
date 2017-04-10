@@ -26,7 +26,7 @@ body {
         var destList = " <option disabled selected>Destination</option>";
         for(var i = 0; i <= 4; i++){
             if(destinations[i] != value){
-                destList += "<option value="+destinations[i]+">" + destinations[i] + "</option>";
+                destList += "<option value="+destinations[i]+">"+destinations+"</option>";
             }
         }
         document.getElementById("destination").innerHTML = destList;
@@ -164,7 +164,7 @@ body {
                 <label for="reservationFlightSearchForm.destinationAirport">
                     To
                     <span class="icon-required" aria-hidden="true"></span><span class="hidden-accessible">(required)</span>
-                    <select name="destinationAirport" id="destination">
+                    <select name="destination" id="destination">
                         <option disabled selected>Destination</option>
                     </select>
                 </label>
@@ -175,9 +175,6 @@ body {
          </div>
         <div class="span4">
             <div class="margin-bottom">
-                
-                    
-                    
                         <label for="destination">
                             Number of passengers
                             <select name="destination" onchange="calcTotalNoOfPsgrsOnHomePage('')" id="destination">
@@ -236,37 +233,5 @@ body {
     </form>
 </div>
 <!-- The end of what Peter added -->
-
-<%--<body>
-	<h2>Search Flights</h2>
-	<form:form method="POST" modelAttribute="flightroute">
-		<form:input type="hidden" path="id" id="id" />
-		<table>
-                    <tr>
-                        <td><label for="origin">Depart From: </label></td>
-                        <td><select name="originAirport" id="origin" onchange="checkDest(this.value)">
-                            <option disabled selected>Depart From</option>
-                            <option value="CID">CID</option>
-                            <option value="ORD">ORD</option>
-                            <option value="ATL">ATL</option>
-                            <option value="SFO">SFO</option>
-                            <option value="LCY">LCY</option>
-                        </select></td>
-                    </tr>
-                    <tr>
-			<td><label for="destination">Destination: </label></td>
-                        <td><select name="destinationAirport" id="destination">
-                            <option disabled selected>Destination</option>
-                        </select></td>
-                    </tr>
-                    <tr>
-			<td colspan="3"><input type="submit" value="Submit" /></td>
-                    </tr>
-		</table>
-	</form:form>
-	<br />
-	<br /> Go back to
-	<a href="<c:url value='home' />">home</a>
-</body>--%>
 
 </html>

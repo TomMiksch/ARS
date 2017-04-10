@@ -238,8 +238,9 @@ public final class AppController {
         
         @RequestMapping(value = { "/flightSearchResult" }, method = RequestMethod.POST)
 	public String searchFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
-                final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
-                model.addAttribute("flightRoutes", flightRoutes);
+            System.out.println(flightRoute.getDestination());
+            final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
+            model.addAttribute("flightRoutes", flightRoutes);
             return "flightSearchResult";
 	}
         
