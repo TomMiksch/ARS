@@ -102,6 +102,8 @@ public final class AppController {
 	 */
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public String homeGet(final ModelMap model) {
+            final FlightRoute flightRoute = new FlightRoute();
+            model.addAttribute("flightRoute", flightRoute);
             return "home";
 	}
         
@@ -110,7 +112,7 @@ public final class AppController {
             if (result.hasErrors()) {
 		return "/";
 	    }
-            
+            flightRouteService.saveEntity(flightRoute);
             return "flightSearchResult";
         }
 
@@ -234,17 +236,17 @@ public final class AppController {
                 return "reset";
 	}
         
-        @RequestMapping(value = { "/flightSearchResult" }, method = RequestMethod.GET)
+        @RequestMapping(value = { "/flightSearchResult" }, method = RequestMethod.POST)
 	public String flightRouteListGet(final ModelMap model) {
 		final List<FlightRoute> flightRoutes = flightRouteService.findAllEntities();
 		model.addAttribute("flightRoutes", flightRoutes);
 		return "flightSearchResult";
 	}
         
-	@InitBinder
+	/*@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		sdf.setLenient(true);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-	}
+	}*/
 }
