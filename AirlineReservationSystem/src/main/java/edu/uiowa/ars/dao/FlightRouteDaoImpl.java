@@ -21,6 +21,12 @@ public final class FlightRouteDaoImpl extends AbstractDao<Integer, FlightRoute> 
 		return (List<FlightRoute>) criteria.list();
 	}
 
+        @SuppressWarnings("unchecked")
+	public List<FlightRoute> findSelectedEntities(final FlightRoute entity) {
+		final Criteria criteria = createEntityCriteria();
+		return (List<FlightRoute>) criteria.list();
+	}
+        
 	@Override
 	public void deleteEntityById(final String id) {
 		getSession().createSQLQuery("DELETE FROM flight_route WHERE id = " + id).executeUpdate();

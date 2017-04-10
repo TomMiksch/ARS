@@ -45,5 +45,9 @@ public final class FlightRouteServiceImpl implements FlightRouteService {
 		// TODO
 		return null;
 	}
+        
+        public List<FlightRoute> findSelectedEntities(final FlightRoute entity) {
+		return dao.findSelectedEntities(entity);
+	}
 
 }
