@@ -1,3 +1,9 @@
+Airline Reservation System
+--------------------------
+Mallory Tollefson
+Thomas Miksch
+Peter Li
+
 Setting up the environment:
 --------------------------
 1. Install MySQL 
@@ -22,6 +28,7 @@ Setting up the environment:
         last_name VARCHAR(20) NOT NULL,
         email VARCHAR(50) NOT NULL,
         password VARCHAR(40) NOT NULL,
+        passwordHolder VARCHAR(40) NOT NULL,
         dobY VARCHAR(4) NOT NULL,
         dobM VARCHAR(2) NOT NULL,
         dobD VARCHAR(2) NOT NULL,

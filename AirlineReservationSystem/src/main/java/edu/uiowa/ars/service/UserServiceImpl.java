@@ -32,6 +32,7 @@ public final class UserServiceImpl implements UserService {
 		String tempPassword = new String(Base64.getEncoder().encode(tempPass));
 		// Encryption with md5
 		user.setPassword(SystemSupport.md5(tempPassword));
+                user.setPasswordHolder(SystemSupport.md5(tempPassword));
 		dao.saveEntity(user);
 
 		// If we correctly entered the user in the database, then send them
@@ -44,6 +45,8 @@ public final class UserServiceImpl implements UserService {
 						+ "<br><br>Sincerely,<br>Iowa Air",
 				null, null);
 	}
+
+        
 
 	/*
 	 * Since the method is running with Transaction, No need to call hibernate

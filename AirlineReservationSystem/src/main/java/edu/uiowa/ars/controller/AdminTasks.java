@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import edu.uiowa.ars.model.Aircraft;
 import edu.uiowa.ars.model.Aircraft.AircraftTypes;
 import edu.uiowa.ars.model.FlightRoute;
+import edu.uiowa.ars.model.FlightRoute.Airports;
+import edu.uiowa.ars.model.FlightRoute.Frequency;
 import edu.uiowa.ars.model.User;
 import edu.uiowa.ars.model.User.Genders;
 import edu.uiowa.ars.model.User.UserTypes;
@@ -121,15 +123,6 @@ public final class AdminTasks {
 			return "admin/addAircraft";
 		}
 
-		// Check to see if any other aircraft have the same ID.
-		final boolean duplicateId = aircraftService.findAllEntities().stream()
-				.anyMatch(currentAircraft -> aircraftService.isEquivalentInDb(aircraft, currentAircraft));
-		if (duplicateId) {
-			result.rejectValue("symbol", DEFAULT_MESSAGE_CODE, "Aircraft symbol already in use.");
-			model.addAttribute("aircraftTypes", AircraftTypes.getAllIdentifiers());
-			return "admin/addAircraft";
-		}
-
 		aircraftService.saveEntity(aircraft);
 		return "redirect:/admin/aircraftList";
 	}
@@ -150,8 +143,12 @@ public final class AdminTasks {
 	@RequestMapping(value = { "/addFlightRoute" }, method = RequestMethod.GET)
 	public String addFlightRouteGet(final ModelMap model) {
 		final FlightRoute flightRoute = new FlightRoute();
+		// Set daily to be the default frequency.
+		flightRoute.setFrequency(Frequency.DAILY.getIdentifier());
 		model.addAttribute("flightRoute", flightRoute);
 		model.addAttribute("aircrafts", aircraftService.getAllSymbols());
+		model.addAttribute("airports", Airports.getAllIdentifiers());
+		model.addAttribute("frequencies", Frequency.getAllIdentifiers());
 		return "admin/addFlightRoute";
 	}
 
@@ -160,12 +157,34 @@ public final class AdminTasks {
 			final ModelMap model) {
 		if (result.hasErrors()) {
 			model.addAttribute("aircrafts", aircraftService.getAllSymbols());
+			model.addAttribute("airports", Airports.getAllIdentifiers());
+			model.addAttribute("frequencies", Frequency.getAllIdentifiers());
+			return "admin/addFlightRoute";
+		}
+
+		// Make sure a destination was entered.
+		final String destination = flightRoute.getDestination();
+		if (destination == null || destination.isEmpty()) {
+			result.rejectValue("destination", DEFAULT_MESSAGE_CODE, "Destination is required.");
+			model.addAttribute("aircrafts", aircraftService.getAllSymbols());
+			model.addAttribute("airports", Airports.getAllIdentifiers());
+			model.addAttribute("frequencies", Frequency.getAllIdentifiers());
+			return "admin/addFlightRoute";
+		}
+
+		// Make sure an end time was entered.
+		final String endTime = flightRoute.getEndTime();
+		if (endTime == null || endTime.isEmpty()) {
+			result.rejectValue("endTime", DEFAULT_MESSAGE_CODE, "End time is required.");
+			model.addAttribute("aircrafts", aircraftService.getAllSymbols());
+			model.addAttribute("airports", Airports.getAllIdentifiers());
+			model.addAttribute("frequencies", Frequency.getAllIdentifiers());
 			return "admin/addFlightRoute";
 		}
 
 		// TODO how should duplicates be checked for?
 		flightRouteService.saveEntity(flightRoute);
-		return "redirect:/admin/addFlightRoute";
+		return "redirect:/admin/flightRouteList";
 	}
 }
 //QByO+YsknxDWp9oe2HEZGw==

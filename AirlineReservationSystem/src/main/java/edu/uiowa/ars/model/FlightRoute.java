@@ -17,6 +17,49 @@ import javax.validation.constraints.Size;
 @Table(name = "FLIGHT_ROUTE")
 public final class FlightRoute {
 
+	public enum Airports {
+		CID("Cedar Rapids"),
+		ORD("Chicago"),
+		ATL("Atlanta"),
+		SFO("San Fransisco"),
+		LCY("London");
+
+		private final String identifier;
+
+		Airports(final String identifier) {
+			this.identifier = identifier;
+		}
+
+		public String getIdentifier() {
+			return this.identifier;
+		}
+
+		public static List<String> getAllIdentifiers() {
+			return Stream.of(Airports.values()).map(Airports::getIdentifier).collect(Collectors.toList());
+		}
+	}
+
+	public enum Frequency {
+		DAILY("Daily"),
+		WEEKLY("Weekly"),
+		BIWEEKLY("Biweekly"),
+		MONTHLY("Monthly");
+
+		private final String identifier;
+
+		Frequency(final String identifier) {
+			this.identifier = identifier;
+		}
+
+		public String getIdentifier() {
+			return this.identifier;
+		}
+
+		public static List<String> getAllIdentifiers() {
+			return Stream.of(Frequency.values()).map(Frequency::getIdentifier).collect(Collectors.toList());
+		}
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

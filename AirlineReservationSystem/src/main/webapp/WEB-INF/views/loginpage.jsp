@@ -42,5 +42,7 @@
 	</form:form>
 
 	<a href="<c:url value='/register' />">Create New Account</a>
+        <br/>
+        <a href="<c:url value='/reset' />">Reset Password</a>
 </body>
 </html>
