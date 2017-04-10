@@ -18,11 +18,11 @@ import javax.validation.constraints.Size;
 public final class FlightRoute {
 
 	public enum Airports {
-		CID("Cedar Rapids"),
-		ORD("Chicago"),
-		ATL("Atlanta"),
-		SFO("San Fransisco"),
-		LCY("London");
+		CID("CID"),
+		ORD("ORD"),
+		ATL("ATL"),
+		SFO("SFO"),
+		LCY("LCY");
 
 		private final String identifier;
 

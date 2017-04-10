@@ -245,6 +245,7 @@ public final class AppController {
             if (flightRoute.getDestination() == null){
                 return "home";
             }
+            System.out.println(flightRoute.getDestination());
             final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
             model.addAttribute("flightRoutes", flightRoutes);
             return "flightSearchResult";
