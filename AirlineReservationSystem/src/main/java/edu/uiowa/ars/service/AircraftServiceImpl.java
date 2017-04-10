@@ -61,4 +61,8 @@ public final class AircraftServiceImpl implements AircraftService {
 	public List<String> getAllSymbols() {
 		return findAllEntities().stream().map(Aircraft::getSymbol).collect(Collectors.toList());
 	}
+        
+        public List<Aircraft> findSelectedEntities(final Aircraft entity) {
+		return dao.findSelectedEntities(entity);
+	}
 }

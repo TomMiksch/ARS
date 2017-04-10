@@ -9,4 +9,6 @@ public interface EntityDao<T> {
 	List<T> findAllEntities();
 	
 	void deleteEntityById(final String id);
+        
+        List<T> findSelectedEntities(T entity);
 }

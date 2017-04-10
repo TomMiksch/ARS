@@ -28,4 +28,10 @@ public final class UserDaoImpl extends AbstractDao<Integer, User> implements Use
 	public void deleteEntityById(final String id) {
 		getSession().createSQLQuery("DELETE FROM user WHERE id = " + id).executeUpdate();
 	}
+        
+        @SuppressWarnings("unchecked")
+	public List<User> findSelectedEntities(final User entity) {
+		final Criteria criteria = createEntityCriteria();
+		return (List<User>) criteria.list();
+	}
 }

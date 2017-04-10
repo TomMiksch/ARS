@@ -24,5 +24,11 @@ public final class AircraftDaoImpl extends AbstractDao<Integer, Aircraft> implem
 	public void deleteEntityById(final String id) {
 		getSession().createSQLQuery("DELETE FROM aircraft WHERE id = " + id).executeUpdate();
 	}
+        
+        @SuppressWarnings("unchecked")
+	public List<Aircraft> findSelectedEntities(final Aircraft entity) {
+		final Criteria criteria = createEntityCriteria();
+		return (List<Aircraft>) criteria.list();
+	}
 
 }

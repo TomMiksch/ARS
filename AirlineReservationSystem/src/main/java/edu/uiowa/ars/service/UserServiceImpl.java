@@ -100,4 +100,8 @@ public final class UserServiceImpl implements UserService {
 			}
 		}
 	}
+        
+        public List<User> findSelectedEntities(final User entity) {
+		return dao.findSelectedEntities(entity);
+	}
 }
