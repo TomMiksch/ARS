@@ -20,6 +20,22 @@ public final class AircraftServiceImpl implements AircraftService {
 
 	@Override
 	public void saveEntity(final Aircraft aircraft) {
+		// The aircraft symbol is +1 the previous symbol with the format 001,
+		// 002, etc.
+		final List<Aircraft> aircraftList = findAllEntities();
+		if ((aircraftList == null) || (aircraftList.size() == 0)) {
+			aircraft.setSymbol("001");
+		} else {
+			final String prevSymbol = aircraftList.get(aircraftList.size() - 1).getSymbol();
+			try {
+				final int newSymbolNum = Integer.parseInt(prevSymbol) + 1;
+				aircraft.setSymbol(String.format("%03d", newSymbolNum));
+			} catch (final Exception e) {
+				System.err.println("Failed to parse aircraft symbol: " + prevSymbol);
+				throw e;
+			}
+		}
+
 		dao.saveEntity(aircraft);
 	}
 

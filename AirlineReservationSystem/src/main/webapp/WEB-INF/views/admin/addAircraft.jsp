@@ -23,11 +23,6 @@
 		<form:input type="hidden" path="id" id="id" />
 		<table>
 			<tr>
-				<td><label for="symbol">Aircraft Symbol: </label></td>
-				<td><form:input path="symbol" id="symbol" /></td>
-				<td><form:errors path="symbol" cssClass="error" /></td>
-			</tr>
-			<tr>
 				<td><label for="aircraftType">Aircraft Type: </label></td>
 				<td><form:select path="aircraftType" items="${aircraftTypes}" /></td>
 			</tr>

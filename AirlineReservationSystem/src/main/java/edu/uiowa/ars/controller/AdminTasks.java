@@ -121,15 +121,6 @@ public final class AdminTasks {
 			return "admin/addAircraft";
 		}
 
-		// Check to see if any other aircraft have the same ID.
-		final boolean duplicateId = aircraftService.findAllEntities().stream()
-				.anyMatch(currentAircraft -> aircraftService.isEquivalentInDb(aircraft, currentAircraft));
-		if (duplicateId) {
-			result.rejectValue("symbol", DEFAULT_MESSAGE_CODE, "Aircraft symbol already in use.");
-			model.addAttribute("aircraftTypes", AircraftTypes.getAllIdentifiers());
-			return "admin/addAircraft";
-		}
-
 		aircraftService.saveEntity(aircraft);
 		return "redirect:/admin/aircraftList";
 	}
