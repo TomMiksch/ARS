@@ -108,7 +108,7 @@ public final class AppController {
 	}
         
         @RequestMapping(value = { "/", "/home" }, method = RequestMethod.POST)
-	public String searchFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
+	public String searchedFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
             if (result.hasErrors()) {
 		return "/";
 	    }
@@ -237,10 +237,16 @@ public final class AppController {
 	}
         
         @RequestMapping(value = { "/flightSearchResult" }, method = RequestMethod.POST)
-	public String flightRouteListGet(final ModelMap model) {
-		final List<FlightRoute> flightRoutes = flightRouteService.findAllEntities();
-		model.addAttribute("flightRoutes", flightRoutes);
-		return "flightSearchResult";
+	public String searchFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
+            //searchedFlight = FlightRouteService.getStoredEntity(flightRoute);
+            final String findOrigin = flightRoute.getOrigin();
+            final String findDest = flightRoute.getDestination();
+            System.out.println(findOrigin);
+            if ("CID".equals(findOrigin)){
+                final List<FlightRoute> flightRoutes = flightRouteService.findAllEntities();
+                model.addAttribute("flightRoutes", flightRoutes);
+            }
+            return "flightSearchResult";
 	}
         
 	/*@InitBinder

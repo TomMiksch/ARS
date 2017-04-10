@@ -142,10 +142,10 @@ body {
     <div class="row-form">
         <div class="span4">
             <div class="position-relative margin-bottom">
-                <label for="reservationFlightSearchForm.originAirport">
+                <label for="origin">
                     From
                     <span class="icon-required" aria-hidden="true"></span><span class="hidden-accessible"> (required)</span>
-                    <select name="originAirport" id="origin" onchange="checkDest(this.value)">
+                    <select name="origin" id="origin" onchange="checkDest(this.value)">
                         <option disabled selected>Depart From</option>
                         <option value="CID">CID</option>
                         <option value="ORD">ORD</option>
@@ -178,9 +178,9 @@ body {
                 
                     
                     
-                        <label for="flightSearchForm.adultOrSeniorPassengerCount">
+                        <label for="destination">
                             Number of passengers
-                            <select name="adultOrSeniorPassengerCount" onchange="calcTotalNoOfPsgrsOnHomePage('')" id="flightSearchForm.adultOrSeniorPassengerCount">
+                            <select name="destination" onchange="calcTotalNoOfPsgrsOnHomePage('')" id="destination">
                                 <option value="1" >1</option>
                                 <option value="2" >2</option>
                                 <option value="3" >3</option>

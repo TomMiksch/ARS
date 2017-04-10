@@ -40,13 +40,10 @@ tr:first-child {
 				<td>${flightRoute.startTime}</td>
 				<td>${flightRoute.endTime}</td>
 				<td>${flightRoute.frequency}</td>
-				<td><a
-					href="<c:url value='delete-${flightRoute.id}-flightRoute' />">delete</a></td>
 			</tr>
 		</c:forEach>
 	</table>
 	<br />
-	<a href="<c:url value='addFlightRoute' />">Add Flight Route</a>
 	<br /> Go back to
 	<a href="<c:url value='home' />">home</a>
 </body>
