@@ -128,15 +128,15 @@ public final class AppController {
             return "hellouser";
 	}
         
-        @RequestMapping(value = { "hellouser" }, method = RequestMethod.POST)
+        @RequestMapping(value = { "/hellouser" }, method = RequestMethod.POST)
 	public String userSearchedFlights(@Valid final User user, @Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
             if (result.hasErrors()) {
 		return "/hellouser";
 	    }
             flightRouteService.saveEntity(flightRoute);
-            //service.getStoredEntity(user);
-            //model.addAttribute("firstName", user.getFirstName());
-            return "flightSearchResult";
+            service.getStoredEntity(user);
+            model.addAttribute("firstName", user.getFirstName());
+            return "userFlightSearch";
         }
 
 	/*
@@ -267,10 +267,19 @@ public final class AppController {
             if (flightRoute.getDestination() == null){
                 return "home";
             }
-            System.out.println(flightRoute.getDestination());
             final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
             model.addAttribute("flightRoutes", flightRoutes);
             return "flightSearchResult";
+	}
+        
+        @RequestMapping(value = { "/userFlightSearch" }, method = RequestMethod.POST)
+	public String userSearchFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
+            if (flightRoute.getDestination() == null){
+                return "hellouser";
+            }
+            final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
+            model.addAttribute("flightRoutes", flightRoutes);
+            return "userFlightSearch";
 	}
 
 	/*@InitBinder

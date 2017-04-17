@@ -113,7 +113,7 @@ body {
 <a href="<c:url value='/reset' />">Reset Password</a>
 <br/>
 <div id="aa-booking-module" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
-    <form name="reservationFlightSearchForm" id="reservationFlightSearchForm" method="POST" modelAttribute="flightroute" action="flightSearchResult" class="zeta">
+    <form name="reservationFlightSearchForm" id="reservationFlightSearchForm" method="POST" modelAttribute="flightroute" action="userFlightSearch" class="zeta">
     <input type="hidden" id="showMoreOptions" name="showMoreOptions" value="false" />
     <input type="hidden" id="fromSearchPage" name="fromSearchPage" value="true" />
     <div class="row-form">
