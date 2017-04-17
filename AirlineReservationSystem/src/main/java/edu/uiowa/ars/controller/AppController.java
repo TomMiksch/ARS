@@ -117,6 +117,22 @@ public final class AppController {
             flightRouteService.saveEntity(flightRoute);
             return "flightSearchResult";
         }
+        
+        @RequestMapping(value = { "/hellouser" }, method = RequestMethod.GET)
+	public String userHomeGet(final ModelMap model) {
+            final FlightRoute flightRoute = new FlightRoute();
+            model.addAttribute("flightRoute", flightRoute);
+            return "hellouser";
+	}
+        
+        @RequestMapping(value = { "hellouser" }, method = RequestMethod.POST)
+	public String userSearchedFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
+            if (result.hasErrors()) {
+		return "/hellouser";
+	    }
+            flightRouteService.saveEntity(flightRoute);
+            return "flightSearchResult";
+        }
 
 	/*
 	 * This method will provide the medium to add a new user.
