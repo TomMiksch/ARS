@@ -81,7 +81,7 @@ body {
 	</form>
 -->
 
-    Hello, ${firstname}!
+    Hello, ${firstName}!
 </article>
 
 <div id="booking-module-tabs"

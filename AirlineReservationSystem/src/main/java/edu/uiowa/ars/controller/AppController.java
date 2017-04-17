@@ -122,15 +122,20 @@ public final class AppController {
 	public String userHomeGet(final ModelMap model) {
             final FlightRoute flightRoute = new FlightRoute();
             model.addAttribute("flightRoute", flightRoute);
+            final User user = new User();
+            model.addAttribute("user", user);
+            System.out.println(user.getFirstName());
             return "hellouser";
 	}
         
         @RequestMapping(value = { "hellouser" }, method = RequestMethod.POST)
-	public String userSearchedFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
+	public String userSearchedFlights(@Valid final User user, @Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
             if (result.hasErrors()) {
 		return "/hellouser";
 	    }
             flightRouteService.saveEntity(flightRoute);
+            //service.getStoredEntity(user);
+            //model.addAttribute("firstName", user.getFirstName());
             return "flightSearchResult";
         }
 
@@ -198,7 +203,8 @@ public final class AppController {
 			if ("Admin".equals(userType)) {
 				return "redirect:/admin/home";
 			} else if ("Customer".equals(userType)) {
-				return "redirect:/home";
+                                model.addAttribute("firstName", storedUser.getFirstName());
+				return "redirect:/hellouser";
 			}
                         
                 // Changed user.getPassword() to something else since 
