@@ -26,8 +26,6 @@ public final class BookingDaoImpl extends AbstractDao<Integer, Booking> implemen
         @SuppressWarnings("unchecked")
 	public List<Booking> findSelectedEntities(final Booking entity) {
 		Criteria criteria = createEntityCriteria();
-                criteria.add(Restrictions.eq("origin", entity.getOrigin()));
-                criteria.add(Restrictions.eq("destination", entity.getDestination()));
 		return (List<Booking>) criteria.list();
 	}
         
