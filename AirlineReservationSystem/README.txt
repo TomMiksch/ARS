@@ -68,6 +68,16 @@ Setting up the environment:
     );
     "
 
+7. Add the 'Booking' table
+    CREATE TABLE BOOKING(
+        id INT NOT NULL auto_increment,
+        user_email VARCHAR(50) NOT NULL,
+        flight_number INT NOT NULL,
+        class VARCHAR(20) NOT NULL,
+        seats INT NOT NULL,
+        PRIMARY KEY (id)
+    );
+
 6. Create user 'myuser' with password 'mypasswd'
     - CREATE USER 'myuser'@'localhost' IDENTIFIED BY 'mypasswd';
 
