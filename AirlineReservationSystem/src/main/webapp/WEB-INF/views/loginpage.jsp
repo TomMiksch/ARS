@@ -18,11 +18,31 @@
 	color: #ff0000;
 }
 </style>
+<script>
+    window.onload = function() {
+
+        // Check for LocalStorage support.
+        if (localStorage) {
+
+          // Add an event listener for form submissions
+          document.getElementById("info").addEventListener("submit", function() {
+            // Get the value of the name field.
+            var email = document.getElementById("emailAddress").value;
+
+            // Save the name in localStorage.
+            localStorage.setItem("email", email);
+
+            console.log(localStorage.getItem("email"));
+          });
+        }
+
+    };
+</script>
 </head>
 <body>
 	<h1>Log in</h1>
 
-	<form:form method="POST" modelAttribute="user">
+	<form:form method="POST" modelAttribute="user" id="info">
 		<form:input type="hidden" path="id" id="id" />
 		<form:errors path="*" cssClass="error" />
 		<table>

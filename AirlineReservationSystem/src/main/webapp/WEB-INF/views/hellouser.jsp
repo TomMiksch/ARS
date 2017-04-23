@@ -20,6 +20,11 @@ body {
 </style>
 
 <script>
+    window.onload = function(){
+        var email = localStorage.getItem("email");
+        console.log(localStorage.getItem("email"))
+    };
+    
     var destinations = ['CID', 'ORD', 'ATL', 'SFO', 'LCY'];
     
     
