@@ -6,7 +6,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public enum BrowserEntry {
-	// CHROME(ChromeDriver.class, "webdriver.chrome.driver", "CHROME_DRIVER"),
+	CHROME(ChromeDriver.class, "webdriver.chrome.driver", "CHROME_DRIVER"),
 	FIREFOX(FirefoxDriver.class, "webdriver.gecko.driver", "FIREFOX_DRIVER"),
 	IE(InternetExplorerDriver.class, "webdriver.internetexplorer.driver", "IE_DRIVER");
 

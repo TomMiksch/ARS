@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.uiowa.ars.dao.BookingDao;
 import edu.uiowa.ars.model.Booking;
 
-@Service("flightRouteService")
+@Service("bookingService")
 @Transactional
 public final class BookingServiceImpl implements BookingService {
 
@@ -45,8 +45,8 @@ public final class BookingServiceImpl implements BookingService {
 		// TODO
 		return null;
 	}
-        
-        public List<Booking> findSelectedEntities(final Booking entity) {
+
+	public List<Booking> findSelectedEntities(final Booking entity) {
 		return dao.findSelectedEntities(entity);
 	}
 

@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class LoginTest {
+public final class LoginTest {
 
 	@Test
 	public void testLogin() throws Exception {
@@ -20,7 +20,6 @@ public class LoginTest {
 
 				if (System.getProperty(driverProp) != null) {
 					System.out.println("Testing login for browser with driver " + browserEntry.getDriverClass());
-					// objects and variables instantiation
 					final Constructor<?> ctor = browserEntry.getDriverClass().getConstructor();
 					driver = (WebDriver) ctor.newInstance();
 					String appUrl = "https://accounts.google.com";
