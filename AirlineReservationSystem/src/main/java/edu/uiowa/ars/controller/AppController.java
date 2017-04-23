@@ -1,35 +1,22 @@
 package edu.uiowa.ars.controller;
 
-import edu.uiowa.ars.SystemSupport;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-
-import java.sql.*;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import edu.uiowa.ars.model.User;
-import edu.uiowa.ars.service.UserService;
+import edu.uiowa.ars.SystemSupport;
 import edu.uiowa.ars.model.FlightRoute;
+import edu.uiowa.ars.model.User;
 import edu.uiowa.ars.service.FlightRouteService;
-import javax.swing.JOptionPane;
-
+import edu.uiowa.ars.service.UserService;
 
 @Controller
 @RequestMapping("/")
@@ -40,8 +27,8 @@ public final class AppController {
 
 	@Autowired
 	MessageSource messageSource;
-        
-        @Autowired
+
+	@Autowired
 	FlightRouteService flightRouteService;
 
 	private static final String DEFAULT_MESSAGE_CODE = "SOME_DEFAULT";
@@ -104,40 +91,42 @@ public final class AppController {
 	 */
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public String homeGet(final ModelMap model) {
-            final FlightRoute flightRoute = new FlightRoute();
-            model.addAttribute("flightRoute", flightRoute);
-            return "home";
+		final FlightRoute flightRoute = new FlightRoute();
+		model.addAttribute("flightRoute", flightRoute);
+		return "home";
 	}
-        
-        @RequestMapping(value = { "/", "/home" }, method = RequestMethod.POST)
-	public String searchedFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
-            if (result.hasErrors()) {
-		return "/";
-	    }
-            flightRouteService.saveEntity(flightRoute);
-            return "flightSearchResult";
-        }
-        
-        @RequestMapping(value = { "/hellouser" }, method = RequestMethod.GET)
+
+	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.POST)
+	public String searchedFlights(@Valid final FlightRoute flightRoute, final BindingResult result,
+			final ModelMap model) {
+		if (result.hasErrors()) {
+			return "/";
+		}
+		flightRouteService.saveEntity(flightRoute);
+		return "flightSearchResult";
+	}
+
+	@RequestMapping(value = { "/hellouser" }, method = RequestMethod.GET)
 	public String userHomeGet(final ModelMap model) {
-            final FlightRoute flightRoute = new FlightRoute();
-            model.addAttribute("flightRoute", flightRoute);
-            final User user = new User();
-            model.addAttribute("user", user);
-            System.out.println(user.getFirstName());
-            return "hellouser";
+		final FlightRoute flightRoute = new FlightRoute();
+		model.addAttribute("flightRoute", flightRoute);
+		final User user = new User();
+		model.addAttribute("user", user);
+		System.out.println(user.getFirstName());
+		return "hellouser";
 	}
-        
-        @RequestMapping(value = { "/hellouser" }, method = RequestMethod.POST)
-	public String userSearchedFlights(@Valid final User user, @Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
-            if (result.hasErrors()) {
-		return "/hellouser";
-	    }
-            flightRouteService.saveEntity(flightRoute);
-            service.getStoredEntity(user);
-            model.addAttribute("firstName", user.getFirstName());
-            return "userFlightSearch";
-        }
+
+	@RequestMapping(value = { "/hellouser" }, method = RequestMethod.POST)
+	public String userSearchedFlights(@Valid final User user, @Valid final FlightRoute flightRoute,
+			final BindingResult result, final ModelMap model) {
+		if (result.hasErrors()) {
+			return "/hellouser";
+		}
+		flightRouteService.saveEntity(flightRoute);
+		service.getStoredEntity(user);
+		model.addAttribute("firstName", user.getFirstName());
+		return "userFlightSearch";
+	}
 
 	/*
 	 * This method will provide the medium to add a new user.
@@ -149,13 +138,13 @@ public final class AppController {
 		return "new";
 	}
 
-        @RequestMapping(value = { "/success" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/success" }, method = RequestMethod.GET)
 	public String success(final ModelMap model) {
 		final User user = new User();
 		model.addAttribute("user", user);
 		return "success";
 	}
-        
+
 	/*
 	 * This method will be called on form submission, handling POST request for
 	 * saving user in database. It also validates the user input
@@ -203,15 +192,14 @@ public final class AppController {
 			if ("Admin".equals(userType)) {
 				return "redirect:/admin/home";
 			} else if ("Customer".equals(userType)) {
-                                model.addAttribute("firstName", storedUser.getFirstName());
+				model.addAttribute("firstName", storedUser.getFirstName());
 				return "redirect:/hellouser";
 			}
-                        
-                // Changed user.getPassword() to something else since 
-                // user.GetPassword will return a hashed password
+
+			// Changed user.getPassword() to something else since
+			// user.GetPassword will return a hashed password
 		} else {
-			System.err.println("Invalid login with username/password combination: \"" + user.getEmailAddress()
-				+ "\"");
+			System.err.println("Invalid login with username/password combination: \"" + user.getEmailAddress() + "\"");
 		}
 		// Indicate to the user that they have an invalid username/password
 		// combination.
@@ -219,21 +207,19 @@ public final class AppController {
 		return "loginpage";
 	}
 
-        
-        /* 
-         * Reset password
-         * User user.phoneNumber as temporary password holder
-         * as can be seen from reset.jsp file
-        */
-        
-        @RequestMapping(value = { "/reset" }, method = RequestMethod.GET)
+	/*
+	 * Reset password User user.phoneNumber as temporary password holder as can
+	 * be seen from reset.jsp file
+	 */
+
+	@RequestMapping(value = { "/reset" }, method = RequestMethod.GET)
 	public String resetPasswd(final ModelMap model) {
 		final User user = new User();
 		model.addAttribute("user", user);
 		return "reset";
 	}
-        
-        @RequestMapping(value = { "/reset" }, method = RequestMethod.POST)
+
+	@RequestMapping(value = { "/reset" }, method = RequestMethod.POST)
 	public String resetPw(@Valid final User user, final BindingResult result, final ModelMap model) {
 
 		if (result.hasErrors()) {
@@ -243,49 +229,49 @@ public final class AppController {
 		// Determine if this is a valid user login or not.
 		User storedUser = service.getStoredEntity(user);
 		if (storedUser != null) {
-                    
-                    // If update password successfully, then redirect to loginpage
-                    storedUser.setPassword(SystemSupport.md5(user.getPasswordHolder()));
-                    service.updateEntity(storedUser);
-                    return "loginpage";
-           
-         
-                // Changed user.getPassword() to something else since 
-                // user.GetPassword will return a hashed password
+
+			// If update password successfully, then redirect to loginpage
+			storedUser.setPassword(SystemSupport.md5(user.getPasswordHolder()));
+			service.updateEntity(storedUser);
+			return "loginpage";
+
+			// Changed user.getPassword() to something else since
+			// user.GetPassword will return a hashed password
 		} else {
-			System.err.println("Invalid login with username/password combination: \"" + user.getEmailAddress()
-				+ "\"");
+			System.err.println("Invalid login with username/password combination: \"" + user.getEmailAddress() + "\"");
 		}
 		// Indicate to the user that they have an invalid username/password
 		// combination.
 		result.reject("loginPageForm", "Invalid Username and/or Password.");
 		return "home";
 	}
-        
-        @RequestMapping(value = { "/flightSearchResult" }, method = RequestMethod.POST)
-	public String searchFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
-            if (flightRoute.getDestination() == null){
-                return "home";
-            }
-            final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
-            model.addAttribute("flightRoutes", flightRoutes);
-            return "flightSearchResult";
-	}
-        
-        @RequestMapping(value = { "/userFlightSearch" }, method = RequestMethod.POST)
-	public String userSearchFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
-            if (flightRoute.getDestination() == null){
-                return "hellouser";
-            }
-            final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
-            model.addAttribute("flightRoutes", flightRoutes);
-            return "userFlightSearch";
+
+	@RequestMapping(value = { "/flightSearchResult" }, method = RequestMethod.POST)
+	public String searchFlights(@Valid final FlightRoute flightRoute, final BindingResult result,
+			final ModelMap model) {
+		if (flightRoute.getDestination() == null) {
+			return "home";
+		}
+		final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
+		model.addAttribute("flightRoutes", flightRoutes);
+		return "flightSearchResult";
 	}
 
-	/*@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		sdf.setLenient(true);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-	}*/
+	@RequestMapping(value = { "/userFlightSearch" }, method = RequestMethod.POST)
+	public String userSearchFlights(@Valid final FlightRoute flightRoute, final BindingResult result,
+			final ModelMap model) {
+		if (flightRoute.getDestination() == null) {
+			return "hellouser";
+		}
+		final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
+		model.addAttribute("flightRoutes", flightRoutes);
+		return "userFlightSearch";
+	}
+
+	/*
+	 * @InitBinder public void initBinder(WebDataBinder binder) {
+	 * SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	 * sdf.setLenient(true); binder.registerCustomEditor(Date.class, new
+	 * CustomDateEditor(sdf, true)); }
+	 */
 }
