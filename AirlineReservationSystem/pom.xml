@@ -114,6 +114,12 @@
 			<version>1.5.5</version>
 		</dependency>
 
+		<!-- Selenium -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>3.4.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -142,9 +148,9 @@
 					<groupId>org.eclipse.jetty</groupId>
 					<artifactId>jetty-maven-plugin</artifactId>
 					<version>9.2.11.v20150529</version>
-                                        <configuration>
-                                            <scanIntervalSeconds>5</scanIntervalSeconds>
-                                        </configuration>
+					<configuration>
+						<scanIntervalSeconds>5</scanIntervalSeconds>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
