@@ -22,7 +22,11 @@ body {
 <script>
     window.onload = function(){
         var email = localStorage.getItem("email");
-        console.log(localStorage.getItem("email"))
+        
+        var firstName = "${firstName}";
+        localStorage.setItem("firstName", firstName);
+        
+        document.getElementById("greet").innerHTML = "Hello, " + firstName;
     };
     
     var destinations = ['CID', 'ORD', 'ATL', 'SFO', 'LCY'];
@@ -89,9 +93,9 @@ body {
     
 </article>
 
-        <body>
-            Hello, ${firstName}!
-        </body>
+        <h3 id="greet"></h3>
+        
+        <a href="<c:url value='/home' />">Log Out</a>
 <div id="booking-module-tabs"
 	class="ui-tabs ui-widget ui-widget-content ui-corner-all">
 	<ul

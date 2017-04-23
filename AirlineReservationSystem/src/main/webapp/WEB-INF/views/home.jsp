@@ -20,6 +20,9 @@ body {
 </style>
 
 <script>
+    window.onload = function(){
+        localStorage.clear();
+    }
     var destinations = ['CID', 'ORD', 'ATL', 'SFO', 'LCY'];
     
     
