@@ -41,7 +41,7 @@
 
 	<form:form method="POST" modelAttribute="user" id="info">
 		<form:input type="hidden" path="id" id="id" />
-		<form:errors path="*" cssClass="error" />
+		<form:errors path="*" cssClass="error" id="formErrors" />
 		<table>
 			<tr>
 				<td><label for="emailAddress">Email: </label></td>
@@ -53,13 +53,14 @@
 				<td><form:password path="password" id="password" /></td>
 			</tr>
 			<tr>
-				<td colspan="3"><input type="submit" value="Log In" /></td>
+				<td colspan="3"><input type="submit" value="Log In"
+					id="submitButton" /></td>
 			</tr>
 		</table>
 	</form:form>
 
 	<a href="<c:url value='/register' />">Create New Account</a>
-        <br/>
-        <a href="<c:url value='/reset' />">Reset Password</a>
+	<br />
+	<a href="<c:url value='/reset' />">Reset Password</a>
 </body>
 </html>
