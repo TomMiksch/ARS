@@ -23,14 +23,12 @@ public final class BookingDaoImpl extends AbstractDao<Integer, Booking> implemen
 		return (List<Booking>) criteria.list();
 	}
 
-        @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public List<Booking> findSelectedEntities(final Booking entity) {
 		Criteria criteria = createEntityCriteria();
-                criteria.add(Restrictions.eq("origin", entity.getOrigin()));
-                criteria.add(Restrictions.eq("destination", entity.getDestination()));
 		return (List<Booking>) criteria.list();
 	}
-        
+
 	@Override
 	public void deleteEntityById(final String id) {
 		getSession().createSQLQuery("DELETE FROM flight_route WHERE id = " + id).executeUpdate();
