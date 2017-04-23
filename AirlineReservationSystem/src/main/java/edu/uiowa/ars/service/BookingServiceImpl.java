@@ -17,8 +17,8 @@ public final class BookingServiceImpl implements BookingService {
 	private BookingDao dao;
 
 	@Override
-	public void saveEntity(final Booking aircraft) {
-		dao.saveEntity(aircraft);
+	public void saveEntity(final Booking booking) {
+		dao.saveEntity(booking);
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public final class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
-	public void updateEntity(final Booking aircraft) {
+	public void updateEntity(final Booking booking) {
 	}
 
 	public List<Booking> findAllEntities() {

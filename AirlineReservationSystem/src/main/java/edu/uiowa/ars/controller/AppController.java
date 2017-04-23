@@ -278,7 +278,6 @@ public final class AppController {
             }
             final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
             model.addAttribute("flightRoutes", flightRoutes);
-            System.out.println(user.getEmailAddress() + "bottom");
             return "userFlightSearch";
 	}
 

@@ -31,8 +31,6 @@
 
             // Save the name in localStorage.
             localStorage.setItem("email", email);
-
-            console.log(localStorage.getItem("email"));
           });
         }
 

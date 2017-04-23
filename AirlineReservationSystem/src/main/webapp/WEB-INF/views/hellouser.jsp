@@ -190,7 +190,7 @@ body {
             <div class="margin-bottom">
                         <label for="seats">
                             Number of passengers
-                            <select name="passengers" onchange="calcTotalNoOfPsgrsOnHomePage('')" id="destination">
+                            <select name="seats" id="seats">
                                 <option value="1" >1</option>
                                 <option value="2" >2</option>
                                 <option value="3" >3</option>
@@ -224,10 +224,10 @@ body {
             </div>--%>
         </div>
         <div class="span4">
-            <label for="fhServiceClass" class="aa-display-none" >
+            <label for="seatClass" class="aa-display-none" >
                 Fare preference
-                <select id="fhServiceClass" name="serviceclass" >
-                    <option selected="selected" value="coach">Coach</option>
+                <select id="seatClass" name="seatClass" >
+                    <option selected="selected" value="coach">Economy</option>
                     <option value="business">Business</option>
                     <option value="first">First</option>
                 </select>
