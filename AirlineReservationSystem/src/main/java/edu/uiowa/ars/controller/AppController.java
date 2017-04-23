@@ -124,7 +124,6 @@ public final class AppController {
             model.addAttribute("flightRoute", flightRoute);
             final User user = new User();
             model.addAttribute("user", user);
-            System.out.println(user.getFirstName());
             return "hellouser";
 	}
         
@@ -135,7 +134,7 @@ public final class AppController {
 	    }
             flightRouteService.saveEntity(flightRoute);
             service.getStoredEntity(user);
-            model.addAttribute("firstName", user.getFirstName());
+            model.addAttribute("emailAddress", user.getEmailAddress());
             return "userFlightSearch";
         }
 
@@ -201,10 +200,10 @@ public final class AppController {
 		if (storedUser != null) {
 			final String userType = storedUser.getUserType();
 			if ("Admin".equals(userType)) {
-				return "redirect:/admin/home";
+				return "redirect:admin/home";
 			} else if ("Customer".equals(userType)) {
                                 model.addAttribute("firstName", storedUser.getFirstName());
-				return "redirect:/hellouser";
+				return "hellouser";
 			}
                         
                 // Changed user.getPassword() to something else since 
@@ -273,12 +272,13 @@ public final class AppController {
 	}
         
         @RequestMapping(value = { "/userFlightSearch" }, method = RequestMethod.POST)
-	public String userSearchFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
+	public String userSearchFlights(@Valid final User user, @Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
             if (flightRoute.getDestination() == null){
                 return "hellouser";
             }
             final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
             model.addAttribute("flightRoutes", flightRoutes);
+            System.out.println(user.getEmailAddress());
             return "userFlightSearch";
 	}
 

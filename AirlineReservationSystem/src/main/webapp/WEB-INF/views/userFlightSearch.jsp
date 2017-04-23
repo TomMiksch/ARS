@@ -46,6 +46,6 @@ tr:first-child {
 		</c:forEach>
 	</table>
 	<br />Go back to
-	<a href="<c:url value='home' />">home</a>
+	<a href="<c:url value='hellouser' />">home</a>
 </body>
 </html>

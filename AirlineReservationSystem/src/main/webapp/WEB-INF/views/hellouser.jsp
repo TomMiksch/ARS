@@ -81,9 +81,12 @@ body {
 	</form>
 -->
 
-    Hello, ${firstName}!
+    
 </article>
 
+        <body>
+            Hello, ${firstName}!
+        </body>
 <div id="booking-module-tabs"
 	class="ui-tabs ui-widget ui-widget-content ui-corner-all">
 	<ul
@@ -176,7 +179,7 @@ body {
          </div>
         <div class="span4">
             <div class="margin-bottom">
-                        <label for="passengers">
+                        <label for="seats">
                             Number of passengers
                             <select name="passengers" onchange="calcTotalNoOfPsgrsOnHomePage('')" id="destination">
                                 <option value="1" >1</option>
