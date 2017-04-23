@@ -45,8 +45,8 @@ public final class BookingServiceImpl implements BookingService {
 		// TODO
 		return null;
 	}
-        
-        public List<Booking> findSelectedEntities(final Booking entity) {
+
+	public List<Booking> findSelectedEntities(final Booking entity) {
 		return dao.findSelectedEntities(entity);
 	}
 
