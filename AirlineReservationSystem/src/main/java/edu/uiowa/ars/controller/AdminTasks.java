@@ -19,10 +19,12 @@ import edu.uiowa.ars.model.FlightRoute.Airports;
 import edu.uiowa.ars.model.FlightRoute.Frequency;
 import edu.uiowa.ars.model.User;
 import edu.uiowa.ars.model.User.Genders;
+import edu.uiowa.ars.model.Booking;
 import edu.uiowa.ars.model.User.UserTypes;
 import edu.uiowa.ars.service.AircraftService;
 import edu.uiowa.ars.service.FlightRouteService;
 import edu.uiowa.ars.service.UserService;
+import edu.uiowa.ars.service.BookingService;
 
 @Controller
 @RequestMapping("/admin")
@@ -36,6 +38,9 @@ public final class AdminTasks {
 
 	@Autowired
 	UserService userService;
+        
+        @Autowired
+        BookingService bookingService;
 
 	private static final String DEFAULT_MESSAGE_CODE = "SOME_DEFAULT";
 
@@ -186,5 +191,17 @@ public final class AdminTasks {
 		flightRouteService.saveEntity(flightRoute);
 		return "redirect:/admin/flightRouteList";
 	}
+        
+        @RequestMapping(value = { "/bookingList" }, method = RequestMethod.GET)
+	public String bookingListGet(final ModelMap model) {
+		final List<Booking> booking = bookingService.findAllEntities();
+		model.addAttribute("booking", booking);
+		return "admin/bookingList";
+	}
+
+	@RequestMapping(value = { "/delete-{id}-booking" }, method = RequestMethod.GET)
+	public String deleteBookingGet(@PathVariable final String id) {
+		bookingService.deleteEntityById(id);
+		return "redirect:/admin/bookingList";
+	}
 }
-//QByO+YsknxDWp9oe2HEZGw==

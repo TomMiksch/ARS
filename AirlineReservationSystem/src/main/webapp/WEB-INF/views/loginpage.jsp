@@ -23,7 +23,6 @@
 
         // Check for LocalStorage support.
         if (localStorage) {
-
           // Add an event listener for form submissions
           document.getElementById("info").addEventListener("submit", function() {
             // Get the value of the name field.

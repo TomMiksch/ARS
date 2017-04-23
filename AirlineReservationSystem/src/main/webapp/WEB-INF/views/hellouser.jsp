@@ -27,6 +27,19 @@ body {
         localStorage.setItem("firstName", firstName);
         
         document.getElementById("greet").innerHTML = "Hello, " + firstName;
+        
+        if (localStorage) {
+            // Add an event listener for form submissions
+            document.getElementById("reservationFlightSearchForm").addEventListener("submit", function() {
+            // Get the value of the name field.
+            var seats = document.getElementById("seats").value;
+            var seatClass = document.getElementById("seatClass").value;
+
+            // Save the name in localStorage.
+            localStorage.setItem("seats", seats);
+            localStorage.setItem("seatClass", seatClass);
+          });
+        }
     };
     
     var destinations = ['CID', 'ORD', 'ATL', 'SFO', 'LCY'];
@@ -227,9 +240,9 @@ body {
             <label for="seatClass" class="aa-display-none" >
                 Fare preference
                 <select id="seatClass" name="seatClass" >
-                    <option selected="selected" value="coach">Economy</option>
-                    <option value="business">Business</option>
-                    <option value="first">First</option>
+                    <option selected="selected" value="Economy">Economy</option>
+                    <option value="Business">Business</option>
+                    <option value="First">First</option>
                 </select>
             </label>
         </div>

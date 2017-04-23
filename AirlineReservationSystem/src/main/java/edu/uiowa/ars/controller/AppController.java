@@ -28,6 +28,8 @@ import edu.uiowa.ars.model.User;
 import edu.uiowa.ars.service.UserService;
 import edu.uiowa.ars.model.FlightRoute;
 import edu.uiowa.ars.service.FlightRouteService;
+import edu.uiowa.ars.model.Booking;
+import edu.uiowa.ars.service.BookingService;
 import javax.swing.JOptionPane;
 
 
@@ -128,13 +130,11 @@ public final class AppController {
 	}
         
         @RequestMapping(value = { "/hellouser" }, method = RequestMethod.POST)
-	public String userSearchedFlights(@Valid final User user, @Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
+	public String userSearchedFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
             if (result.hasErrors()) {
 		return "/hellouser";
 	    }
             flightRouteService.saveEntity(flightRoute);
-            service.getStoredEntity(user);
-            model.addAttribute("emailAddress", user.getEmailAddress());
             return "userFlightSearch";
         }
 
@@ -272,12 +272,13 @@ public final class AppController {
 	}
         
         @RequestMapping(value = { "/userFlightSearch" }, method = RequestMethod.POST)
-	public String userSearchFlights(@Valid final User user, @Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
+	public String userSearchFlights(@Valid final Booking booking, @Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
             if (flightRoute.getDestination() == null){
                 return "hellouser";
             }
             final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
             model.addAttribute("flightRoutes", flightRoutes);
+            //booking.setFlightNumber(flightRoute.getId());
             return "userFlightSearch";
 	}
 

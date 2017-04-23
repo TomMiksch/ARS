@@ -31,6 +31,6 @@ public final class BookingDaoImpl extends AbstractDao<Integer, Booking> implemen
 
 	@Override
 	public void deleteEntityById(final String id) {
-		getSession().createSQLQuery("DELETE FROM flight_route WHERE id = " + id).executeUpdate();
+		getSession().createSQLQuery("DELETE FROM booking WHERE id = " + id).executeUpdate();
 	}
 }
