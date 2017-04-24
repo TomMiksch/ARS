@@ -23,12 +23,30 @@ public final class FlightRouteDaoImpl extends AbstractDao<Integer, FlightRoute> 
 		return (List<FlightRoute>) criteria.list();
 	}
 
-        @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
 	public List<FlightRoute> findSelectedEntities(final FlightRoute entity) {
 		Criteria criteria = createEntityCriteria();
-                criteria.add(Restrictions.eq("origin", entity.getOrigin()));
-                criteria.add(Restrictions.eq("destination", entity.getDestination()));
-		return (List<FlightRoute>) criteria.list();
+        // check the non-stop flights
+        criteria.add(Restrictions.eq("origin", entity.getOrigin()));
+        criteria.add(Restrictions.eq("destination", entity.getDestination()));
+        // check the flights with stops (two stops)
+        // this is brute for loop to find all the two-stop flights
+        Criteria criteriaIntermediate = createEntityCriteria();
+        criteriaIntermediate.add(Restrictions.eq("origin", entity.getOrigin()));
+        List<FlightRoute> intermediateFlights = criteriaIntermediate.list();
+		
+        List<FlightRoute> flightWithStops = new List<FlightRoute>();
+        for(FlightRoute flight: intermediateFlights) {
+            Criteria tempCriteria = createEntityCriteria();
+            tempCriteria.add(Restrictions.eq("origin", flight.getDestination()));
+            tempCriteria.add(Restrictions.eq("destination", entity.getDestination()));
+            flightWithStops.addAll(tempCriteria.list());
+        }
+        List<FlightRoute> allFlights = new List<FlightRoute>();
+        allFlights.addAll(flightWithStops);
+        allFlights.addAll(criteria.list());
+        
+        return (List<FlightRoute>) allFlights;
 	}
         
 	@Override
