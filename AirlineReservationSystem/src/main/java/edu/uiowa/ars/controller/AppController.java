@@ -269,13 +269,12 @@ public final class AppController {
 	}
         
         @RequestMapping(value = { "/book-{id}-booking" }, method = RequestMethod.GET)
-	public String deleteBookingGet(@PathVariable final String id, final String email, 
-                final String seatClass, final int seats) {
+	public String deleteBookingGet(@PathVariable final String id) {
                 final Booking booking = new Booking();
-                booking.setUserEmail(email);
+                booking.setUserEmail("test@email.net");
                 booking.setFlightNumber(Integer.parseInt(id));
-                booking.setSeatClass(seatClass);
-                booking.setSeats(seats);
+                booking.setSeatClass("First");
+                booking.setSeats(6);
 		bookingService.saveEntity(booking);
 		return "redirect:/hellouser";
 	}

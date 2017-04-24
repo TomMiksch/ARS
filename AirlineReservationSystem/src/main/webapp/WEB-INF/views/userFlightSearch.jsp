@@ -20,7 +20,7 @@ tr:first-child {
     console.log(help1)
     console.log(help2)
     console.log(help3)
-    return deleteBookGet(help1, help2, help3);
+    //return deleteBookGet(help1, help2, help3);
 </script>
 
 </head>
