@@ -1,5 +1,6 @@
 package edu.uiowa.ars.controller;
 
+import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -19,6 +20,13 @@ import edu.uiowa.ars.model.Booking;
 import edu.uiowa.ars.service.FlightRouteService;
 import edu.uiowa.ars.service.UserService;
 import edu.uiowa.ars.service.BookingService;
+import java.net.CookieManager;
+import java.net.CookieStore;
+import java.net.HttpCookie;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Cookie;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
@@ -270,8 +278,13 @@ public final class AppController {
         
         @RequestMapping(value = { "/book-{id}-booking" }, method = RequestMethod.GET)
 	public String deleteBookingGet(@PathVariable final String id) {
+                /*int i = 0;
+                String[] things = {"Boner"};
+                HttpServletRequest request = null;
+                Cookie[] cookies = request.getCookies();
+                System.out.println("FUCK " + cookies[1]);*/
                 final Booking booking = new Booking();
-                booking.setUserEmail("test@email.net");
+                booking.setUserEmail("example@email.net");
                 booking.setFlightNumber(Integer.parseInt(id));
                 booking.setSeatClass("First");
                 booking.setSeats(6);

@@ -33,11 +33,11 @@ body {
             // Add an event listener for form submissions
             document.getElementById("reservationFlightSearchForm").addEventListener("submit", function() {
             // Get the value of the name field.
-            var seats = document.getElementById("seats").value;
+            var seats1 = document.getElementById("seats").value;
             var seatClass = document.getElementById("seatClass").value;
 
             // Save the name in localStorage.
-            localStorage.setItem("seats", seats);
+            localStorage.setItem("seats", seats1);
             localStorage.setItem("seatClass", seatClass);
           });
         }

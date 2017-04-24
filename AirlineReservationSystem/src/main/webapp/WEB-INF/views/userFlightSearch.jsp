@@ -20,10 +20,21 @@ tr:first-child {
     document.cookie = "email=" + help1;
     document.cookie = "seatClass=" + help2;
     document.cookie = "seats=" + help3;
-    console.log(help1)
-    console.log(help2)
-    console.log(readCookie('seats'))
-    //return deleteBookGet(help1, help2, help3);
+    
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
 </script>
 
 </head>
