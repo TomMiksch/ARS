@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import edu.uiowa.ars.SystemSupport;
 import edu.uiowa.ars.model.FlightRoute;
 import edu.uiowa.ars.model.User;
+import edu.uiowa.ars.model.Booking;
 import edu.uiowa.ars.service.FlightRouteService;
 import edu.uiowa.ars.service.UserService;
+import edu.uiowa.ars.service.BookingService;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequestMapping("/")
@@ -31,6 +34,9 @@ public final class AppController {
 	@Autowired
 	FlightRouteService flightRouteService;
 
+        @Autowired
+        BookingService bookingService;
+        
 	private static final String DEFAULT_MESSAGE_CODE = "SOME_DEFAULT";
 
 	/**
@@ -259,19 +265,19 @@ public final class AppController {
             }
             final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
             model.addAttribute("flightRoutes", flightRoutes);
-            //booking.setFlightNumber(flightRoute.getId());
             return "userFlightSearch";
 	}
-
-	@RequestMapping(value = { "/userFlightSearch" }, method = RequestMethod.POST)
-	public String userSearchFlights(@Valid final FlightRoute flightRoute, final BindingResult result,
-			final ModelMap model) {
-		if (flightRoute.getDestination() == null) {
-			return "hellouser";
-		}
-		final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
-		model.addAttribute("flightRoutes", flightRoutes);
-		return "userFlightSearch";
+        
+        @RequestMapping(value = { "/book-{id}-booking" }, method = RequestMethod.GET)
+	public String deleteBookingGet(@PathVariable final String id, final String email, 
+                final String seatClass, final int seats) {
+                final Booking booking = new Booking();
+                booking.setUserEmail(email);
+                booking.setFlightNumber(Integer.parseInt(id));
+                booking.setSeatClass(seatClass);
+                booking.setSeats(seats);
+		bookingService.saveEntity(booking);
+		return "redirect:/hellouser";
 	}
 
 	/*

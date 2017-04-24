@@ -27,6 +27,7 @@ body {
         localStorage.setItem("firstName", firstName);
         
         document.getElementById("greet").innerHTML = "Hello, " + firstName;
+        //document.getElementById("greet").innerHTML = localStorage.getItem("email");
         
         if (localStorage) {
             // Add an event listener for form submissions

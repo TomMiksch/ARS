@@ -13,10 +13,24 @@ tr:first-child {
 }
 </style>
 
+<script>
+    var help1 = localStorage.getItem("email");
+    var help2 = localStorage.getItem("seatClass");
+    var help3 = localStorage.getItem("seats");
+    console.log(help1)
+    console.log(help2)
+    console.log(help3)
+    return deleteBookGet(help1, help2, help3);
+</script>
+
 </head>
 
 <body>
 	<h2>Flights</h2>
+<form:form method="POST" modelAttribute="user" id="info">
+        <form:input type="hidden" path="userEmail" id="userEmail"/>
+        <form:input type="hidden" path="seatClass" id="seatClass"/>
+        <form:input type="hidden" path="seats" id="seats"/>
 	<table>
 		<tr>
 			<td>Aircraft</td>
@@ -40,12 +54,14 @@ tr:first-child {
 				<td>${flightRoute.startTime}</td>
 				<td>${flightRoute.endTime}</td>
 				<td>${flightRoute.frequency}</td>
-				<td><a
-					href="<c:url value='delete-${flightRoute.id}-flightRoute' />">Book Flight</a></td>
+				<td><a id="booknow"
+					href="<c:url value='book-${flightRoute.id}-booking' />">Book Flight</a></td>
 			</tr>
 		</c:forEach>
 	</table>
 	<br />Go back to
 	<a href="<c:url value='hellouser' />">home</a>
+        
+</form:form>
 </body>
 </html>
