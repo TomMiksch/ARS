@@ -17,9 +17,12 @@ tr:first-child {
     var help1 = localStorage.getItem("email");
     var help2 = localStorage.getItem("seatClass");
     var help3 = localStorage.getItem("seats");
+    document.cookie = "email=" + help1;
+    document.cookie = "seatClass=" + help2;
+    document.cookie = "seats=" + help3;
     console.log(help1)
     console.log(help2)
-    console.log(help3)
+    console.log(readCookie('seats'))
     //return deleteBookGet(help1, help2, help3);
 </script>
 
@@ -27,10 +30,9 @@ tr:first-child {
 
 <body>
 	<h2>Flights</h2>
-<form:form method="POST" modelAttribute="user" id="info">
-        <form:input type="hidden" path="userEmail" id="userEmail"/>
-        <form:input type="hidden" path="seatClass" id="seatClass"/>
-        <form:input type="hidden" path="seats" id="seats"/>
+        <form:input type="hidden" id="userEmail"/>
+        <form:input type="hidden" id="seatClass"/>
+        <form:input type="hidden" id="seats"/>
 	<table>
 		<tr>
 			<td>Aircraft</td>
