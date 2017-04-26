@@ -42,7 +42,7 @@
 	$(function() {
 		$("#beginDate").datepicker(
 				{
-					dateFormat : "mm-dd-yy",
+					dateFormat : "yy-mm-d",
 					minDate : 0,
 					maxDate : 365,
 					showOn : "button",
@@ -52,7 +52,7 @@
 					}
 				});
 		$("#endDate").datepicker({
-			dateFormat : "mm-dd-yy",
+			dateFormat : "yy-mm-dd",
 			minDate : 0,
 			maxDate : 365,
 			showOn : "button"
@@ -159,13 +159,13 @@
 			<tr>
 				<td><label for="beginDate">Beginning Date: </label></td>
 				<td><form:input type="text" path="beginDate" id="beginDate"
-						placeholder="mm-dd-yy" readonly="true" /></td>
+						placeholder="yyyy-mm-dd" readonly="true" /></td>
 				<td><form:errors path="beginDate" cssClass="error" /></td>
 			</tr>
 			<tr>
 				<td><label for="endDate">End Date: </label></td>
 				<td><form:input type="text" path="endDate" id="endDate"
-						placeholder="mm-dd-yy" readonly="true" /></td>
+						placeholder="yyyy-mm-dd" readonly="true" /></td>
 				<td><form:errors path="endDate" cssClass="error" /></td>
 			</tr>
 			<tr>

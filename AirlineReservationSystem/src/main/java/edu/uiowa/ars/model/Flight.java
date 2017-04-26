@@ -17,7 +17,7 @@ public final class Flight {
 	private int id;
 
 	@Column(name = "FLIGHT_ROUTE_ID", nullable = false)
-	private String flightRouteId;
+	private int flightRouteId;
 
 	@Size(min = 10, max = 10)
 	@Column(name = "DATE", nullable = false)
@@ -31,11 +31,11 @@ public final class Flight {
 		this.id = id;
 	}
 
-	public String getFlightRouteId() {
+	public int getFlightRouteId() {
 		return flightRouteId;
 	}
 
-	public void setFlightRouteId(final String flightRouteId) {
+	public void setFlightRouteId(final int flightRouteId) {
 		this.flightRouteId = flightRouteId;
 	}
 

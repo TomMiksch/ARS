@@ -64,8 +64,21 @@ Setting up the environment:
         start_time VARCHAR(20) NOT NULL,
         end_time VARCHAR(20) NOT NULL,
         frequency VARCHAR(10) NOT NULL,
+        begin_date VARCHAR(10) NOT NULL,
+        end_date VARCHAR(10) NOT NULL,
         PRIMARY KEY (id)
     );
+    "
+
+7. Add a table called 'FLIGHT' to the websystique database.
+    "
+    CREATE TABLE FLIGHT(
+        id INT NOT NULL auto_increment,
+        flight_route_id INT NOT NULL,
+        date VARCHAR(10) NOT NULL,
+        PRIMARY KEY (id)
+    );
+    "
     "
 
 7. Add the 'Booking' table

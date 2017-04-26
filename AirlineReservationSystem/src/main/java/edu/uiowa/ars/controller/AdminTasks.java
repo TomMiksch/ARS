@@ -1,9 +1,11 @@
 package edu.uiowa.ars.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,17 +16,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import edu.uiowa.ars.model.Aircraft;
 import edu.uiowa.ars.model.Aircraft.AircraftTypes;
+import edu.uiowa.ars.model.Booking;
+import edu.uiowa.ars.model.Flight;
 import edu.uiowa.ars.model.FlightRoute;
 import edu.uiowa.ars.model.FlightRoute.Airports;
 import edu.uiowa.ars.model.FlightRoute.Frequency;
 import edu.uiowa.ars.model.User;
 import edu.uiowa.ars.model.User.Genders;
-import edu.uiowa.ars.model.Booking;
 import edu.uiowa.ars.model.User.UserTypes;
 import edu.uiowa.ars.service.AircraftService;
-import edu.uiowa.ars.service.FlightRouteService;
-import edu.uiowa.ars.service.UserService;
 import edu.uiowa.ars.service.BookingService;
+import edu.uiowa.ars.service.FlightRouteService;
+import edu.uiowa.ars.service.FlightService;
+import edu.uiowa.ars.service.UserService;
 
 @Controller
 @RequestMapping("/admin")
@@ -41,6 +45,9 @@ public final class AdminTasks {
 
 	@Autowired
 	BookingService bookingService;
+
+	@Autowired
+	FlightService flightService;
 
 	private static final String DEFAULT_MESSAGE_CODE = "SOME_DEFAULT";
 
@@ -132,6 +139,14 @@ public final class AdminTasks {
 		return "redirect:/admin/aircraftList";
 	}
 
+	@RequestMapping(value = { "/flightList" }, method = RequestMethod.GET)
+	public String flightListGet(final ModelMap model) {
+		final List<FlightDataHolder> flights = flightService.findAllEntities().stream()
+				.map(flight -> new FlightDataHolder(flight)).collect(Collectors.toList());
+		model.addAttribute("flights", flights);
+		return "admin/flightList";
+	}
+
 	@RequestMapping(value = { "/flightRouteList" }, method = RequestMethod.GET)
 	public String flightRouteListGet(final ModelMap model) {
 		final List<FlightRoute> flightRoutes = flightRouteService.findAllEntities();
@@ -144,7 +159,7 @@ public final class AdminTasks {
 		flightRouteService.deleteEntityById(id);
 
 		// Delete all flights that are children of this route.
-
+		flightService.deleteAllFlightsFromRoute(id);
 		return "redirect:/admin/flightRouteList";
 	}
 
@@ -214,7 +229,18 @@ public final class AdminTasks {
 		flightRouteService.saveEntity(flightRoute);
 
 		// Create a set of flights based off of this route.
-		
+		LocalDate beginLocalDate = new LocalDate(beginDate);
+		final LocalDate endLocalDate = new LocalDate(endDate);
+
+		final Frequency freq = Frequency.valueOf(flightRoute.getFrequency().toUpperCase());
+		while (!beginLocalDate.isAfter(endLocalDate)) {
+			// Save the current date as a new flight.
+			final Flight flight = new Flight();
+			flight.setFlightRouteId(flightRoute.getId());
+			flight.setDate(beginLocalDate.toString("MM-dd-yyyy"));
+			flightService.saveEntity(flight);
+			beginLocalDate = freq.apply(beginLocalDate);
+		}
 
 		return "redirect:/admin/flightRouteList";
 	}
@@ -230,5 +256,70 @@ public final class AdminTasks {
 	public String deleteBookingGet(@PathVariable final String id) {
 		bookingService.deleteEntityById(id);
 		return "redirect:/admin/bookingList";
+	}
+
+	public final class FlightDataHolder {
+
+		private String aircraft;
+		private String date;
+		private int firstClassPrice;
+		private int businessClassPrice;
+
+		private int economyClassPrice;
+		private String origin;
+		private String destination;
+		private String startTime;
+		private String endTime;
+
+		public FlightDataHolder(final Flight flight) {
+			this.date = flight.getDate();
+			final FlightRoute route = flightRouteService.findAllEntities().stream()
+					.filter(flightRoute -> flightRoute.getId() == flight.getFlightRouteId()).findAny().get();
+			this.aircraft = route.getAircraft();
+			this.firstClassPrice = route.getFirstClassPrice();
+			this.businessClassPrice = route.getBusinessClassPrice();
+			this.economyClassPrice = route.getEconomyClassPrice();
+			this.origin = route.getOrigin();
+			this.destination = route.getDestination();
+			this.startTime = route.getStartTime();
+			this.endTime = route.getEndTime();
+		}
+
+		public int getBusinessClassPrice() {
+			return businessClassPrice;
+		}
+
+		public int getEconomyClassPrice() {
+			return economyClassPrice;
+		}
+
+		public String getOrigin() {
+			return origin;
+		}
+
+		public String getDestination() {
+			return destination;
+		}
+
+		public String getStartTime() {
+			return startTime;
+		}
+
+		public String getEndTime() {
+			return endTime;
+		}
+
+		public int getFirstClassPrice() {
+			return firstClassPrice;
+		}
+
+		public String getAircraft() {
+			return aircraft;
+		}
+
+		public String getDate() {
+			return date;
+		}
+
 	}
 }

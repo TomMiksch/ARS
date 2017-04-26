@@ -28,6 +28,8 @@ tr:first-child {
 			<td>Start Time</td>
 			<td>End Time</td>
 			<td>Frequency</td>
+			<td>Beginning</td>
+			<td>Ending</td>
 		</tr>
 		<c:forEach items="${flightRoutes}" var="flightRoute">
 			<tr>
@@ -40,6 +42,8 @@ tr:first-child {
 				<td>${flightRoute.startTime}</td>
 				<td>${flightRoute.endTime}</td>
 				<td>${flightRoute.frequency}</td>
+				<td>${flightRoute.beginDate}</td>
+				<td>${flightRoute.endDate}</td>
 				<td><a
 					href="<c:url value='delete-${flightRoute.id}-flightRoute' />">delete</a></td>
 			</tr>
