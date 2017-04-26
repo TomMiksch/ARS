@@ -19,13 +19,29 @@ tr:first-child {
 	<h2>List of Flights</h2>
 	<table>
 		<tr>
-			<td>Aircraft</td>
 			<td>Date</td>
+			<td>Aircraft</td>
+			<td>Aircraft</td>
+			<td>First Class Price</td>
+			<td>Business Class Price</td>
+			<td>Economy Class Price</td>
+			<td>Origin</td>
+			<td>Destination</td>
+			<td>Start Time</td>
+			<td>End Time</td>
 		</tr>
 		<c:forEach items="${flights}" var="flight">
 			<tr>
-				<td>${flight.aircraft}</td>
 				<td>${flight.date}</td>
+				<td>${flight.aircraft}</td>
+				<td>${flight.aircraft}</td>
+				<td>${flight.firstClassPrice}</td>
+				<td>${flight.businessClassPrice}</td>
+				<td>${flight.economyClassPrice}</td>
+				<td>${flight.origin}</td>
+				<td>${flight.destination}</td>
+				<td>${flight.startTime}</td>
+				<td>${flight.endTime}</td>
 			</tr>
 		</c:forEach>
 	</table>
