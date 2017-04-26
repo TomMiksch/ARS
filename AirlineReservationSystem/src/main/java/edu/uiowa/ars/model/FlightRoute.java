@@ -100,6 +100,14 @@ public final class FlightRoute {
 	@Column(name = "FREQUENCY", nullable = false)
 	private String frequency;
 
+	@Size(min = 10, max = 10)
+	@Column(name = "BEGIN_DATE", nullable = false)
+	private String beginDate;
+
+	@Size(min = 10, max = 10)
+	@Column(name = "END_DATE", nullable = false)
+	private String endDate;
+
 	public int getId() {
 		return id;
 	}
@@ -178,5 +186,21 @@ public final class FlightRoute {
 
 	public void setFrequency(final String frequency) {
 		this.frequency = frequency;
+	}
+
+	public String getBeginDate() {
+		return beginDate;
+	}
+
+	public void setBeginDate(final String beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(final String endDate) {
+		this.endDate = endDate;
 	}
 }

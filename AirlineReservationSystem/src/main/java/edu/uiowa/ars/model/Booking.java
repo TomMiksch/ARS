@@ -1,9 +1,5 @@
 package edu.uiowa.ars.model;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +18,7 @@ public final class Booking {
 	private int id;
 
 	@Size(min = 1, max = 50)
-        @Column(name = "USER_EMAIL", nullable = false)
+	@Column(name = "USER_EMAIL", nullable = false)
 	private String userEmail;
 
 	@Column(name = "FLIGHT_NUMBER", nullable = false)
@@ -43,35 +39,35 @@ public final class Booking {
 		this.id = id;
 	}
 
-	public String getUserEmail(){
-            return userEmail;
-        }
-        
-        public void setUserEmail(final String userEmail){
-            this.userEmail = userEmail;
-        }
-        
-        public int getFlightNumber(){
-            return flightNumber;
-        }
-        
-        public void setFlightNumber(final int flightNumber){
-            this.flightNumber = flightNumber;
-        }
-        
-        public String getSeatClass(){
-            return seatClass;
-        }
-        
-        public void setSeatClass(final String seatClass){
-            this.seatClass = seatClass;
-        }
-        
-        public int getSeats(){
-            return seats;
-        }
-        
-        public void setSeats(final int seats){
-            this.seats = seats;
-        }
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(final String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public int getFlightNumber() {
+		return flightNumber;
+	}
+
+	public void setFlightNumber(final int flightNumber) {
+		this.flightNumber = flightNumber;
+	}
+
+	public String getSeatClass() {
+		return seatClass;
+	}
+
+	public void setSeatClass(final String seatClass) {
+		this.seatClass = seatClass;
+	}
+
+	public int getSeats() {
+		return seats;
+	}
+
+	public void setSeats(final int seats) {
+		this.seats = seats;
+	}
 }

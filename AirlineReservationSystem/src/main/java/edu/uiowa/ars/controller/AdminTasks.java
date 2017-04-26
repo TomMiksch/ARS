@@ -38,9 +38,9 @@ public final class AdminTasks {
 
 	@Autowired
 	UserService userService;
-        
-        @Autowired
-        BookingService bookingService;
+
+	@Autowired
+	BookingService bookingService;
 
 	private static final String DEFAULT_MESSAGE_CODE = "SOME_DEFAULT";
 
@@ -142,6 +142,9 @@ public final class AdminTasks {
 	@RequestMapping(value = { "/delete-{id}-flightRoute" }, method = RequestMethod.GET)
 	public String deleteFlightRouteGet(@PathVariable final String id) {
 		flightRouteService.deleteEntityById(id);
+
+		// Delete all flights that are children of this route.
+
 		return "redirect:/admin/flightRouteList";
 	}
 
@@ -187,12 +190,36 @@ public final class AdminTasks {
 			return "admin/addFlightRoute";
 		}
 
-		// TODO how should duplicates be checked for?
+		// Make sure an beginning date was entered.
+		final String beginDate = flightRoute.getBeginDate();
+		if (beginDate == null || beginDate.isEmpty()) {
+			result.rejectValue("beginDate", DEFAULT_MESSAGE_CODE, "Begin date is required.");
+			model.addAttribute("aircrafts", aircraftService.getAllSymbols());
+			model.addAttribute("airports", Airports.getAllIdentifiers());
+			model.addAttribute("frequencies", Frequency.getAllIdentifiers());
+			return "admin/addFlightRoute";
+		}
+
+		// Make sure an ending time was entered.
+		final String endDate = flightRoute.getEndDate();
+		if (endDate == null || endDate.isEmpty()) {
+			result.rejectValue("endDate", DEFAULT_MESSAGE_CODE, "End date is required.");
+			model.addAttribute("aircrafts", aircraftService.getAllSymbols());
+			model.addAttribute("airports", Airports.getAllIdentifiers());
+			model.addAttribute("frequencies", Frequency.getAllIdentifiers());
+			return "admin/addFlightRoute";
+		}
+
+		// Save the flight route.
 		flightRouteService.saveEntity(flightRoute);
+
+		// Create a set of flights based off of this route.
+		
+
 		return "redirect:/admin/flightRouteList";
 	}
-        
-        @RequestMapping(value = { "/bookingList" }, method = RequestMethod.GET)
+
+	@RequestMapping(value = { "/bookingList" }, method = RequestMethod.GET)
 	public String bookingListGet(final ModelMap model) {
 		final List<Booking> booking = bookingService.findAllEntities();
 		model.addAttribute("booking", booking);
