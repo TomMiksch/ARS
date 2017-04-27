@@ -263,9 +263,11 @@ public final class AdminTasks {
 		return "redirect:/admin/bookingList";
 	}
         
-        @RequestMapping(value = "/confirm-{user_email:.+}", method = RequestMethod.GET)
-	public String confirmBookingGet(@PathVariable("user_email") final String email) {
+        @RequestMapping(value = "/confirm-{user_email:.+}/{id}", method = RequestMethod.GET)
+	public String confirmBookingGet(@PathVariable("user_email") final String email,
+                    @PathVariable("id") final String id) {
 		bookingService.confirmEntityByEmail(email);
+                bookingService.deleteEntityById(id);
 		return "redirect:/admin/bookingList";
 	}
         

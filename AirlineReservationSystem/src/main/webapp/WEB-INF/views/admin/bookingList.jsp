@@ -33,7 +33,7 @@ tr:first-child {
 				<td><a
 					href="<c:url value='delete-${bookings.id}-booking' />">Delete Booking</a></td>
 				<td><a
-					href="<c:url value='confirm-${bookings.userEmail}' />">Confirm Booking</a></td>
+					href="<c:url value='confirm-${bookings.userEmail}/${bookings.id}' />">Confirm Booking</a></td>
 				
 			</tr>
 		</c:forEach>
