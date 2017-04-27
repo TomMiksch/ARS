@@ -264,14 +264,34 @@ public final class AdminTasks {
 		// Set daily to be the default frequency.
 		model.addAttribute("flightRoute", flightRoute);
                 model.addAttribute("flightID", flightRouteService.getAllSymbols());
-		model.addAttribute("airports", Airports.getAllIdentifiers());
-		model.addAttribute("frequencies", Frequency.getAllIdentifiers());
 		return "admin/editFlights";
 	}
+        
+        @RequestMapping(value = { "/editFlights" }, method = RequestMethod.POST)
+	public String editFlightsPost(@Valid final FlightRoute flightRoute, final BindingResult result,
+			final ModelMap model) {
+                if (result.hasErrors()) {
+			return "editFlights";
+		}
+                
+                final FlightRoute storedFlight = flightRouteService.getStoredEntity(flightRoute);
+                if (storedFlight != null){
+                    final int flightID = storedFlight.getId();
+                    storedFlight.setFirstClassPrice(flightRoute.getFirstClassPrice());
+                    storedFlight.setBusinessClassPrice(flightRoute.getBusinessClassPrice());
+                    storedFlight.setEconomyClassPrice(flightRoute.getEconomyClassPrice());
+                } else {
+			System.err.println("Flight Not Found");
+		}
+                
+                flightRouteService.updateEntity(storedFlight);
+                return "redirect:/admin/flightRouteList";
+        }
 
 	public final class FlightDataHolder {
 
 		private String aircraft;
+                private String symbol;
 		private String date;
 		private int firstClassPrice;
 		private int businessClassPrice;
@@ -287,6 +307,7 @@ public final class AdminTasks {
 			final FlightRoute route = flightRouteService.findAllEntities().stream()
 					.filter(flightRoute -> flightRoute.getId() == flight.getFlightRouteId()).findAny().get();
 			this.aircraft = route.getAircraft();
+                        this.symbol = route.getSymbol();
 			this.firstClassPrice = route.getFirstClassPrice();
 			this.businessClassPrice = route.getBusinessClassPrice();
 			this.economyClassPrice = route.getEconomyClassPrice();
@@ -331,6 +352,11 @@ public final class AdminTasks {
 		public String getDate() {
 			return date;
 		}
+                
+                public String getSymbol(){
+                        return symbol;
+                }
+
 
 	}
 }

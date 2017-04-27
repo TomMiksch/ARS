@@ -20,6 +20,7 @@ tr:first-child {
 	<table>
 		<tr>
 			<td>Aircraft</td>
+                        <td>Flight Symbol</td>
 			<td>First Class Price</td>
 			<td>Business Class Price</td>
 			<td>Economy Class Price</td>
@@ -34,6 +35,7 @@ tr:first-child {
 		<c:forEach items="${flightRoutes}" var="flightRoute">
 			<tr>
 				<td>${flightRoute.aircraft}</td>
+                                <td>${flightRoute.symbol}</td>
 				<td>${flightRoute.firstClassPrice}</td>
 				<td>${flightRoute.businessClassPrice}</td>
 				<td>${flightRoute.economyClassPrice}</td>

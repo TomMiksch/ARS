@@ -62,4 +62,15 @@ public final class FlightRouteDaoImpl extends AbstractDao<Integer, FlightRoute> 
 	public void deleteEntityById(final String id) {
 		getSession().createSQLQuery("DELETE FROM flight_route WHERE id = " + id).executeUpdate();
 	}
+        
+        @Override
+        public void updateEntity(final FlightRoute entity){
+                int id = entity.getId();
+                int first = entity.getFirstClassPrice();
+                int business = entity.getBusinessClassPrice();
+                int economy = entity.getEconomyClassPrice();
+                getSession().createSQLQuery("UPDATE flight_route SET first_class_price = " + first +
+                    ", business_class_price = " + business + ", economy_class_price = " + economy + 
+                        " WHERE id = " + id).executeUpdate();
+        }
 }

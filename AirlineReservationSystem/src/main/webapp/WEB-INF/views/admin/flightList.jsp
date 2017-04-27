@@ -21,7 +21,7 @@ tr:first-child {
 		<tr>
 			<td>Date</td>
 			<td>Aircraft</td>
-			<td>Aircraft</td>
+			<td>Symbol</td>
 			<td>First Class Price</td>
 			<td>Business Class Price</td>
 			<td>Economy Class Price</td>
@@ -34,7 +34,7 @@ tr:first-child {
 			<tr>
 				<td>${flight.date}</td>
 				<td>${flight.aircraft}</td>
-				<td>${flight.aircraft}</td>
+				<td>${flight.symbol}</td>
 				<td>${flight.firstClassPrice}</td>
 				<td>${flight.businessClassPrice}</td>
 				<td>${flight.economyClassPrice}</td>

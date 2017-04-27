@@ -1,5 +1,6 @@
 package edu.uiowa.ars.service;
 
+import edu.uiowa.ars.SystemSupport;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.uiowa.ars.dao.FlightRouteDao;
 import edu.uiowa.ars.model.FlightRoute;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service("flightRouteService")
@@ -43,6 +45,7 @@ public final class FlightRouteServiceImpl implements FlightRouteService {
 
 	@Override
 	public void updateEntity(final FlightRoute aircraft) {
+                dao.updateEntity(aircraft);
 	}
 
 	public List<FlightRoute> findAllEntities() {
@@ -51,14 +54,28 @@ public final class FlightRouteServiceImpl implements FlightRouteService {
 
 	@Override
 	public boolean isEquivalentInDb(final FlightRoute entered, final FlightRoute db) {
-		// TODO
+		final String enteredSymbol = entered.getSymbol();
+
+		if ((enteredSymbol != null)) {
+			return enteredSymbol.equals(db.getSymbol());
+		}
 		return false;
 	}
 
 	@Override
 	public FlightRoute getStoredEntity(FlightRoute enteredEntity) {
-		// TODO
-		return null;
+		final List<FlightRoute> allEntries = findAllEntities();
+		if ((allEntries == null) || (allEntries.isEmpty())) {
+			return null;
+		} else {
+			final Optional<FlightRoute> result = allEntries.stream().filter(entry -> isEquivalentInDb(enteredEntity, entry))
+					.findAny();
+			if (result.isPresent()) {
+				return result.get();
+			} else {
+				return null;
+			}
+		}
 	}
         
         public List<FlightRoute> findSelectedEntities(final FlightRoute entity) {
