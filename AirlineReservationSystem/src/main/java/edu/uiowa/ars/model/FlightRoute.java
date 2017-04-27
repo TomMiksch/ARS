@@ -72,6 +72,10 @@ public final class FlightRoute {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+        
+        @Size(min = 1, max = 10)
+	@Column(name = "SYMBOL", nullable = false)
+	private String symbol;
 
 	@Size(min = 1, max = 10)
 	@Column(name = "AIRCRAFT", nullable = false)
@@ -121,6 +125,14 @@ public final class FlightRoute {
 
 	public void setId(final int id) {
 		this.id = id;
+	}
+
+	public String getSymbol() {
+		return symbol;
+	}
+
+	public void setSymbol(final String symbol) {
+		this.symbol = symbol;
 	}
 
 	public String getAircraft() {

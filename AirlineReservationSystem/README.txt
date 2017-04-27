@@ -55,6 +55,7 @@ Setting up the environment:
     "
     CREATE TABLE FLIGHT_ROUTE(
         id INT NOT NULL auto_increment,
+        symbol VARCHAR(10) NOT NULL,
         aircraft VARCHAR(10) NOT NULL,
         first_class_price INT NOT NULL,
         business_class_price INT NOT NULL,

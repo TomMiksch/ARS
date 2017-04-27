@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.uiowa.ars.dao.FlightRouteDao;
 import edu.uiowa.ars.model.FlightRoute;
+import java.util.stream.Collectors;
 
 @Service("flightRouteService")
 @Transactional
@@ -18,6 +19,20 @@ public final class FlightRouteServiceImpl implements FlightRouteService {
 
 	@Override
 	public void saveEntity(final FlightRoute aircraft) {
+                final List<FlightRoute> flightList = findAllEntities();
+		if ((flightList == null) || (flightList.size() == 0)) {
+			aircraft.setSymbol("001");
+		} else {
+			final String prevSymbol = flightList.get(flightList.size() - 1).getSymbol();
+			try {
+				final int newSymbolNum = Integer.parseInt(prevSymbol) + 1;
+				aircraft.setSymbol(String.format("%03d", newSymbolNum));
+			} catch (final Exception e) {
+				System.err.println("Failed to parse flight symbol: " + prevSymbol);
+				throw e;
+			}
+		}
+            
 		dao.saveEntity(aircraft);
 	}
 
@@ -48,6 +63,11 @@ public final class FlightRouteServiceImpl implements FlightRouteService {
         
         public List<FlightRoute> findSelectedEntities(final FlightRoute entity) {
 		return dao.findSelectedEntities(entity);
+	}
+        
+        @Override
+	public List<String> getAllSymbols() {
+		return findAllEntities().stream().map(FlightRoute::getSymbol).collect(Collectors.toList());
 	}
 
 }

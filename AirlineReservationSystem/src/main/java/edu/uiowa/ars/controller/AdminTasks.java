@@ -257,6 +257,17 @@ public final class AdminTasks {
 		bookingService.deleteEntityById(id);
 		return "redirect:/admin/bookingList";
 	}
+        
+        @RequestMapping(value = {"/editFlights" }, method = RequestMethod.GET)
+        public String editFlights(final ModelMap model) {
+                final FlightRoute flightRoute = new FlightRoute();
+		// Set daily to be the default frequency.
+		model.addAttribute("flightRoute", flightRoute);
+                model.addAttribute("flightID", flightRouteService.getAllSymbols());
+		model.addAttribute("airports", Airports.getAllIdentifiers());
+		model.addAttribute("frequencies", Frequency.getAllIdentifiers());
+		return "admin/editFlights";
+	}
 
 	public final class FlightDataHolder {
 
