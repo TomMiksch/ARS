@@ -77,6 +77,9 @@ Setting up the environment:
         id INT NOT NULL auto_increment,
         flight_route_id INT NOT NULL,
         date VARCHAR(10) NOT NULL,
+        first_class_seats INT NOT NULL,
+        business_class_seats INT NOT NULL,
+        economy_class_seats INT NOT NULL,
         PRIMARY KEY (id)
     );
     "

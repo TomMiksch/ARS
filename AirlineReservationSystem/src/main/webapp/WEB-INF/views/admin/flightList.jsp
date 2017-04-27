@@ -25,6 +25,9 @@ tr:first-child {
 			<td>First Class Price</td>
 			<td>Business Class Price</td>
 			<td>Economy Class Price</td>
+			<%--<td>First Class Seats</td>
+			<td>Business Class Seats</td>
+			<td>Economy Class Seats</td>--%>
 			<td>Origin</td>
 			<td>Destination</td>
 			<td>Start Time</td>
@@ -38,6 +41,9 @@ tr:first-child {
 				<td>${flight.firstClassPrice}</td>
 				<td>${flight.businessClassPrice}</td>
 				<td>${flight.economyClassPrice}</td>
+				<%--<td>${flight.firstClassSeats}</td>
+				<td>${flight.businessClassSeats}</td>
+				<td>${flight.economyClassSeats}</td>--%>
 				<td>${flight.origin}</td>
 				<td>${flight.destination}</td>
 				<td>${flight.startTime}</td>

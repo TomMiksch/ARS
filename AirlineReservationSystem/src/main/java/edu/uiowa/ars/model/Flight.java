@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -22,6 +23,18 @@ public final class Flight {
 	@Size(min = 10, max = 10)
 	@Column(name = "DATE", nullable = false)
 	private String date;
+
+	@Min(value = 0)
+	@Column(name = "FIRST_CLASS_SEATS", nullable = false)
+	private int firstClassSeats;
+
+	@Min(value = 0)
+	@Column(name = "BUSINESS_CLASS_SEATS", nullable = false)
+	private int businessClassSeats;
+
+	@Min(value = 0)
+	@Column(name = "ECONOMY_CLASS_SEATS", nullable = false)
+	private int economyClassSeats;
 
 	public int getId() {
 		return id;
@@ -45,6 +58,30 @@ public final class Flight {
 
 	public void setDate(final String date) {
 		this.date = date;
+	}
+
+	public int getFirstClassSeats() {
+		return firstClassSeats;
+	}
+
+	public void setFirstClassSeats(final int firstClassSeats) {
+		this.firstClassSeats = firstClassSeats;
+	}
+
+	public int getBusinessClassSeats() {
+		return businessClassSeats;
+	}
+
+	public void setBusinessClassSeats(final int businessClassSeats) {
+		this.businessClassSeats = businessClassSeats;
+	}
+
+	public int getEconomyClassSeats() {
+		return economyClassSeats;
+	}
+
+	public void setEconomyClassSeats(final int economyClassSeats) {
+		this.economyClassSeats = economyClassSeats;
 	}
 
 }
