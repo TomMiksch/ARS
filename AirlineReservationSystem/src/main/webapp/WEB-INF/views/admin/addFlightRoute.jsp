@@ -15,7 +15,9 @@
 }
 </style>
 
-<script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
 	var flightTimes = [ "00:00", "00:30", "01:00", "01:30", "02:00", "02:30",
 			"03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00",
 			"06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30",
@@ -36,6 +38,26 @@
 		}
 		displayFlightTimes();
 	};
+
+	$(function() {
+		$("#beginDate").datepicker(
+				{
+					dateFormat : "yy-mm-d",
+					minDate : 0,
+					maxDate : 365,
+					showOn : "button",
+					onSelect : function(dateText, inst) {
+						$("#endDate").datepicker("option", "minDate",
+								$("#beginDate").datepicker("getDate"));
+					}
+				});
+		$("#endDate").datepicker({
+			dateFormat : "yy-mm-dd",
+			minDate : 0,
+			maxDate : 365,
+			showOn : "button"
+		});
+	});
 
 	function displayDestinations() {
 		// Remove all current elements in the destinationBox.
@@ -133,6 +155,18 @@
 				<td><label for="frequency">Frequency: </label></td>
 				<td><form:radiobuttons path="frequency" id="frequency"
 						items="${frequencies}" /></td>
+			</tr>
+			<tr>
+				<td><label for="beginDate">Beginning Date: </label></td>
+				<td><form:input type="text" path="beginDate" id="beginDate"
+						placeholder="yyyy-mm-dd" readonly="true" /></td>
+				<td><form:errors path="beginDate" cssClass="error" /></td>
+			</tr>
+			<tr>
+				<td><label for="endDate">End Date: </label></td>
+				<td><form:input type="text" path="endDate" id="endDate"
+						placeholder="yyyy-mm-dd" readonly="true" /></td>
+				<td><form:errors path="endDate" cssClass="error" /></td>
 			</tr>
 			<tr>
 				<td colspan="3"><input type="submit" value="Submit" /></td>

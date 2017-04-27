@@ -28,6 +28,8 @@
 	<br />Flight Routes:
 	<a href="<c:url value='flightRouteList' />">List</a>
 	<a href="<c:url value='addFlightRoute' />">Add</a>
+	<br />Flights:
+	<a href="<c:url value='flightList' />">List</a>
 	<br />Bookings:
 	<a href="<c:url value='bookingList' />">List</a>
 </body>

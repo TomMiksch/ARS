@@ -1,6 +1,7 @@
 package edu.uiowa.ars.model;
 
 import java.util.List;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -12,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+
+import org.joda.time.LocalDate;
 
 @Entity
 @Table(name = "FLIGHT_ROUTE")
@@ -40,15 +43,17 @@ public final class FlightRoute {
 	}
 
 	public enum Frequency {
-		DAILY("Daily"),
-		WEEKLY("Weekly"),
-		BIWEEKLY("Biweekly"),
-		MONTHLY("Monthly");
+		DAILY("Daily", date -> date.plusDays(1)),
+		WEEKLY("Weekly", date -> date.plusWeeks(1)),
+		BIWEEKLY("Biweekly", date -> date.plusWeeks(2)),
+		MONTHLY("Monthly", date -> date.plusMonths(1));
 
 		private final String identifier;
+		private final UnaryOperator<LocalDate> dateFunction;
 
-		Frequency(final String identifier) {
+		Frequency(final String identifier, final UnaryOperator<LocalDate> dateFunction) {
 			this.identifier = identifier;
+			this.dateFunction = dateFunction;
 		}
 
 		public String getIdentifier() {
@@ -57,6 +62,10 @@ public final class FlightRoute {
 
 		public static List<String> getAllIdentifiers() {
 			return Stream.of(Frequency.values()).map(Frequency::getIdentifier).collect(Collectors.toList());
+		}
+
+		public LocalDate apply(final LocalDate orig) {
+			return dateFunction.apply(orig);
 		}
 	}
 
@@ -99,6 +108,12 @@ public final class FlightRoute {
 	@Size(min = 1, max = 10)
 	@Column(name = "FREQUENCY", nullable = false)
 	private String frequency;
+
+	@Column(name = "BEGIN_DATE", nullable = false)
+	private String beginDate;
+
+	@Column(name = "END_DATE", nullable = false)
+	private String endDate;
 
 	public int getId() {
 		return id;
@@ -178,5 +193,21 @@ public final class FlightRoute {
 
 	public void setFrequency(final String frequency) {
 		this.frequency = frequency;
+	}
+
+	public String getBeginDate() {
+		return beginDate;
+	}
+
+	public void setBeginDate(final String beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(final String endDate) {
+		this.endDate = endDate;
 	}
 }

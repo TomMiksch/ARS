@@ -1,13 +1,13 @@
 package edu.uiowa.ars.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import edu.uiowa.ars.model.FlightRoute;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
 
 @Repository("flightRouteDao")
 public final class FlightRouteDaoImpl extends AbstractDao<Integer, FlightRoute> implements FlightRouteDao {
@@ -23,14 +23,41 @@ public final class FlightRouteDaoImpl extends AbstractDao<Integer, FlightRoute> 
 		return (List<FlightRoute>) criteria.list();
 	}
 
-        @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public List<FlightRoute> findSelectedEntities(final FlightRoute entity) {
 		Criteria criteria = createEntityCriteria();
+                List<FlightRoute> allFlights = new ArrayList<>();
+		// check the non-stop flights
+		if (entity.getBeginDate() != null) {
+                    criteria.add(Restrictions.eq("begin_date",entity.getBeginDate()));
+                }
                 criteria.add(Restrictions.eq("origin", entity.getOrigin()));
                 criteria.add(Restrictions.eq("destination", entity.getDestination()));
-		return (List<FlightRoute>) criteria.list();
+
+                // check the flights with stops (two stops)
+                // this is brute for loop to find all the two-stop flights
+                Criteria criteriaIntermediate = createEntityCriteria();
+                criteriaIntermediate.add(Restrictions.eq("origin", entity.getOrigin()));
+                List<FlightRoute> intermediateFlights = criteriaIntermediate.list();
+
+                List<FlightRoute> flightWithStops = new ArrayList<>();
+                for (FlightRoute flight : intermediateFlights) {
+                    Criteria tempCriteria = createEntityCriteria();
+                    tempCriteria.add(Restrictions.eq("origin", flight.getDestination()));
+                    tempCriteria.add(Restrictions.eq("destination", entity.getDestination()));
+                    if (tempCriteria.list() != null) {
+                        if (!tempCriteria.list().isEmpty()) { 
+                            flightWithStops.addAll(tempCriteria.list());
+                            flightWithStops.add(flight);
+                        }
+                    }
+                }
+		allFlights.addAll(flightWithStops);
+		allFlights.addAll(criteria.list());
+                
+		return (List<FlightRoute>) allFlights;
 	}
-        
+
 	@Override
 	public void deleteEntityById(final String id) {
 		getSession().createSQLQuery("DELETE FROM flight_route WHERE id = " + id).executeUpdate();
