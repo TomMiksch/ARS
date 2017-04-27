@@ -32,6 +32,8 @@ tr:first-child {
 				<td>${bookings.seats}</td>
 				<td><a
 					href="<c:url value='delete-${bookings.id}-booking' />">Delete Booking</a></td>
+				<td><a
+					href="<c:url value='confirm-${bookings.userEmail}' />">Confirm Booking</a></td>
 				
 			</tr>
 		</c:forEach>

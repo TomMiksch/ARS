@@ -279,12 +279,12 @@ public final class AppController {
         @RequestMapping(value = { "/book-{id}-booking" }, method = RequestMethod.GET)
 	public String deleteBookingGet(@PathVariable final String id) {
                 /*int i = 0;
-                String[] things = {"Boner"};
+                String[] things = {"No"};
                 HttpServletRequest request = null;
                 Cookie[] cookies = request.getCookies();
                 System.out.println("FUCK " + cookies[1]);*/
                 final Booking booking = new Booking();
-                booking.setUserEmail("example@email.net");
+                booking.setUserEmail("thomas-miksch@uiowa.edu");
                 booking.setFlightNumber(Integer.parseInt(id));
                 booking.setSeatClass("First");
                 booking.setSeats(6);

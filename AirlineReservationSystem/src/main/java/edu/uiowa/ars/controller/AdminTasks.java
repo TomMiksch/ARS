@@ -263,6 +263,12 @@ public final class AdminTasks {
 		return "redirect:/admin/bookingList";
 	}
         
+        @RequestMapping(value = "/confirm-{user_email:.+}", method = RequestMethod.GET)
+	public String confirmBookingGet(@PathVariable("user_email") final String email) {
+		bookingService.confirmEntityByEmail(email);
+		return "redirect:/admin/bookingList";
+	}
+        
         @RequestMapping(value = {"/editFlights" }, method = RequestMethod.GET)
         public String editFlights(final ModelMap model) {
                 final FlightRoute flightRoute = new FlightRoute();
