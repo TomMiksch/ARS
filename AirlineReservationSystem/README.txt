@@ -67,7 +67,7 @@ Setting up the environment:
         frequency VARCHAR(10) NOT NULL,
         begin_date VARCHAR(10) NOT NULL,
         end_date VARCHAR(10) NOT NULL,
-        PRIMARY KEY (id)
+        PRIMARY KEY (id) 
     );
     "
 
