@@ -221,10 +221,10 @@ body {
     <div class="row-form aa-flightSearchForm-datesRow">
         <div class="span4">
             <div>
-                <label for="aa-leavingOn">
+                <label for="date">
                     Depart <span class="icon-required" aria-hidden="true"></span><span class="hidden-accessible">, required.</span>
                     <span class="datePicker">(date format mm/dd/yyyy)</span>
-                    <input id="startTime" name="departDate" type="date"/>
+                    <input id="date" name="date" type="date"/>
                 </label>
             </div>
         </div>

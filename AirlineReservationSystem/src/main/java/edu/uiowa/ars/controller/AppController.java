@@ -17,12 +17,15 @@ import edu.uiowa.ars.SystemSupport;
 import edu.uiowa.ars.model.FlightRoute;
 import edu.uiowa.ars.model.User;
 import edu.uiowa.ars.model.Booking;
+import edu.uiowa.ars.model.Flight;
 import edu.uiowa.ars.service.FlightRouteService;
 import edu.uiowa.ars.service.UserService;
 import edu.uiowa.ars.service.BookingService;
+import edu.uiowa.ars.service.FlightService;
 import java.net.CookieManager;
 import java.net.CookieStore;
 import java.net.HttpCookie;
+import java.util.stream.Collectors;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +47,9 @@ public final class AppController {
 
         @Autowired
         BookingService bookingService;
+        
+        @Autowired
+        FlightService flightService;
         
 	private static final String DEFAULT_MESSAGE_CODE = "SOME_DEFAULT";
 
@@ -122,8 +128,8 @@ public final class AppController {
 
 	@RequestMapping(value = { "/hellouser" }, method = RequestMethod.GET)
 	public String userHomeGet(final ModelMap model) {
-            final FlightRoute flightRoute = new FlightRoute();
-            model.addAttribute("flightRoute", flightRoute);
+            final Flight flight = new Flight();
+            model.addAttribute("flight", flight);
             final User user = new User();
             model.addAttribute("user", user);
             return "hellouser";
@@ -257,22 +263,22 @@ public final class AppController {
 	}
         
         @RequestMapping(value = { "/flightSearchResult" }, method = RequestMethod.POST)
-	public String searchFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
-            if (flightRoute.getDestination() == null){
+	public String searchFlights(@Valid final Flight flight, final BindingResult result, final ModelMap model) {
+            if (flight.getDestination() == null){
                 return "home";
             }
-            final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
-            model.addAttribute("flightRoutes", flightRoutes);
+                final List<Flight> flights = flightService.findSelectedEntities(flight);
+		model.addAttribute("flightRoutes", flights);
             return "flightSearchResult";
 	}
         
         @RequestMapping(value = { "/userFlightSearch" }, method = RequestMethod.POST)
-	public String userSearchFlights(@Valid final Booking booking, @Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
-            if (flightRoute.getDestination() == null){
+	public String userSearchFlights(@Valid final Booking booking, @Valid final Flight flight, final BindingResult result, final ModelMap model) {
+            if (flight.getDestination() == null){
                 return "hellouser";
             }
-            final List<FlightRoute> flightRoutes = flightRouteService.findSelectedEntities(flightRoute);
-            model.addAttribute("flightRoutes", flightRoutes);
+            final List<Flight> flights = flightService.findSelectedEntities(flight);
+		model.addAttribute("flightRoutes", flights);
             return "userFlightSearch";
 	}
         
@@ -290,6 +296,83 @@ public final class AppController {
                 booking.setSeats(6);
 		bookingService.saveEntity(booking);
 		return "redirect:/hellouser";
+	}
+        
+        public final class FlightDataHolder {
+
+                private int id;
+		private String aircraft;
+                private String symbol;
+		private String date;
+		private int firstClassPrice;
+		private int businessClassPrice;
+		private int economyClassPrice;
+		private String origin;
+		private String destination;
+		private String startTime;
+		private String endTime;
+
+		public FlightDataHolder(final Flight flight) {
+                        this.id = flight.getId();
+			this.date = flight.getDate();
+			final FlightRoute route = flightRouteService.findAllEntities().stream()
+					.filter(flightRoute -> flightRoute.getId() == flight.getFlightRouteId()).findAny().get();
+			this.aircraft = route.getAircraft();
+                        this.symbol = route.getSymbol();
+			this.firstClassPrice = route.getFirstClassPrice();
+			this.businessClassPrice = route.getBusinessClassPrice();
+			this.economyClassPrice = route.getEconomyClassPrice();
+			this.origin = route.getOrigin();
+			this.destination = route.getDestination();
+			this.startTime = route.getStartTime();
+			this.endTime = route.getEndTime();
+		}
+                
+                public int getId(){
+                    return id;
+                }
+
+		public int getFirstClassPrice() {
+			return firstClassPrice;
+		}
+
+		public int getBusinessClassPrice() {
+			return businessClassPrice;
+		}
+
+		public int getEconomyClassPrice() {
+			return economyClassPrice;
+		}
+
+		public String getOrigin() {
+			return origin;
+		}
+
+		public String getDestination() {
+			return destination;
+		}
+
+		public String getStartTime() {
+			return startTime;
+		}
+
+		public String getEndTime() {
+			return endTime;
+		}
+
+		public String getAircraft() {
+			return aircraft;
+		}
+
+		public String getDate() {
+			return date;
+		}
+                
+                public String getSymbol(){
+                        return symbol;
+                }
+
+
 	}
 
 	/*

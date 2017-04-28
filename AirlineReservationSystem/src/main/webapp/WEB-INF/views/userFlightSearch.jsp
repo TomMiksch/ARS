@@ -46,7 +46,7 @@ tr:first-child {
         <form:input type="hidden" id="seats"/>
 	<table>
 		<tr>
-			<td>Aircraft</td>
+			<td>Date</td>
 			<td>First Class Price</td>
 			<td>Business Class Price</td>
 			<td>Economy Class Price</td>
@@ -54,21 +54,19 @@ tr:first-child {
 			<td>Destination</td>
 			<td>Start Time</td>
 			<td>End Time</td>
-			<td>Frequency</td>
 		</tr>
-		<c:forEach items="${flightRoutes}" var="flightRoute">
+		<c:forEach items="${flightRoutes}" var="flight">
 			<tr>
-				<td>${flightRoute.aircraft}</td>
-				<td>${flightRoute.firstClassPrice}</td>
-				<td>${flightRoute.businessClassPrice}</td>
-				<td>${flightRoute.economyClassPrice}</td>
-				<td>${flightRoute.origin}</td>
-				<td>${flightRoute.destination}</td>
-				<td>${flightRoute.startTime}</td>
-				<td>${flightRoute.endTime}</td>
-				<td>${flightRoute.frequency}</td>
-				<td><a id="booknow"
-					href="<c:url value='book-${flightRoute.id}-booking' />">Book Flight</a></td>
+                            <td>${flight.date}</td>
+                            <td>${flight.firstClassPrice}</td>
+                            <td>${flight.businessClassPrice}</td>
+                            <td>${flight.economyClassPrice}</td>
+                            <td>${flight.origin}</td>
+                            <td>${flight.destination}</td>
+                            <td>${flight.startTime}</td>
+                            <td>${flight.endTime}</td>
+                            <td><a id="booknow"
+				href="<c:url value='book-${flight.id}-booking' />">Book Flight</a></td>
 			</tr>
 		</c:forEach>
 	</table>

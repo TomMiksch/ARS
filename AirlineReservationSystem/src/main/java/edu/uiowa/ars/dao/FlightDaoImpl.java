@@ -7,6 +7,8 @@ import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
 
 import edu.uiowa.ars.model.Flight;
+import java.util.ArrayList;
+import org.hibernate.criterion.Restrictions;
 
 @Repository("flightDao")
 public final class FlightDaoImpl extends AbstractDao<Integer, Flight> implements FlightDao {
@@ -23,7 +25,35 @@ public final class FlightDaoImpl extends AbstractDao<Integer, Flight> implements
 	}
 
 	public List<Flight> findSelectedEntities(final Flight entity) {
-		return Collections.emptyList();
+            Criteria criteria = createEntityCriteria();
+                List<Flight> allFlights = new ArrayList<>();
+		// check the non-stop flights
+                criteria.add(Restrictions.eq("origin", entity.getOrigin()));
+                criteria.add(Restrictions.eq("destination", entity.getDestination()));
+                criteria.add(Restrictions.eq("date", entity.getDate()));
+
+                // check the flights with stops (two stops)
+                // this is brute for loop to find all the two-stop flights
+                Criteria criteriaIntermediate = createEntityCriteria();
+                criteriaIntermediate.add(Restrictions.eq("origin", entity.getOrigin()));
+                List<Flight> intermediateFlights = criteriaIntermediate.list();
+
+                List<Flight> flightWithStops = new ArrayList<>();
+                for (Flight flight : intermediateFlights) {
+                    Criteria tempCriteria = createEntityCriteria();
+                    tempCriteria.add(Restrictions.eq("origin", flight.getDestination()));
+                    tempCriteria.add(Restrictions.eq("destination", entity.getDestination()));
+                    if (tempCriteria.list() != null) {
+                        if (!tempCriteria.list().isEmpty()) { 
+                            flightWithStops.addAll(tempCriteria.list());
+                            flightWithStops.add(flight);
+                        }
+                    }
+                }
+		allFlights.addAll(flightWithStops);
+		allFlights.addAll(criteria.list());
+                
+                return (List<Flight>) allFlights;
 	}
 
 	@Override

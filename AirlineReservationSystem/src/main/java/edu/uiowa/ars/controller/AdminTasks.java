@@ -237,12 +237,16 @@ public final class AdminTasks {
 			// Save the current date as a new flight.
 			final Flight flight = new Flight();
 			flight.setFlightRouteId(flightRoute.getId());
-			flight.setDate(beginLocalDate.toString("MM-dd-yyyy"));
+			flight.setDate(beginLocalDate.toString("yyyy-MM-dd"));
                         //String storedAircraft = flightRoute.getAircraft();
                         //final Aircraft aircraft = aircraftService.getStoredEntity(storedAircraft);
-                        flight.setFirstClassSeats(0);
-                        flight.setFirstClassSeats(0);
-                        flight.setFirstClassSeats(0);
+                        flight.setOrigin(flightRoute.getOrigin());
+                        flight.setDestination(flightRoute.getDestination());
+                        flight.setFirstClassPrice(flightRoute.getFirstClassPrice());
+                        flight.setBusinessClassPrice(flightRoute.getBusinessClassPrice());
+                        flight.setEconomyClassPrice(flightRoute.getEconomyClassPrice());
+                        flight.setStartTime(flightRoute.getStartTime());
+                        flight.setEndTime(flightRoute.getEndTime());
 			flightService.saveEntity(flight);
 			beginLocalDate = freq.apply(beginLocalDate);
 		}
@@ -309,9 +313,6 @@ public final class AdminTasks {
 		private int firstClassPrice;
 		private int businessClassPrice;
 		private int economyClassPrice;
-		/*private int firstClassSeats;
-		private int businessClassSeats;
-		private int economyClassSeats;*/
 		private String origin;
 		private String destination;
 		private String startTime;
@@ -326,9 +327,6 @@ public final class AdminTasks {
 			this.firstClassPrice = route.getFirstClassPrice();
 			this.businessClassPrice = route.getBusinessClassPrice();
 			this.economyClassPrice = route.getEconomyClassPrice();
-			/*this.firstClassSeats = route.getFirstClassPrice();
-			this.businessClassSeats = route.getBusinessClassPrice();
-			this.economyClassSeats = route.getEconomyClassPrice();*/
 			this.origin = route.getOrigin();
 			this.destination = route.getDestination();
 			this.startTime = route.getStartTime();
@@ -346,18 +344,6 @@ public final class AdminTasks {
 		public int getEconomyClassPrice() {
 			return economyClassPrice;
 		}
-
-		/*public int getFirstClassSeats() {
-			return firstClassSeats;
-		}
-                
-                public int getBusinessClassSeats() {
-			return businessClassSeats;
-		}
-
-		public int getEconomyClassSeats() {
-			return economyClassSeats;
-		}*/
 
 		public String getOrigin() {
 			return origin;

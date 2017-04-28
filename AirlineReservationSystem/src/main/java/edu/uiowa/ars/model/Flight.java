@@ -23,18 +23,34 @@ public final class Flight {
 	@Size(min = 10, max = 10)
 	@Column(name = "DATE", nullable = false)
 	private String date;
+        
+        @Size(min = 1, max = 50)
+        @Column(name = "ORIGIN", nullable = false)
+        private String origin;
+        
+        @Size(min = 1, max = 50)
+        @Column(name = "DESTINATION", nullable = false)
+        private String destination;
+        
+        @Min(value = 0)
+	@Column(name = "FIRST_CLASS_PRICE", nullable = false)
+	private int firstClassPrice;
 
 	@Min(value = 0)
-	@Column(name = "FIRST_CLASS_SEATS", nullable = false)
-	private int firstClassSeats;
+	@Column(name = "BUSINESS_CLASS_PRICE", nullable = false)
+	private int businessClassPrice;
 
 	@Min(value = 0)
-	@Column(name = "BUSINESS_CLASS_SEATS", nullable = false)
-	private int businessClassSeats;
+	@Column(name = "ECONOMY_CLASS_PRICE", nullable = false)
+	private int economyClassPrice;
+        
+        @Size(min = 1, max = 20)
+	@Column(name = "START_TIME", nullable = false)
+	private String startTime;
 
-	@Min(value = 0)
-	@Column(name = "ECONOMY_CLASS_SEATS", nullable = false)
-	private int economyClassSeats;
+	@Size(min = 1, max = 20)
+	@Column(name = "END_TIME", nullable = false)
+	private String endTime;
 
 	public int getId() {
 		return id;
@@ -59,29 +75,60 @@ public final class Flight {
 	public void setDate(final String date) {
 		this.date = date;
 	}
-
-	public int getFirstClassSeats() {
-		return firstClassSeats;
+        
+        public String getOrigin() {
+            return origin;
+        }
+        
+        public void setOrigin(final String origin) {
+            this.origin = origin;
+        }
+        
+        public String getDestination() {
+            return destination;
+        }
+        
+        public void setDestination(final String destination) {
+            this.destination = destination;
+        }
+        
+        public int getFirstClassPrice() {
+		return firstClassPrice;
 	}
 
-	public void setFirstClassSeats(final int firstClassSeats) {
-		this.firstClassSeats = firstClassSeats;
+	public void setFirstClassPrice(final int firstClassPrice) {
+		this.firstClassPrice = firstClassPrice;
 	}
 
-	public int getBusinessClassSeats() {
-		return businessClassSeats;
+	public int getBusinessClassPrice() {
+		return businessClassPrice;
 	}
 
-	public void setBusinessClassSeats(final int businessClassSeats) {
-		this.businessClassSeats = businessClassSeats;
+	public void setBusinessClassPrice(final int businessClassPrice) {
+		this.businessClassPrice = businessClassPrice;
 	}
 
-	public int getEconomyClassSeats() {
-		return economyClassSeats;
+	public int getEconomyClassPrice() {
+		return economyClassPrice;
 	}
 
-	public void setEconomyClassSeats(final int economyClassSeats) {
-		this.economyClassSeats = economyClassSeats;
+	public void setEconomyClassPrice(final int economyClassPrice) {
+		this.economyClassPrice = economyClassPrice;
+	}
+        
+        public String getStartTime() {
+		return startTime;
 	}
 
+	public void setStartTime(final String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(final String endTime) {
+		this.endTime = endTime;
+	}
 }

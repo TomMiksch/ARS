@@ -77,12 +77,15 @@ Setting up the environment:
         id INT NOT NULL auto_increment,
         flight_route_id INT NOT NULL,
         date VARCHAR(10) NOT NULL,
-        first_class_seats INT NOT NULL,
-        business_class_seats INT NOT NULL,
-        economy_class_seats INT NOT NULL,
+        origin VARCHAR(50) NOT NULL,
+        destination VARCHAR(50) NOT NULL,
+        first_class_price INT NOT NULL,
+        business_class_price INT NOT NULL,
+        economy_class_price INT NOT NULL,
+        start_time VARCHAR(20) NOT NULL,
+        end_time VARCHAR(20) NOT NULL,
         PRIMARY KEY (id)
     );
-    "
     "
 
 7. Add the 'Booking' table
