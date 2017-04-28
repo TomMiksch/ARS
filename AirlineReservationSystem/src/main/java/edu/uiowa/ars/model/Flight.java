@@ -51,6 +51,12 @@ public final class Flight {
 	@Size(min = 1, max = 20)
 	@Column(name = "END_TIME", nullable = false)
 	private String endTime;
+        
+        @Column(name = "SEATS", nullable = false)
+        private int seats;
+        
+        @Column(name = "FLIGHT_CLASS", nullable = false)
+        private String flightClass;
 
 	public int getId() {
 		return id;
@@ -131,4 +137,20 @@ public final class Flight {
 	public void setEndTime(final String endTime) {
 		this.endTime = endTime;
 	}
+        
+        public int getSeats() {
+            return seats;
+        }
+        
+        public void setSeats(final int seats) {
+            this.seats = seats;
+        }
+        
+        public String getFlightClass() {
+            return flightClass;
+        }
+        
+        public void setFlightClass(final String flightClass) {
+            this.flightClass = flightClass;
+        }
 }

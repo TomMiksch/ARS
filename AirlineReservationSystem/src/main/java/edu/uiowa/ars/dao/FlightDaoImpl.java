@@ -31,6 +31,7 @@ public final class FlightDaoImpl extends AbstractDao<Integer, Flight> implements
                 criteria.add(Restrictions.eq("origin", entity.getOrigin()));
                 criteria.add(Restrictions.eq("destination", entity.getDestination()));
                 criteria.add(Restrictions.eq("date", entity.getDate()));
+                
 
                 // check the flights with stops (two stops)
                 // this is brute for loop to find all the two-stop flights
@@ -65,4 +66,15 @@ public final class FlightDaoImpl extends AbstractDao<Integer, Flight> implements
 	public void deleteAllFlightsFromRoute(final String id) {
 		getSession().createSQLQuery("DELETE FROM flight WHERE flight_route_id = " + id).executeUpdate();
 	}
+        
+        @Override
+        public void updateEntity(final Flight entity){
+                int id = entity.getId();
+                String flightClass = entity.getFlightClass();
+                int seats = entity.getEconomyClassPrice();
+                System.out.println("UPDATE flight SET flight_class = '" + flightClass +
+                    "', seats = " + seats +  " WHERE id = " + id);
+                getSession().createSQLQuery("UPDATE flight SET flight_class = " + flightClass +
+                    ", seats = " + seats +  " WHERE id = " + id).executeUpdate();
+        }
 }

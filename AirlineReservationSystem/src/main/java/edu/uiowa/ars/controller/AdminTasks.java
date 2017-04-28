@@ -247,6 +247,8 @@ public final class AdminTasks {
                         flight.setEconomyClassPrice(flightRoute.getEconomyClassPrice());
                         flight.setStartTime(flightRoute.getStartTime());
                         flight.setEndTime(flightRoute.getEndTime());
+                        flight.setSeats(0);
+                        flight.setFlightClass("blank");
 			flightService.saveEntity(flight);
 			beginLocalDate = freq.apply(beginLocalDate);
 		}

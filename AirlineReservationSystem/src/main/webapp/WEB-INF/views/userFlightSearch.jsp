@@ -66,7 +66,7 @@ tr:first-child {
                             <td>${flight.startTime}</td>
                             <td>${flight.endTime}</td>
                             <td><a id="booknow"
-				href="<c:url value='book-${flight.id}-booking' />">Book Flight</a></td>
+				href="<c:url value='book-${flight.id}-booking/${flight.flightClass}/${flight.seats}' />">Book Flight</a></td>
 			</tr>
 		</c:forEach>
 	</table>

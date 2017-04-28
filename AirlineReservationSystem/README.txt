@@ -84,6 +84,8 @@ Setting up the environment:
         economy_class_price INT NOT NULL,
         start_time VARCHAR(20) NOT NULL,
         end_time VARCHAR(20) NOT NULL,
+        seats INT NOT NULL,
+        flight_class VARCHAR(10) NOT NULL,
         PRIMARY KEY (id)
     );
     "

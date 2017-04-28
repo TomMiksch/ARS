@@ -223,7 +223,7 @@ body {
             <div>
                 <label for="date">
                     Depart <span class="icon-required" aria-hidden="true"></span><span class="hidden-accessible">, required.</span>
-                    <span class="datePicker">(date format mm/dd/yyyy)</span>
+                    <span class="datePicker"></span>
                     <input id="date" name="date" type="date"/>
                 </label>
             </div>
@@ -238,9 +238,9 @@ body {
             </div>--%>
         </div>
         <div class="span4">
-            <label for="seatClass" class="aa-display-none" >
+            <label for="flightClass" class="aa-display-none" >
                 Fare preference
-                <select id="seatClass" name="seatClass" >
+                <select id="flightClass" name="flightClass" >
                     <option selected="selected" value="Economy">Economy</option>
                     <option value="Business">Business</option>
                     <option value="First">First</option>

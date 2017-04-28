@@ -277,13 +277,17 @@ public final class AppController {
             if (flight.getDestination() == null){
                 return "hellouser";
             }
+            System.out.println(flight.getId());
+            flightService.updateEntity(flight);
             final List<Flight> flights = flightService.findSelectedEntities(flight);
-		model.addAttribute("flightRoutes", flights);
+            model.addAttribute("flightRoutes", flights);
             return "userFlightSearch";
 	}
         
-        @RequestMapping(value = { "/book-{id}-booking" }, method = RequestMethod.GET)
-	public String deleteBookingGet(@PathVariable final String id) {
+        @RequestMapping(value = { "/book-{id}-booking/{flight_class}/{seats}" }, method = RequestMethod.GET)
+	public String deleteBookingGet(@PathVariable("id") final String id,
+                    @PathVariable("flight_class") final String flightClass, 
+                    @PathVariable("seats") final String seats) {
                 /*int i = 0;
                 String[] things = {"No"};
                 HttpServletRequest request = null;
@@ -292,8 +296,8 @@ public final class AppController {
                 final Booking booking = new Booking();
                 booking.setUserEmail("thomas-miksch@uiowa.edu");
                 booking.setFlightNumber(Integer.parseInt(id));
-                booking.setSeatClass("First");
-                booking.setSeats(6);
+                booking.setSeatClass(flightClass);
+                booking.setSeats(Integer.parseInt(seats));
 		bookingService.saveEntity(booking);
 		return "redirect:/hellouser";
 	}

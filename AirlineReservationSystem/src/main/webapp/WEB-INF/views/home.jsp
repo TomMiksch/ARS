@@ -181,9 +181,9 @@ body {
 			</div>
 			<div class="span4">
 				<div class="margin-bottom">
-					<label for="passengers"> Number of passengers <select
-						name="passengers" onchange="calcTotalNoOfPsgrsOnHomePage('')"
-						id="destination">
+					<label for="seats"> Number of passengers <select
+						name="seats" onchange="calcTotalNoOfPsgrsOnHomePage('')"
+						id="seats">
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -203,7 +203,7 @@ body {
 					<label for="date"> Depart <span
 						class="icon-required" aria-hidden="true"></span><span
 						class="hidden-accessible">, required.</span> <span
-						class="datePicker">(date format mm/dd/yyyy)</span> <input
+						class="datePicker"></span> <input
 						id="date" name="date" type="date" />
 					</label>
 				</div>
@@ -218,11 +218,11 @@ body {
             </div>--%>
 			</div>
 			<div class="span4">
-				<label for="fhServiceClass" class="aa-display-none"> Fare
-					preference <select id="fhServiceClass" name="serviceclass">
-						<option selected="selected" value="coach">Coach</option>
-						<option value="business">Business</option>
-						<option value="first">First</option>
+				<label for="flightClass" class="aa-display-none"> Fare
+					preference <select id="flightClass" name="flightClass">
+						<option selected="selected" value="Economy">Economy</option>
+						<option value="Business">Business</option>
+						<option value="First">First</option>
 				</select>
 				</label>
 			</div>
