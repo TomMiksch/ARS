@@ -28,12 +28,18 @@ public final class FlightRouteDaoImpl extends AbstractDao<Integer, FlightRoute> 
 		Criteria criteria = createEntityCriteria();
                 List<FlightRoute> allFlights = new ArrayList<>();
 		// check the non-stop flights
-		if (entity.getBeginDate() != null) {
-                    criteria.add(Restrictions.eq("begin_date",entity.getBeginDate()));
+                // there has to be origin and destinations
+                // depart time is optional
+                
+		if (!entity.getBeginDate().isEmpty()) {
+                    criteria.add(Restrictions.eq("beginDate", entity.getBeginDate()));
                 }
-                criteria.add(Restrictions.eq("origin", entity.getOrigin()));
-                criteria.add(Restrictions.eq("destination", entity.getDestination()));
-
+                if (entity.getOrigin() != null) {
+                    criteria.add(Restrictions.eq("origin", entity.getOrigin()));
+                }
+                if (entity.getDestination() != null) {
+                    criteria.add(Restrictions.eq("destination", entity.getDestination()));
+                }
                 // check the flights with stops (two stops)
                 // this is brute for loop to find all the two-stop flights
                 Criteria criteriaIntermediate = createEntityCriteria();
@@ -64,13 +70,13 @@ public final class FlightRouteDaoImpl extends AbstractDao<Integer, FlightRoute> 
 	}
         
         @Override
-        public void updateEntity(final FlightRoute entity){
-                int id = entity.getId();
-                int first = entity.getFirstClassPrice();
-                int business = entity.getBusinessClassPrice();
-                int economy = entity.getEconomyClassPrice();
-                getSession().createSQLQuery("UPDATE flight_route SET first_class_price = " + first +
-                    ", business_class_price = " + business + ", economy_class_price = " + economy + 
-                        " WHERE id = " + id).executeUpdate();
-        }
+         public void updateEntity(final FlightRoute entity){
+                 int id = entity.getId();
+                 int first = entity.getFirstClassPrice();
+                 int business = entity.getBusinessClassPrice();
+                 int economy = entity.getEconomyClassPrice();
+                 getSession().createSQLQuery("UPDATE flight_route SET first_class_price = " + first +
+                     ", business_class_price = " + business + ", economy_class_price = " + economy + 
+                         " WHERE id = " + id).executeUpdate();
+         }
 }

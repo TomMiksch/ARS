@@ -28,11 +28,18 @@ public final class FlightDaoImpl extends AbstractDao<Integer, Flight> implements
             Criteria criteria = createEntityCriteria();
                 List<Flight> allFlights = new ArrayList<>();
 		// check the non-stop flights
-                criteria.add(Restrictions.eq("origin", entity.getOrigin()));
-                criteria.add(Restrictions.eq("destination", entity.getDestination()));
-                criteria.add(Restrictions.eq("date", entity.getDate()));
+                // there has to be origin and destinations
+                // depart time is optional
                 
-
+		if (!entity.getDate().isEmpty()) {
+                    criteria.add(Restrictions.eq("date", entity.getDate()));
+                }
+                if (entity.getOrigin() != null) {
+                    criteria.add(Restrictions.eq("origin", entity.getOrigin()));
+                }
+                if (entity.getDestination() != null) {
+                    criteria.add(Restrictions.eq("destination", entity.getDestination()));
+                }
                 // check the flights with stops (two stops)
                 // this is brute for loop to find all the two-stop flights
                 Criteria criteriaIntermediate = createEntityCriteria();
@@ -44,7 +51,6 @@ public final class FlightDaoImpl extends AbstractDao<Integer, Flight> implements
                     Criteria tempCriteria = createEntityCriteria();
                     tempCriteria.add(Restrictions.eq("origin", flight.getDestination()));
                     tempCriteria.add(Restrictions.eq("destination", entity.getDestination()));
-                    tempCriteria.add(Restrictions.eq("date", entity.getDate()));
                     if (tempCriteria.list() != null) {
                         if (!tempCriteria.list().isEmpty()) { 
                             flightWithStops.addAll(tempCriteria.list());
@@ -55,7 +61,7 @@ public final class FlightDaoImpl extends AbstractDao<Integer, Flight> implements
 		allFlights.addAll(flightWithStops);
 		allFlights.addAll(criteria.list());
                 
-                return (List<Flight>) allFlights;
+		return (List<Flight>) allFlights;
 	}
 
 	@Override

@@ -19,6 +19,11 @@ body {
 	background-size: cover;
 	-webkit-filter: blur(0px);
 }
+
+div#map_container{
+    width: 60%;
+    height: 400px;
+}
 </style>
 
 <script>
@@ -200,11 +205,19 @@ body {
 		<div class="row-form aa-flightSearchForm-datesRow">
 			<div class="span4">
 				<div>
-					<label for="date"> Depart <span
+                                    <!--
+                                    <label for="aa-leavingOn"> Depart <span
 						class="icon-required" aria-hidden="true"></span><span
 						class="hidden-accessible">, required.</span> <span
-						class="datePicker"></span> <input
-						id="date" name="date" type="date" />
+						class="datePicker">(date format mm/dd/yyyy)</span> <input
+						id="startTime" name="departDate" type="date" />
+                                    </label>
+                                    -->
+					<label for="date"> Depart <span
+						class="icon-required" aria-hidden="true"></span><span
+						class="hidden-accessible">, optional.</span> <span
+						class="datePicker">(date format yyyy-mm-dd)</span> <input
+						id="date" name="date" />
 					</label>
 				</div>
 			</div>
@@ -239,6 +252,55 @@ body {
 		</div>
 	</form>
 </div>
-<!-- The end of what Peter added -->
+
+<script type="text/javascript"
+        src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+  function loadMap() {
+    var cen = new google.maps.LatLng(38.483924, -101.754673);
+    var latlng = new google.maps.LatLng(41.975736, -91.670641);
+    var latlng2 = new google.maps.LatLng(41.974185, -87.907171);
+    var latlng3 = new google.maps.LatLng(34.467355, -83.574585);
+    var latlng4 = new google.maps.LatLng(37.621355, -122.378730);
+    var latlng5 = new google.maps.LatLng(51.504817, 0.049550);
+    var myOptions = {
+      zoom: 4,
+      center: cen,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_container"),myOptions);
+
+    var marker1 = new google.maps.Marker({
+      position: latlng,
+      map: map,
+      title:"CID"
+    });
+    var marker2 = new google.maps.Marker({
+      position: latlng2,
+      map: map,
+      title:"ORD"
+    });
+    var marker3 = new google.maps.Marker({
+      position: latlng3,
+      map: map,
+      title:"ALT"
+    });
+    var marker4 = new google.maps.Marker({
+      position: latlng4,
+      map: map,
+      title:"SFO"
+    });
+    var marker5 = new google.maps.Marker({
+      position: latlng5,
+      map: map,
+      title:"LCY"
+    });
+    
+
+  }
+</script>
+<body onload="loadMap()">
+<div id="map_container"></div>
+</body>
 
 </html>
