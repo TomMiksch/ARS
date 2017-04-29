@@ -221,6 +221,7 @@ public final class AppController {
 		if (storedUser != null) {
 			final String userType = storedUser.getUserType();
 			if ("Admin".equals(userType)) {
+                                model.addAttribute("userId", storedUser.getId());
 				return "redirect:/admin/home";
 			} else if ("Customer".equals(userType)) {
 				model.addAttribute("userId", storedUser.getId());

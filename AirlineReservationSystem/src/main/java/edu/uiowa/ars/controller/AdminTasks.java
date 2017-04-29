@@ -29,6 +29,7 @@ import edu.uiowa.ars.service.BookingService;
 import edu.uiowa.ars.service.FlightRouteService;
 import edu.uiowa.ars.service.FlightService;
 import edu.uiowa.ars.service.UserService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/admin")
@@ -52,7 +53,11 @@ public final class AdminTasks {
 	private static final String DEFAULT_MESSAGE_CODE = "SOME_DEFAULT";
 
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
-	public String homeGet(final ModelMap model) {
+	public String homeGet(final ModelMap model,
+                    @RequestParam(value = "userId", required = false) final String userId) {
+                if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		}
 		return "admin/home";
 	}
 

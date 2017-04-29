@@ -110,6 +110,16 @@ public final class UserServiceImpl implements UserService {
 	public boolean isValidId(final String userId) {
 		return (getUserById(userId) != null);
 	}
+        
+        @Override
+	public boolean isValidAdmin(final String userId) {
+		if (getUserById(userId) != null){
+                    return (getUserById(userId).getUserType().equals("Admin"));
+                }
+                else {
+                    return false;
+                }
+	}
 
 	@Override
 	public User getUserById(final String userId) {
