@@ -44,6 +44,7 @@ public final class FlightDaoImpl extends AbstractDao<Integer, Flight> implements
                     Criteria tempCriteria = createEntityCriteria();
                     tempCriteria.add(Restrictions.eq("origin", flight.getDestination()));
                     tempCriteria.add(Restrictions.eq("destination", entity.getDestination()));
+                    tempCriteria.add(Restrictions.eq("date", entity.getDate()));
                     if (tempCriteria.list() != null) {
                         if (!tempCriteria.list().isEmpty()) { 
                             flightWithStops.addAll(tempCriteria.list());

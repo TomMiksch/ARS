@@ -277,8 +277,8 @@ public final class AppController {
             if (flight.getDestination() == null){
                 return "hellouser";
             }
-            System.out.println(flight.getId());
-            flightService.updateEntity(flight);
+            //System.out.println(flight.getId());
+            //flightService.updateEntity(flight);
             final List<Flight> flights = flightService.findSelectedEntities(flight);
             model.addAttribute("flightRoutes", flights);
             return "userFlightSearch";
