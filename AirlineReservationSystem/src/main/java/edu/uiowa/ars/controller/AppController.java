@@ -1,6 +1,5 @@
 package edu.uiowa.ars.controller;
 
-import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -10,27 +9,19 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import edu.uiowa.ars.SystemSupport;
-import edu.uiowa.ars.model.FlightRoute;
-import edu.uiowa.ars.model.User;
 import edu.uiowa.ars.model.Booking;
 import edu.uiowa.ars.model.Flight;
-import edu.uiowa.ars.service.FlightRouteService;
-import edu.uiowa.ars.service.UserService;
+import edu.uiowa.ars.model.FlightRoute;
+import edu.uiowa.ars.model.User;
 import edu.uiowa.ars.service.BookingService;
+import edu.uiowa.ars.service.FlightRouteService;
 import edu.uiowa.ars.service.FlightService;
-import java.net.CookieManager;
-import java.net.CookieStore;
-import java.net.HttpCookie;
-import java.util.stream.Collectors;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Cookie;
-import org.springframework.web.bind.annotation.PathVariable;
+import edu.uiowa.ars.service.UserService;
 
 @Controller
 @RequestMapping("/")
@@ -45,12 +36,12 @@ public final class AppController {
 	@Autowired
 	FlightRouteService flightRouteService;
 
-        @Autowired
-        BookingService bookingService;
-        
-        @Autowired
-        FlightService flightService;
-        
+	@Autowired
+	BookingService bookingService;
+
+	@Autowired
+	FlightService flightService;
+
 	private static final String DEFAULT_MESSAGE_CODE = "SOME_DEFAULT";
 
 	/**
@@ -128,21 +119,22 @@ public final class AppController {
 
 	@RequestMapping(value = { "/hellouser" }, method = RequestMethod.GET)
 	public String userHomeGet(final ModelMap model) {
-            final Flight flight = new Flight();
-            model.addAttribute("flight", flight);
-            final User user = new User();
-            model.addAttribute("user", user);
-            return "hellouser";
+		final Flight flight = new Flight();
+		model.addAttribute("flight", flight);
+		final User user = new User();
+		model.addAttribute("user", user);
+		return "hellouser";
 	}
-        
-        @RequestMapping(value = { "/hellouser" }, method = RequestMethod.POST)
-	public String userSearchedFlights(@Valid final FlightRoute flightRoute, final BindingResult result, final ModelMap model) {
-            if (result.hasErrors()) {
-		return "/hellouser";
-	    }
-            flightRouteService.saveEntity(flightRoute);
-            return "userFlightSearch";
-        }
+
+	@RequestMapping(value = { "/hellouser" }, method = RequestMethod.POST)
+	public String userSearchedFlights(@Valid final FlightRoute flightRoute, final BindingResult result,
+			final ModelMap model) {
+		if (result.hasErrors()) {
+			return "/hellouser";
+		}
+		flightRouteService.saveEntity(flightRoute);
+		return "userFlightSearch";
+	}
 
 	/*
 	 * This method will provide the medium to add a new user.
@@ -208,7 +200,7 @@ public final class AppController {
 			if ("Admin".equals(userType)) {
 				return "redirect:/admin/home";
 			} else if ("Customer".equals(userType)) {
-                                model.addAttribute("firstName", storedUser.getFirstName());
+				model.addAttribute("firstName", storedUser.getFirstName());
 				return "hellouser";
 			}
 
@@ -261,52 +253,52 @@ public final class AppController {
 		result.reject("loginPageForm", "Invalid Username and/or Password.");
 		return "home";
 	}
-        
-        @RequestMapping(value = { "/flightSearchResult" }, method = RequestMethod.POST)
+
+	@RequestMapping(value = { "/flightSearchResult" }, method = RequestMethod.POST)
 	public String searchFlights(@Valid final Flight flight, final BindingResult result, final ModelMap model) {
-            if (flight.getDestination() == null){
-                return "home";
-            }
-                final List<Flight> flights = flightService.findSelectedEntities(flight);
+		if (flight.getDestination() == null) {
+			return "home";
+		}
+		final List<Flight> flights = flightService.findSelectedEntities(flight);
 		model.addAttribute("flightRoutes", flights);
-            return "flightSearchResult";
+		return "flightSearchResult";
 	}
-        
-        @RequestMapping(value = { "/userFlightSearch" }, method = RequestMethod.POST)
-	public String userSearchFlights(@Valid final Booking booking, @Valid final Flight flight, final BindingResult result, final ModelMap model) {
-            if (flight.getDestination() == null){
-                return "hellouser";
-            }
-            //System.out.println(flight.getId());
-            //flightService.updateEntity(flight);
-            final List<Flight> flights = flightService.findSelectedEntities(flight);
-            model.addAttribute("flightRoutes", flights);
-            return "userFlightSearch";
+
+	@RequestMapping(value = { "/userFlightSearch" }, method = RequestMethod.POST)
+	public String userSearchFlights(@Valid final Booking booking, @Valid final Flight flight,
+			final BindingResult result, final ModelMap model) {
+		if (flight.getDestination() == null) {
+			return "hellouser";
+		}
+		// System.out.println(flight.getId());
+		// flightService.updateEntity(flight);
+		final List<Flight> flights = flightService.findSelectedEntities(flight);
+		model.addAttribute("flightRoutes", flights);
+		return "userFlightSearch";
 	}
-        
-        @RequestMapping(value = { "/book-{id}-booking/{flight_class}/{seats}" }, method = RequestMethod.GET)
+
+	@RequestMapping(value = { "/book-{id}-booking/{flight_class}/{seats}" }, method = RequestMethod.GET)
 	public String deleteBookingGet(@PathVariable("id") final String id,
-                    @PathVariable("flight_class") final String flightClass, 
-                    @PathVariable("seats") final String seats) {
-                /*int i = 0;
-                String[] things = {"No"};
-                HttpServletRequest request = null;
-                Cookie[] cookies = request.getCookies();
-                System.out.println("FUCK " + cookies[1]);*/
-                final Booking booking = new Booking();
-                booking.setUserEmail("thomas-miksch@uiowa.edu");
-                booking.setFlightNumber(Integer.parseInt(id));
-                booking.setSeatClass(flightClass);
-                booking.setSeats(Integer.parseInt(seats));
+			@PathVariable("flight_class") final String flightClass, @PathVariable("seats") final String seats) {
+		/*
+		 * int i = 0; String[] things = {"No"}; HttpServletRequest request =
+		 * null; Cookie[] cookies = request.getCookies(); System.out.println(
+		 * "FUCK " + cookies[1]);
+		 */
+		final Booking booking = new Booking();
+		booking.setUserEmail("thomas-miksch@uiowa.edu");
+		booking.setFlightNumber(Integer.parseInt(id));
+		booking.setSeatClass(flightClass);
+		booking.setSeats(Integer.parseInt(seats));
 		bookingService.saveEntity(booking);
 		return "redirect:/hellouser";
 	}
-        
-        public final class FlightDataHolder {
 
-                private int id;
+	public final class FlightDataHolder {
+
+		private int id;
 		private String aircraft;
-                private String symbol;
+		private String symbol;
 		private String date;
 		private int firstClassPrice;
 		private int businessClassPrice;
@@ -317,12 +309,12 @@ public final class AppController {
 		private String endTime;
 
 		public FlightDataHolder(final Flight flight) {
-                        this.id = flight.getId();
+			this.id = flight.getId();
 			this.date = flight.getDate();
 			final FlightRoute route = flightRouteService.findAllEntities().stream()
 					.filter(flightRoute -> flightRoute.getId() == flight.getFlightRouteId()).findAny().get();
 			this.aircraft = route.getAircraft();
-                        this.symbol = route.getSymbol();
+			this.symbol = route.getSymbol();
 			this.firstClassPrice = route.getFirstClassPrice();
 			this.businessClassPrice = route.getBusinessClassPrice();
 			this.economyClassPrice = route.getEconomyClassPrice();
@@ -331,10 +323,10 @@ public final class AppController {
 			this.startTime = route.getStartTime();
 			this.endTime = route.getEndTime();
 		}
-                
-                public int getId(){
-                    return id;
-                }
+
+		public int getId() {
+			return id;
+		}
 
 		public int getFirstClassPrice() {
 			return firstClassPrice;
@@ -371,11 +363,10 @@ public final class AppController {
 		public String getDate() {
 			return date;
 		}
-                
-                public String getSymbol(){
-                        return symbol;
-                }
 
+		public String getSymbol() {
+			return symbol;
+		}
 
 	}
 

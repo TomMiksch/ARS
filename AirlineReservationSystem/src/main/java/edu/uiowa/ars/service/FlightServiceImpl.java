@@ -28,7 +28,7 @@ public final class FlightServiceImpl implements FlightService {
 
 	@Override
 	public void updateEntity(final Flight flight) {
-                dao.updateEntity(flight);
+		dao.updateEntity(flight);
 	}
 
 	public List<Flight> findAllEntities() {
