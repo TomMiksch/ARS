@@ -58,7 +58,7 @@ public final class AdminTasks {
                 if (!userService.isValidAdmin(userId)) {
 			return "redirect:/loginpage";
 		}
-		return "admin/home";
+		return "admin/home"; 
 	}
 
 	@RequestMapping(value = { "/userList" }, method = RequestMethod.GET)
