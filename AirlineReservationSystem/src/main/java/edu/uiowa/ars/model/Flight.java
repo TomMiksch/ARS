@@ -23,16 +23,16 @@ public final class Flight {
 	@Size(min = 10, max = 10)
 	@Column(name = "DATE", nullable = false)
 	private String date;
-        
-        @Size(min = 1, max = 50)
-        @Column(name = "ORIGIN", nullable = false)
-        private String origin;
-        
-        @Size(min = 1, max = 50)
-        @Column(name = "DESTINATION", nullable = false)
-        private String destination;
-        
-        @Min(value = 0)
+
+	@Size(min = 1, max = 50)
+	@Column(name = "ORIGIN", nullable = false)
+	private String origin;
+
+	@Size(min = 1, max = 50)
+	@Column(name = "DESTINATION", nullable = false)
+	private String destination;
+
+	@Min(value = 0)
 	@Column(name = "FIRST_CLASS_PRICE", nullable = false)
 	private int firstClassPrice;
 
@@ -43,20 +43,20 @@ public final class Flight {
 	@Min(value = 0)
 	@Column(name = "ECONOMY_CLASS_PRICE", nullable = false)
 	private int economyClassPrice;
-        
-        @Size(min = 1, max = 20)
+
+	@Size(min = 1, max = 20)
 	@Column(name = "START_TIME", nullable = false)
 	private String startTime;
 
 	@Size(min = 1, max = 20)
 	@Column(name = "END_TIME", nullable = false)
 	private String endTime;
-        
-        @Column(name = "SEATS", nullable = false)
-        private int seats;
-        
-        @Column(name = "FLIGHT_CLASS", nullable = false)
-        private String flightClass;
+
+	@Column(name = "SEATS", nullable = false)
+	private int seats;
+
+	@Column(name = "FLIGHT_CLASS", nullable = false)
+	private String flightClass;
 
 	public int getId() {
 		return id;
@@ -81,24 +81,24 @@ public final class Flight {
 	public void setDate(final String date) {
 		this.date = date;
 	}
-        
-        public String getOrigin() {
-            return origin;
-        }
-        
-        public void setOrigin(final String origin) {
-            this.origin = origin;
-        }
-        
-        public String getDestination() {
-            return destination;
-        }
-        
-        public void setDestination(final String destination) {
-            this.destination = destination;
-        }
-        
-        public int getFirstClassPrice() {
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(final String origin) {
+		this.origin = origin;
+	}
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public void setDestination(final String destination) {
+		this.destination = destination;
+	}
+
+	public int getFirstClassPrice() {
 		return firstClassPrice;
 	}
 
@@ -121,8 +121,8 @@ public final class Flight {
 	public void setEconomyClassPrice(final int economyClassPrice) {
 		this.economyClassPrice = economyClassPrice;
 	}
-        
-        public String getStartTime() {
+
+	public String getStartTime() {
 		return startTime;
 	}
 
@@ -137,20 +137,20 @@ public final class Flight {
 	public void setEndTime(final String endTime) {
 		this.endTime = endTime;
 	}
-        
-        public int getSeats() {
-            return seats;
-        }
-        
-        public void setSeats(final int seats) {
-            this.seats = seats;
-        }
-        
-        public String getFlightClass() {
-            return flightClass;
-        }
-        
-        public void setFlightClass(final String flightClass) {
-            this.flightClass = flightClass;
-        }
+
+	public int getSeats() {
+		return seats;
+	}
+
+	public void setSeats(final int seats) {
+		this.seats = seats;
+	}
+
+	public String getFlightClass() {
+		return flightClass;
+	}
+
+	public void setFlightClass(final String flightClass) {
+		this.flightClass = flightClass;
+	}
 }

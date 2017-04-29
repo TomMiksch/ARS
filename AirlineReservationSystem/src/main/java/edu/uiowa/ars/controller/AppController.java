@@ -12,6 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.google.common.base.Strings;
 
 import edu.uiowa.ars.SystemSupport;
 import edu.uiowa.ars.model.Booking;
@@ -28,7 +31,7 @@ import edu.uiowa.ars.service.UserService;
 public final class AppController {
 
 	@Autowired
-	UserService service;
+	UserService userService;
 
 	@Autowired
 	MessageSource messageSource;
@@ -79,7 +82,7 @@ public final class AppController {
 		}
 
 		// Check to see if any other users have the same email address.
-		final boolean duplicateEmail = service.findAllEntities().stream()
+		final boolean duplicateEmail = userService.findAllEntities().stream()
 				.anyMatch(currentUser -> currentUser.getEmailAddress().equalsIgnoreCase(user.getEmailAddress()));
 		if (duplicateEmail) {
 			result.rejectValue("emailAddress", DEFAULT_MESSAGE_CODE, "Email address already in use.");
@@ -87,7 +90,7 @@ public final class AppController {
 		}
 		// This user is a customer.
 		user.setUserType("Customer");
-		service.saveEntity(user);
+		userService.saveEntity(user);
 		model.addAttribute("firstName", user.getFirstName());
 		return "success";
 	}
@@ -118,7 +121,11 @@ public final class AppController {
 	}
 
 	@RequestMapping(value = { "/hellouser" }, method = RequestMethod.GET)
-	public String userHomeGet(final ModelMap model) {
+	public String userHomeGet(final ModelMap model,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidId(userId)) {
+			return "redirect:/loginpage";
+		}
 		final Flight flight = new Flight();
 		model.addAttribute("flight", flight);
 		final User user = new User();
@@ -127,12 +134,22 @@ public final class AppController {
 	}
 
 	@RequestMapping(value = { "/hellouser" }, method = RequestMethod.POST)
-	public String userSearchedFlights(@Valid final FlightRoute flightRoute, final BindingResult result,
-			final ModelMap model) {
-		if (result.hasErrors()) {
+	public String userHomePost(@Valid final Flight flight, final BindingResult result, final ModelMap model,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidId(userId)) {
+			return "redirect:/loginpage";
+		} else if (result.hasErrors()) {
 			return "/hellouser";
 		}
-		flightRouteService.saveEntity(flightRoute);
+
+		// Check the flight destination.
+		final String destination = flight.getDestination();
+		if (Strings.isNullOrEmpty(destination)) {
+			return "hellouser";
+		}
+
+		final List<Flight> flights = flightService.findSelectedEntities(flight);
+		model.addAttribute("flightRoutes", flights);
 		return "userFlightSearch";
 	}
 
@@ -164,14 +181,14 @@ public final class AppController {
 		}
 
 		// Check to see if any other users have the same email address.
-		final boolean duplicateEmail = service.findAllEntities().stream()
+		final boolean duplicateEmail = userService.findAllEntities().stream()
 				.anyMatch(currentUser -> currentUser.getEmailAddress().equalsIgnoreCase(user.getEmailAddress()));
 		if (duplicateEmail) {
 			result.rejectValue("emailAddress", DEFAULT_MESSAGE_CODE, "Email address already in use.");
 			return "new";
 		}
 
-		service.saveEntity(user);
+		userService.saveEntity(user);
 		model.addAttribute("firstName", user.getFirstName());
 		return "success";
 	}
@@ -194,14 +211,14 @@ public final class AppController {
 		}
 
 		// Determine if this is a valid user login or not.
-		final User storedUser = service.getStoredEntity(user);
+		final User storedUser = userService.getStoredEntity(user);
 		if (storedUser != null) {
 			final String userType = storedUser.getUserType();
 			if ("Admin".equals(userType)) {
 				return "redirect:/admin/home";
 			} else if ("Customer".equals(userType)) {
-				model.addAttribute("firstName", storedUser.getFirstName());
-				return "hellouser";
+				model.addAttribute("userId", storedUser.getId());
+				return "redirect:/hellouser";
 			}
 
 			// Changed user.getPassword() to something else since
@@ -235,12 +252,12 @@ public final class AppController {
 		}
 
 		// Determine if this is a valid user login or not.
-		User storedUser = service.getStoredEntity(user);
+		User storedUser = userService.getStoredEntity(user);
 		if (storedUser != null) {
 
 			// If update password successfully, then redirect to loginpage
 			storedUser.setPassword(SystemSupport.md5(user.getPasswordHolder()));
-			service.updateEntity(storedUser);
+			userService.updateEntity(storedUser);
 			return "loginpage";
 
 			// Changed user.getPassword() to something else since
@@ -264,34 +281,31 @@ public final class AppController {
 		return "flightSearchResult";
 	}
 
-	@RequestMapping(value = { "/userFlightSearch" }, method = RequestMethod.POST)
-	public String userSearchFlights(@Valid final Booking booking, @Valid final Flight flight,
-			final BindingResult result, final ModelMap model) {
-		if (flight.getDestination() == null) {
-			return "hellouser";
-		}
-		// System.out.println(flight.getId());
-		// flightService.updateEntity(flight);
-		final List<Flight> flights = flightService.findSelectedEntities(flight);
-		model.addAttribute("flightRoutes", flights);
-		return "userFlightSearch";
-	}
-
 	@RequestMapping(value = { "/book-{id}-booking/{flight_class}/{seats}" }, method = RequestMethod.GET)
 	public String deleteBookingGet(@PathVariable("id") final String id,
-			@PathVariable("flight_class") final String flightClass, @PathVariable("seats") final String seats) {
-		/*
-		 * int i = 0; String[] things = {"No"}; HttpServletRequest request =
-		 * null; Cookie[] cookies = request.getCookies(); System.out.println(
-		 * "FUCK " + cookies[1]);
-		 */
+			@PathVariable("flight_class") final String flightClass, @PathVariable("seats") final String seats,
+			@RequestParam(value = "userId", required = false) final String userId, final ModelMap model) {
+		if (!userService.isValidId(userId)) {
+			return "redirect:/loginpage";
+		}
 		final Booking booking = new Booking();
-		booking.setUserEmail("thomas-miksch@uiowa.edu");
+
+		final User currentUser = userService.getUserById(userId);
+		booking.setUserEmail(currentUser.getEmailAddress());
 		booking.setFlightNumber(Integer.parseInt(id));
 		booking.setSeatClass(flightClass);
 		booking.setSeats(Integer.parseInt(seats));
 		bookingService.saveEntity(booking);
-		return "redirect:/hellouser";
+
+		// Booking is saved, now send an email notification.
+		SystemSupport.sendEmail(currentUser.getEmailAddress(), "Flight Booked",
+				"Hello,<br>"
+						+ "Thank you for booking your flight!<br>An administrator will confirm your flight soon.<br>"
+						+ "<br>Thank You<br>Iowa Air",
+				null, null);
+
+		model.addAttribute("userId", userId);
+		return "hellouser";
 	}
 
 	public final class FlightDataHolder {

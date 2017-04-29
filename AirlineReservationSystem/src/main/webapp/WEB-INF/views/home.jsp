@@ -106,25 +106,6 @@ div#map_container {
 	<a href="<c:url value='/register' />">Create New Account</a>
 </article>
 
-<div id="booking-module-tabs"
-	class="ui-tabs ui-widget ui-widget-content ui-corner-all">
-	<ul
-		class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-		<li
-			class="ui-state-default ui-corner-top ui-tabs-active ui-state-active"
-			id="aa-tab-booking-module"><a class="ui-tabs-anchor"
-			href="#aa-booking-module" id="jq-findFlights"> Book flights </a></li>
-		<li class="ui-state-default ui-corner-top"
-			id="aa-tab-viewReservations"><a class="ui-tabs-anchor"
-			href="#aa-viewReservations" id="jq-myTripsCheckIn"> My trips /
-				Check-in </a></li>
-		<li class="ui-state-default ui-corner-top" id="aa-tab-flightStatus">
-			<a class="ui-tabs-anchor" href="#aa-hp-flightStatus"
-			id="jq-flightStatus"> Flight status </a>
-		</li>
-	</ul>
-</div>
-
 <a href="<c:url value='/reset' />">Reset Password</a>
 <br />
 <div id="aa-booking-module"
