@@ -149,6 +149,12 @@ public final class AppController {
 		}
 
 		final List<Flight> flights = flightService.findSelectedEntities(flight);
+		// Map each of the possible flights to have the selected seats and seat
+		// assignment.
+		flights.forEach(currentFlight -> {
+			currentFlight.setSeats(flight.getSeats());
+			currentFlight.setFlightClass(flight.getFlightClass());
+		});
 		model.addAttribute("flightRoutes", flights);
 		return "userFlightSearch";
 	}
