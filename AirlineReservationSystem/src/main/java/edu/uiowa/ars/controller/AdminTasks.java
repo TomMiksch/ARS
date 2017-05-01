@@ -331,6 +331,28 @@ public final class AdminTasks {
 		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 		return "redirect:/admin/bookingList?userId=" + userId;
 	}
+        
+        @RequestMapping(value = { "/delete-{id}-flightRoute" }, method = RequestMethod.GET)
+	public String deleteFlightGet(final ModelMap model, @PathVariable final String id,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		}
+		flightRouteService.deleteEntityById(id);
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
+		return "redirect:/admin/flightRouteList?userId=" + userId;
+	}
+        
+        @RequestMapping(value = { "/delete-{id}-aircraft" }, method = RequestMethod.GET)
+	public String deleteAircraftGet(final ModelMap model, @PathVariable final String id,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		}
+		aircraftService.deleteEntityById(id);
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
+		return "redirect:/admin/aircraftList?userId=" + userId;
+	}
 
 	@RequestMapping(value = "/confirm-{user_email:.+}/{id}", method = RequestMethod.GET)
 	public String confirmBookingGet(final ModelMap model, @PathVariable("user_email") final String email,
