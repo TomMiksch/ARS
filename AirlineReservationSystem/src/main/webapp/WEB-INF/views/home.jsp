@@ -157,7 +157,7 @@ p.copyRight {
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="<c:url value='/loginpage' />"><span
+				<li><a id="loginButton" href="<c:url value='/loginpage' />"><span
 						class="glyphicon glyphicon-log-in"></span> Login</a></li>
 			</ul>
 		</div>
