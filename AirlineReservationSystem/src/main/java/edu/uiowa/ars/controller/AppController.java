@@ -130,6 +130,7 @@ public final class AppController {
 		model.addAttribute("flight", flight);
 		final User user = new User();
 		model.addAttribute("user", user);
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 		return "hellouser";
 	}
 
@@ -221,7 +222,7 @@ public final class AppController {
 		if (storedUser != null) {
 			final String userType = storedUser.getUserType();
 			if ("Admin".equals(userType)) {
-                                model.addAttribute("userId", storedUser.getId());
+				model.addAttribute("userId", storedUser.getId());
 				return "redirect:/admin/home";
 			} else if ("Customer".equals(userType)) {
 				model.addAttribute("userId", storedUser.getId());
@@ -255,7 +256,7 @@ public final class AppController {
 	public String resetPw(@Valid final User user, final BindingResult result, final ModelMap model) {
 
 		if (result.hasErrors()) {
-			return "home";
+			return "reset";
 		}
 
 		// Determine if this is a valid user login or not.
@@ -265,7 +266,7 @@ public final class AppController {
 			// If update password successfully, then redirect to loginpage
 			storedUser.setPassword(SystemSupport.md5(user.getPasswordHolder()));
 			userService.updateEntity(storedUser);
-			return "loginpage";
+			return "redirect:/loginpage";
 
 			// Changed user.getPassword() to something else since
 			// user.GetPassword will return a hashed password
@@ -275,7 +276,7 @@ public final class AppController {
 		// Indicate to the user that they have an invalid username/password
 		// combination.
 		result.reject("loginPageForm", "Invalid Username and/or Password.");
-		return "home";
+		return "reset";
 	}
 
 	@RequestMapping(value = { "/flightSearchResult" }, method = RequestMethod.POST)

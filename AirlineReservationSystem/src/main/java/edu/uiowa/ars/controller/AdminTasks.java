@@ -53,45 +53,68 @@ public final class AdminTasks {
 	private static final String DEFAULT_MESSAGE_CODE = "SOME_DEFAULT";
 
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
-	public String homeGet(final ModelMap model,
-                    @RequestParam(value = "userId", required = false) final String userId) {
-                if (!userService.isValidAdmin(userId)) {
+	public String homeGet(final ModelMap model, @RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
 			return "redirect:/loginpage";
 		}
-		return "admin/home"; 
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
+		return "admin/home";
 	}
 
 	@RequestMapping(value = { "/userList" }, method = RequestMethod.GET)
-	public String userListGet(final ModelMap model) {
+	public String userListGet(final ModelMap model,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		}
 		final List<User> users = userService.findAllEntities();
 		model.addAttribute("users", users);
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 		return "admin/userList";
 	}
 
 	@RequestMapping(value = { "/delete-{id}-user" }, method = RequestMethod.GET)
-	public String deleteUserGet(@PathVariable final String id) {
+	public String deleteUserGet(final ModelMap model, @PathVariable final String id,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		} else if (userId.equals(id)) {
+			System.err.println("Cannot delete your own account this way!");
+			model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
+			return "redirect:/admin/home?userId=" + userId;
+		}
 		userService.deleteEntityById(id);
-		return "redirect:/admin/userList";
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
+		return "redirect:/admin/userList?userId=" + userId;
 	}
 
 	@RequestMapping(value = { "/addUser" }, method = RequestMethod.GET)
-	public String addUserGet(final ModelMap model) {
+	public String addUserGet(final ModelMap model,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		}
 		final User user = new User();
 		model.addAttribute("user", user);
 		final List<String> userTypes = UserTypes.getAllIdentifiers();
 		userTypes.remove(UserTypes.CUSOMTER.getIdentifier());
 		model.addAttribute("userTypes", userTypes);
 		model.addAttribute("genders", Genders.getAllIdentifiers());
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 		return "admin/addUser";
 	}
 
 	@RequestMapping(value = { "/addUser" }, method = RequestMethod.POST)
-	public String addUserPost(@Valid final User user, final BindingResult result, final ModelMap model) {
-		if (result.hasErrors()) {
+	public String addUserPost(@Valid final User user, final BindingResult result, final ModelMap model,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		} else if (result.hasErrors()) {
 			final List<String> userTypes = UserTypes.getAllIdentifiers();
 			userTypes.remove(UserTypes.CUSOMTER.getIdentifier());
 			model.addAttribute("userTypes", userTypes);
 			model.addAttribute("genders", Genders.getAllIdentifiers());
+			model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 			return "admin/addUser";
 		}
 
@@ -104,72 +127,87 @@ public final class AdminTasks {
 			userTypes.remove(UserTypes.CUSOMTER.getIdentifier());
 			model.addAttribute("userTypes", userTypes);
 			model.addAttribute("genders", Genders.getAllIdentifiers());
+			model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 			return "admin/addUser";
 		}
 
 		userService.saveEntity(user);
-		model.addAttribute("firstName", user.getFirstName());
-		return "redirect:/admin/userList";
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
+		return "redirect:/admin/userList?userId=" + userId;
 	}
 
 	@RequestMapping(value = { "/aircraftList" }, method = RequestMethod.GET)
-	public String aircraftListGet(final ModelMap model) {
+	public String aircraftListGet(final ModelMap model,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		}
 		final List<Aircraft> aircrafts = aircraftService.findAllEntities();
 		model.addAttribute("aircrafts", aircrafts);
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 		return "admin/aircraftList";
 	}
 
-	@RequestMapping(value = { "/delete-{id}-aircraft" }, method = RequestMethod.GET)
-	public String deleteAircraftGet(@PathVariable final String id) {
-		aircraftService.deleteEntityById(id);
-		return "redirect:/admin/aircraftList";
-	}
-
 	@RequestMapping(value = { "/addAircraft" }, method = RequestMethod.GET)
-	public String addAircraftGet(final ModelMap model) {
+	public String addAircraftGet(final ModelMap model,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		}
 		final Aircraft aircraft = new Aircraft();
 		model.addAttribute("aircraft", aircraft);
 		model.addAttribute("aircraftTypes", AircraftTypes.getAllIdentifiers());
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 		return "admin/addAircraft";
 	}
 
 	@RequestMapping(value = { "/addAircraft" }, method = RequestMethod.POST)
-	public String addAircraftPost(@Valid final Aircraft aircraft, final BindingResult result, final ModelMap model) {
-		if (result.hasErrors()) {
+	public String addAircraftPost(@Valid final Aircraft aircraft, final BindingResult result, final ModelMap model,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		} else if (result.hasErrors()) {
+			model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 			model.addAttribute("aircraftTypes", AircraftTypes.getAllIdentifiers());
 			return "admin/addAircraft";
 		}
 
 		aircraftService.saveEntity(aircraft);
-		return "redirect:/admin/aircraftList";
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
+		return "redirect:/admin/aircraftList?userId=" + userId;
 	}
 
 	@RequestMapping(value = { "/flightList" }, method = RequestMethod.GET)
-	public String flightListGet(final ModelMap model) {
+	public String flightListGet(final ModelMap model,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		}
 		final List<FlightDataHolder> flights = flightService.findAllEntities().stream()
 				.map(flight -> new FlightDataHolder(flight)).collect(Collectors.toList());
 		model.addAttribute("flights", flights);
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 		return "admin/flightList";
 	}
 
 	@RequestMapping(value = { "/flightRouteList" }, method = RequestMethod.GET)
-	public String flightRouteListGet(final ModelMap model) {
+	public String flightRouteListGet(final ModelMap model,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		}
 		final List<FlightRoute> flightRoutes = flightRouteService.findAllEntities();
 		model.addAttribute("flightRoutes", flightRoutes);
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 		return "admin/flightRouteList";
 	}
 
-	@RequestMapping(value = { "/delete-{id}-flightRoute" }, method = RequestMethod.GET)
-	public String deleteFlightRouteGet(@PathVariable final String id) {
-		flightRouteService.deleteEntityById(id);
-
-		// Delete all flights that are children of this route.
-		flightService.deleteAllFlightsFromRoute(id);
-		return "redirect:/admin/flightRouteList";
-	}
-
 	@RequestMapping(value = { "/addFlightRoute" }, method = RequestMethod.GET)
-	public String addFlightRouteGet(final ModelMap model) {
+	public String addFlightRouteGet(final ModelMap model,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		}
 		final FlightRoute flightRoute = new FlightRoute();
 		// Set daily to be the default frequency.
 		flightRoute.setFrequency(Frequency.DAILY.getIdentifier());
@@ -177,16 +215,20 @@ public final class AdminTasks {
 		model.addAttribute("aircrafts", aircraftService.getAllSymbols());
 		model.addAttribute("airports", Airports.getAllIdentifiers());
 		model.addAttribute("frequencies", Frequency.getAllIdentifiers());
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 		return "admin/addFlightRoute";
 	}
 
 	@RequestMapping(value = { "/addFlightRoute" }, method = RequestMethod.POST)
 	public String addFlightRoutePost(@Valid final FlightRoute flightRoute, final BindingResult result,
-			final ModelMap model) {
-		if (result.hasErrors()) {
+			final ModelMap model, @RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		} else if (result.hasErrors()) {
 			model.addAttribute("aircrafts", aircraftService.getAllSymbols());
 			model.addAttribute("airports", Airports.getAllIdentifiers());
 			model.addAttribute("frequencies", Frequency.getAllIdentifiers());
+			model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 			return "admin/addFlightRoute";
 		}
 
@@ -197,6 +239,7 @@ public final class AdminTasks {
 			model.addAttribute("aircrafts", aircraftService.getAllSymbols());
 			model.addAttribute("airports", Airports.getAllIdentifiers());
 			model.addAttribute("frequencies", Frequency.getAllIdentifiers());
+			model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 			return "admin/addFlightRoute";
 		}
 
@@ -207,6 +250,7 @@ public final class AdminTasks {
 			model.addAttribute("aircrafts", aircraftService.getAllSymbols());
 			model.addAttribute("airports", Airports.getAllIdentifiers());
 			model.addAttribute("frequencies", Frequency.getAllIdentifiers());
+			model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 			return "admin/addFlightRoute";
 		}
 
@@ -217,6 +261,7 @@ public final class AdminTasks {
 			model.addAttribute("aircrafts", aircraftService.getAllSymbols());
 			model.addAttribute("airports", Airports.getAllIdentifiers());
 			model.addAttribute("frequencies", Frequency.getAllIdentifiers());
+			model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 			return "admin/addFlightRoute";
 		}
 
@@ -227,6 +272,7 @@ public final class AdminTasks {
 			model.addAttribute("aircrafts", aircraftService.getAllSymbols());
 			model.addAttribute("airports", Airports.getAllIdentifiers());
 			model.addAttribute("frequencies", Frequency.getAllIdentifiers());
+			model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 			return "admin/addFlightRoute";
 		}
 
@@ -243,79 +289,104 @@ public final class AdminTasks {
 			final Flight flight = new Flight();
 			flight.setFlightRouteId(flightRoute.getId());
 			flight.setDate(beginLocalDate.toString("yyyy-MM-dd"));
-                        //String storedAircraft = flightRoute.getAircraft();
-                        //final Aircraft aircraft = aircraftService.getStoredEntity(storedAircraft);
-                        flight.setOrigin(flightRoute.getOrigin());
-                        flight.setDestination(flightRoute.getDestination());
-                        flight.setFirstClassPrice(flightRoute.getFirstClassPrice());
-                        flight.setBusinessClassPrice(flightRoute.getBusinessClassPrice());
-                        flight.setEconomyClassPrice(flightRoute.getEconomyClassPrice());
-                        flight.setStartTime(flightRoute.getStartTime());
-                        flight.setEndTime(flightRoute.getEndTime());
-                        flight.setSeats(0);
-                        flight.setFlightClass("blank");
+			// String storedAircraft = flightRoute.getAircraft();
+			// final Aircraft aircraft =
+			// aircraftService.getStoredEntity(storedAircraft);
+			flight.setOrigin(flightRoute.getOrigin());
+			flight.setDestination(flightRoute.getDestination());
+			flight.setFirstClassPrice(flightRoute.getFirstClassPrice());
+			flight.setBusinessClassPrice(flightRoute.getBusinessClassPrice());
+			flight.setEconomyClassPrice(flightRoute.getEconomyClassPrice());
+			flight.setStartTime(flightRoute.getStartTime());
+			flight.setEndTime(flightRoute.getEndTime());
+			flight.setSeats(0);
+			flight.setFlightClass("blank");
 			flightService.saveEntity(flight);
 			beginLocalDate = freq.apply(beginLocalDate);
 		}
 
-		return "redirect:/admin/flightRouteList";
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
+		return "redirect:/admin/flightRouteList?userId=" + userId;
 	}
 
 	@RequestMapping(value = { "/bookingList" }, method = RequestMethod.GET)
-	public String bookingListGet(final ModelMap model) {
+	public String bookingListGet(final ModelMap model,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		}
 		final List<Booking> booking = bookingService.findAllEntities();
 		model.addAttribute("booking", booking);
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 		return "admin/bookingList";
 	}
 
 	@RequestMapping(value = { "/delete-{id}-booking" }, method = RequestMethod.GET)
-	public String deleteBookingGet(@PathVariable final String id) {
+	public String deleteBookingGet(final ModelMap model, @PathVariable final String id,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		}
 		bookingService.deleteEntityById(id);
-		return "redirect:/admin/bookingList";
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
+		return "redirect:/admin/bookingList?userId=" + userId;
 	}
-        
-        @RequestMapping(value = "/confirm-{user_email:.+}/{id}", method = RequestMethod.GET)
-	public String confirmBookingGet(@PathVariable("user_email") final String email,
-                    @PathVariable("id") final String id) {
+
+	@RequestMapping(value = "/confirm-{user_email:.+}/{id}", method = RequestMethod.GET)
+	public String confirmBookingGet(final ModelMap model, @PathVariable("user_email") final String email,
+			@PathVariable("id") final String id,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		}
 		bookingService.confirmEntityByEmail(email);
-                bookingService.deleteEntityById(id);
-		return "redirect:/admin/bookingList";
+		bookingService.deleteEntityById(id);
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
+		return "redirect:/admin/bookingList?userId=" + userId;
 	}
-        
-        @RequestMapping(value = {"/editFlights" }, method = RequestMethod.GET)
-        public String editFlights(final ModelMap model) {
-                final FlightRoute flightRoute = new FlightRoute();
+
+	@RequestMapping(value = { "/editFlights" }, method = RequestMethod.GET)
+	public String editFlights(final ModelMap model,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		}
+		final FlightRoute flightRoute = new FlightRoute();
 		// Set daily to be the default frequency.
 		model.addAttribute("flightRoute", flightRoute);
-                model.addAttribute("flightID", flightRouteService.getAllSymbols());
+		model.addAttribute("flightID", flightRouteService.getAllSymbols());
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 		return "admin/editFlights";
 	}
-        
-        @RequestMapping(value = { "/editFlights" }, method = RequestMethod.POST)
+
+	@RequestMapping(value = { "/editFlights" }, method = RequestMethod.POST)
 	public String editFlightsPost(@Valid final FlightRoute flightRoute, final BindingResult result,
-			final ModelMap model) {
-                if (result.hasErrors()) {
+			final ModelMap model, @RequestParam(value = "userId", required = false) final String userId) {
+		if (!userService.isValidAdmin(userId)) {
+			return "redirect:/loginpage";
+		} else if (result.hasErrors()) {
+			model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 			return "editFlights";
 		}
-                
-                final FlightRoute storedFlight = flightRouteService.getStoredEntity(flightRoute);
-                if (storedFlight != null){
-                    final int flightID = storedFlight.getId();
-                    storedFlight.setFirstClassPrice(flightRoute.getFirstClassPrice());
-                    storedFlight.setBusinessClassPrice(flightRoute.getBusinessClassPrice());
-                    storedFlight.setEconomyClassPrice(flightRoute.getEconomyClassPrice());
-                } else {
+
+		final FlightRoute storedFlight = flightRouteService.getStoredEntity(flightRoute);
+		if (storedFlight != null) {
+			storedFlight.setFirstClassPrice(flightRoute.getFirstClassPrice());
+			storedFlight.setBusinessClassPrice(flightRoute.getBusinessClassPrice());
+			storedFlight.setEconomyClassPrice(flightRoute.getEconomyClassPrice());
+		} else {
 			System.err.println("Route Not Found");
 		}
-                
-                flightRouteService.updateEntity(storedFlight);
-                return "redirect:/admin/flightRouteList";
-        }
+
+		flightRouteService.updateEntity(storedFlight);
+		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
+		return "redirect:/admin/flightRouteList?userId=" + userId;
+	}
 
 	public final class FlightDataHolder {
 
 		private String aircraft;
-                private String symbol;
+		private String symbol;
 		private String date;
 		private int firstClassPrice;
 		private int businessClassPrice;
@@ -330,7 +401,7 @@ public final class AdminTasks {
 			final FlightRoute route = flightRouteService.findAllEntities().stream()
 					.filter(flightRoute -> flightRoute.getId() == flight.getFlightRouteId()).findAny().get();
 			this.aircraft = route.getAircraft();
-                        this.symbol = route.getSymbol();
+			this.symbol = route.getSymbol();
 			this.firstClassPrice = route.getFirstClassPrice();
 			this.businessClassPrice = route.getBusinessClassPrice();
 			this.economyClassPrice = route.getEconomyClassPrice();
@@ -375,11 +446,10 @@ public final class AdminTasks {
 		public String getDate() {
 			return date;
 		}
-                
-                public String getSymbol(){
-                        return symbol;
-                }
 
+		public String getSymbol() {
+			return symbol;
+		}
 
 	}
 }

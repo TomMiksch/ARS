@@ -7,38 +7,93 @@
 <title>Airline Reservation System</title>
 
 <style>
-tr:first-child {
-	font-weight: bold;
-	background-color: #C6C9C4;
+h1 {
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+}
+
+h3 {
+	text-align: center;
+}
+
+font {
+	color: gray;
+}
+
+p.copyRight {
+	color: gray;
+	text-align: center;
 }
 </style>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-	<h2>Booked Flights</h2>
-	<table>
-		<tr>
-			<td>User Email</td>
-			<td>Flight Number</td>
-			<td>Class</td>
-			<td>Passengers</td>
-		</tr>
-		<c:forEach items="${booking}" var="bookings">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">Airline Reservation System</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="<c:url value='/admin/home' />?<c:out value = "${pageContext.request.queryString}" />">Home</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a>Hello, ${firstName}!</a></li>
+				<li><a href="<c:url value='/home' />"><span
+						class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+			</ul>
+		</div>
+	</nav>
+	<div class="jumbotron">
+		<div class="container">
+			<h2>Booked Flights</h2>
+		</div>
+	</div>
+	<table class="table table-hover table-bordered">
+		<thead>
 			<tr>
-				<td>${bookings.userEmail}</td>
-				<td>${bookings.flightNumber}</td>
-				<td>${bookings.seatClass}</td>
-				<td>${bookings.seats}</td>
-				<td><a
-					href="<c:url value='delete-${bookings.id}-booking' />">Delete Booking</a></td>
-				<td><a
-					href="<c:url value='confirm-${bookings.userEmail}/${bookings.id}' />">Confirm Booking</a></td>
-				
+				<th>User Email</th>
+				<th>Flight Number</th>
+				<th>Class</th>
+				<th>Passengers</th>
+				<th>Confirm</th>
+				<th>Dismiss</th>
 			</tr>
-		</c:forEach>
+		</thead>
+		<tbody>
+			<c:forEach items="${booking}" var="bookings">
+				<tr>
+					<th>${bookings.userEmail}</th>
+					<th>${bookings.flightNumber}</th>
+					<th>${bookings.seatClass}</th>
+					<th>${bookings.seats}</th>
+					<th><a class="btn btn-success"
+						href="<c:url value='confirm-${bookings.userEmail}/${bookings.id}' />?<c:out value = "${pageContext.request.queryString}" />">Confirm</a></th>
+					<th><a class="btn btn-danger"
+						href="<c:url value='delete-${bookings.id}-booking' />?<c:out value = "${pageContext.request.queryString}" />">Dismiss</a></th>
+
+				</tr>
+			</c:forEach>
+		</tbody>
 	</table>
-	<br />Go back to
-	<a href="<c:url value='home' />">home</a>
+	<br>
+	<br>
+	<br>
+	<br>
+	<footer class="navbar navbar-inverse navbar-fixed-bottom">
+		<p class="copyRight">
+			Mallory Tollefson, Thomas Miksch, Peter Li<br />&#9400; Iowa Air
+			2017
+		</p>
+	</footer>
 </body>
 </html>

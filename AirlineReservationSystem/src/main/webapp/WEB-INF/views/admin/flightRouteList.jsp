@@ -7,53 +7,108 @@
 <title>Airline Reservation System</title>
 
 <style>
-tr:first-child {
-	font-weight: bold;
-	background-color: #C6C9C4;
+h1 {
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+}
+
+h3 {
+	text-align: center;
+}
+
+font {
+	color: gray;
+}
+
+p.copyRight {
+	color: gray;
+	text-align: center;
 }
 </style>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-	<h2>List of Flight Routes</h2>
-	<table>
-		<tr>
-			<td>Aircraft</td>
-                        <td>Flight Symbol</td>
-			<td>First Class Price</td>
-			<td>Business Class Price</td>
-			<td>Economy Class Price</td>
-			<td>Origin</td>
-			<td>Destination</td>
-			<td>Start Time</td>
-			<td>End Time</td>
-			<td>Frequency</td>
-			<td>Beginning</td>
-			<td>Ending</td>
-		</tr>
-		<c:forEach items="${flightRoutes}" var="flightRoute">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">Airline Reservation System</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="<c:url value='/admin/home' />?<c:out value = "${pageContext.request.queryString}" />">Home</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a>Hello, ${firstName}!</a></li>
+				<li><a href="<c:url value='/home' />"><span
+						class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+			</ul>
+		</div>
+	</nav>
+	<div class="jumbotron">
+		<div class="container">
+			<h2>List of Flight Routes</h2>
+		</div>
+	</div>
+	<table class="table table-hover table-bordered">
+		<thead>
 			<tr>
-				<td>${flightRoute.aircraft}</td>
-                                <td>${flightRoute.symbol}</td>
-				<td>${flightRoute.firstClassPrice}</td>
-				<td>${flightRoute.businessClassPrice}</td>
-				<td>${flightRoute.economyClassPrice}</td>
-				<td>${flightRoute.origin}</td>
-				<td>${flightRoute.destination}</td>
-				<td>${flightRoute.startTime}</td>
-				<td>${flightRoute.endTime}</td>
-				<td>${flightRoute.frequency}</td>
-				<td>${flightRoute.beginDate}</td>
-				<td>${flightRoute.endDate}</td>
-				<td><a
-					href="<c:url value='delete-${flightRoute.id}-flightRoute' />">delete</a></td>
+				<th>Aircraft</th>
+				<th>Flight Symbol</th>
+				<th>First Class Price</th>
+				<th>Business Class Price</th>
+				<th>Economy Class Price</th>
+				<th>Origin</th>
+				<th>Destination</th>
+				<th>Start Time</th>
+				<th>End Time</th>
+				<th>Frequency</th>
+				<th>Beginning</th>
+				<th>Ending</th>
+				<th>Delete</th>
 			</tr>
-		</c:forEach>
+		</thead>
+		<tbody>
+			<c:forEach items="${flightRoutes}" var="flightRoute">
+				<tr>
+					<th>${flightRoute.aircraft}</th>
+					<th>${flightRoute.symbol}</th>
+					<th>${flightRoute.firstClassPrice}</th>
+					<th>${flightRoute.businessClassPrice}</th>
+					<th>${flightRoute.economyClassPrice}</th>
+					<th>${flightRoute.origin}</th>
+					<th>${flightRoute.destination}</th>
+					<th>${flightRoute.startTime}</th>
+					<th>${flightRoute.endTime}</th>
+					<th>${flightRoute.frequency}</th>
+					<th>${flightRoute.beginDate}</th>
+					<th>${flightRoute.endDate}</th>
+					<th><a class="btn btn-danger"
+						href="<c:url value='delete-${flightRoute.id}-flightRoute' />?<c:out value = "${pageContext.request.queryString}" />">Delete</a></th>
+				</tr>
+			</c:forEach>
+		</tbody>
 	</table>
 	<br />
-	<a href="<c:url value='addFlightRoute' />">Add Flight Route</a>
-	<br /> Go back to
-	<a href="<c:url value='home' />">home</a>
+	<a class="btn btn-primary" href="<c:url value='addFlightRoute' />?<c:out value = "${pageContext.request.queryString}" />">Add
+		Flight Route</a>
+	<br>
+	<br>
+	<br>
+	<br>
+	<footer class="navbar navbar-inverse navbar-fixed-bottom">
+		<p class="copyRight">
+			Mallory Tollefson, Thomas Miksch, Peter Li<br />&#9400; Iowa Air
+			2017
+		</p>
+	</footer>
 </body>
 </html>

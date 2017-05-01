@@ -7,38 +7,94 @@
 <title>Airline Reservation System</title>
 
 <style>
-tr:first-child {
-	font-weight: bold;
-	background-color: #C6C9C4;
+h1 {
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+}
+
+h3 {
+	text-align: center;
+}
+
+font {
+	color: gray;
+}
+
+p.copyRight {
+	color: gray;
+	text-align: center;
 }
 </style>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-	<h2>List of Aircraft</h2>
-	<table>
-		<tr>
-			<td>Aircraft Symbol</td>
-			<td>Aircraft Type</td>
-			<td>First Class Seats</td>
-			<td>Business Class Seats</td>
-			<td>Economy Class Seats</td>
-		</tr>
-		<c:forEach items="${aircrafts}" var="aircraft">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">Airline Reservation System</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="<c:url value='/admin/home' />?<c:out value = "${pageContext.request.queryString}" />">Home</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a>Hello, ${firstName}!</a></li>
+				<li><a href="<c:url value='/home' />"><span
+						class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+			</ul>
+		</div>
+	</nav>
+	<div class="jumbotron">
+		<div class="container">
+			<h2>List of Aircraft</h2>
+		</div>
+	</div>
+	<table class="table table-hover table-bordered">
+		<thead>
 			<tr>
-				<td>${aircraft.symbol}</td>
-				<td>${aircraft.aircraftType}</td>
-				<td>${aircraft.firstClassSeats}</td>
-				<td>${aircraft.businessClassSeats}</td>
-				<td>${aircraft.economyClassSeats}</td>
-				<td><a href="<c:url value='delete-${aircraft.id}-aircraft' />">delete</a></td>
+				<th>Aircraft Symbol</th>
+				<th>Aircraft Type</th>
+				<th>First Class Seats</th>
+				<th>Business Class Seats</th>
+				<th>Economy Class Seats</th>
+				<th>Delete</th>
 			</tr>
-		</c:forEach>
+		</thead>
+		<tbody>
+			<c:forEach items="${aircrafts}" var="aircraft">
+				<tr>
+					<th>${aircraft.symbol}</th>
+					<th>${aircraft.aircraftType}</th>
+					<th>${aircraft.firstClassSeats}</th>
+					<th>${aircraft.businessClassSeats}</th>
+					<th>${aircraft.economyClassSeats}</th>
+					<th><a class="btn btn-danger"
+						href="<c:url value='delete-${aircraft.id}-aircraft' />?<c:out value = "${pageContext.request.queryString}" />">Delete</a></th>
+				</tr>
+			</c:forEach>
+		</tbody>
 	</table>
 	<br />
-	<a href="<c:url value='addAircraft' />">Add Aircraft</a>
-	<br /> Go back to
-	<a href="<c:url value='home' />">home</a>
+	<a class="btn btn-primary" href="<c:url value='addAircraft' />?<c:out value = "${pageContext.request.queryString}" />">Add
+		Aircraft</a>
+	<br>
+	<br>
+	<br>
+	<br>
+	<footer class="navbar navbar-inverse navbar-fixed-bottom">
+		<p class="copyRight">
+			Mallory Tollefson, Thomas Miksch, Peter Li<br />&#9400; Iowa Air
+			2017
+		</p>
+	</footer>
 </body>
 </html>

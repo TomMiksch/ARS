@@ -8,7 +8,15 @@
 <title>Account Home</title>
 
 <style>
+h1 {
+	text-align: center;
+}
+
 h2 {
+	text-align: center;
+}
+
+h3 {
 	text-align: center;
 }
 
@@ -32,14 +40,16 @@ p.copyRight {
 
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
+		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand">Airline Reservation System</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="<c:url value='/admin/home' />">Home</a></li>
+				<li class="active"><a
+					href="<c:url value='/admin/home' />?<c:out value = "${pageContext.request.queryString}" />">Home</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
+				<li><a>Hello, ${firstName}!</a></li>
 				<li><a href="<c:url value='/home' />"><span
 						class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 			</ul>
@@ -53,70 +63,78 @@ p.copyRight {
 	<div class="container">
 		<div class="accordion" id="mainView">
 			<div class="panel">
-				<a class="btn btn-primary btn-lg" data-toggle="collapse"
+				<a class="btn btn-info btn-lg" data-toggle="collapse"
 					data-target="#collapsible-1" data-parent="mainView">Users</a>
 				<div id="collapsible-1" class="collapse">
 					<table class="table table-hover">
 						<tbody>
 							<tr>
-								<td><a href="<c:url value='userList' />" role="button">List
-										Current Users</a></td>
+								<td><a
+									href="<c:url value='userList' />?<c:out value = "${pageContext.request.queryString}" />"
+									role="button">List Current Users</a></td>
 							</tr>
 							<tr>
-								<td><a href="<c:url value='addUser' />" role="button">Add
-										New User (Employee/Administrator Only)</a></td>
+								<td><a
+									href="<c:url value='addUser' />?<c:out value = "${pageContext.request.queryString}" />"
+									role="button">Add New User (Employee/Administrator Only)</a></td>
 							</tr>
 					</table>
 				</div>
 			</div>
 			<div class="panel">
-				<a class="btn btn-primary btn-lg" data-toggle="collapse"
+				<a class="btn btn-info btn-lg" data-toggle="collapse"
 					data-target="#collapsible-2" data-parent="mainView">Aircraft</a>
 				<div id="collapsible-2" class="collapse">
 					<table class="table table-hover">
 						<tbody>
 							<tr>
-								<td><a href="<c:url value='aircraftList' />" role="button">List
-										Current Aircraft</a></td>
+								<td><a
+									href="<c:url value='aircraftList' />?<c:out value = "${pageContext.request.queryString}" />"
+									role="button">List Current Aircraft</a></td>
 							</tr>
 							<tr>
-								<td><a href="<c:url value='addAircraft' />" role="button">Add
-										New Aircraft</a></td>
+								<td><a
+									href="<c:url value='addAircraft' />?<c:out value = "${pageContext.request.queryString}" />"
+									role="button">Add New Aircraft</a></td>
 							</tr>
 					</table>
 				</div>
 			</div>
 			<div class="panel">
-				<a class="btn btn-primary btn-lg" data-toggle="collapse"
+				<a class="btn btn-info btn-lg" data-toggle="collapse"
 					data-target="#collapsible-3" data-parent="mainView">Flight
 					Routes</a>
 				<div id="collapsible-3" class="collapse">
 					<table class="table table-hover">
 						<tbody>
 							<tr>
-								<td><a href="<c:url value='flightRouteList' />"
+								<td><a
+									href="<c:url value='flightRouteList' />?<c:out value = "${pageContext.request.queryString}" />"
 									role="button">List Current Flight Routes</a></td>
 							</tr>
 							<tr>
-								<td><a href="<c:url value='addFlightRoute' />"
+								<td><a
+									href="<c:url value='addFlightRoute' />?<c:out value = "${pageContext.request.queryString}" />"
 									role="button">Add New Flight Route</a></td>
 							</tr>
 							<tr>
-								<td><a href="<c:url value='editFlights' />" role="button">Edit
-										Existing Flight Routes</a></td>
+								<td><a
+									href="<c:url value='editFlights' />?<c:out value = "${pageContext.request.queryString}" />"
+									role="button">Edit Existing Flight Routes</a></td>
 							</tr>
 					</table>
 				</div>
 			</div>
 			<div class="panel">
-				<a class="btn btn-primary btn-lg" data-toggle="collapse"
+				<a class="btn btn-info btn-lg" data-toggle="collapse"
 					data-target="#collapsible-4" data-parent="mainView">Bookings</a>
 				<div id="collapsible-4" class="collapse">
 					<table class="table table-hover">
 						<tbody>
 							<tr>
-								<td><a href="<c:url value='bookingList' />" role="button">List
-										Bookings Pending Verification</a></td>
+								<td><a
+									href="<c:url value='bookingList' />?<c:out value = "${pageContext.request.queryString}" />"
+									role="button">List Bookings Pending Verification</a></td>
 							</tr>
 					</table>
 				</div>

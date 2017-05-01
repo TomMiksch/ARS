@@ -4,7 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
-
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Iowa Air</title>
@@ -14,6 +13,7 @@
 }
 
 body {
+	padding-top: 65px;
 	background-image:
 		url("https://www.scienceabc.com/wp-content/uploads/2015/10/airplane.jpg");
 	background-size: cover;
@@ -21,11 +21,48 @@ body {
 }
 
 div#map_container {
-	width: 60%;
 	height: 400px;
 }
-</style>
 
+h1 {
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+}
+
+h3 {
+	text-align: center;
+}
+
+font {
+	color: gray;
+}
+
+.overlay {
+	background-color: rgba(100, 100, 100, 0.5);
+	height: 500px;
+}
+
+p.copyRight {
+	color: gray;
+	text-align: center;
+}
+</style>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript"
+	src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
@@ -56,197 +93,7 @@ div#map_container {
 
 	var today = new Date();
 	document.getElementsByName("departDate")[0].setAttribute('min', today);
-</script>
 
-</head>
-
-<!-- The begining of what Peter added for our login page -->
-
-<article id="login">
-	<h2 class="left gamma">Home</h2>
-
-	<!--
-    <form id="loginForm" method="post" action="<c:url value='/new' />">
-	<input type="hidden" name="previousPage" value="/homePage.do?locale=" />
-    <input type="hidden" name="activeTab" id="loginForm.activeTab"/>
-    <label for="loginForm.loginId">
-        Username
-		<input type="text" name="loginId" maxlength="52" size="20" value="" id="loginForm.loginId" autocomplete="off" aria-required="true"/>
-	</label>
-    <br />	
-	<label for="loginForm.lastName">
-        Last name
-		<input type="text" name="lastName" maxlength="35" size="20" value="" id="loginForm.lastName" autocomplete="off" aria-required="true"/>
-	</label>
-    <br />
-    <label for="loginForm.password">
-	    Password
-		<input type="password" name="password" maxlength="16" size="20"	value="" id="loginForm.password" aria-required="true"/>
-	</label>
-	
-	<div class="span12 pushLeft forgot-link-wrapper">
-		<p><span class="hidden-accessible">Reset your password?</span></p>
-	</div>
-	<div class="remember-submit-wrapper">
-		<div class="span6 pushLeft customComponent">
-		    <input type="checkbox" id="loginForm.rememberMeCheckbox" name="rememberMe"  >
-		    <label for="loginForm.rememberMeCheckbox">
-		        <span class="control left"></span>
-		        <span class="lbl left">Remember me</span>
-		    </label>
-		</div>
-		<div class="span6 pushLeft">
-			<input type="submit" name="_button_go" value="Log in" class="btn btn-fullWidth" />
-		</div>
-	</div>
-	</form>
--->
-
-	<a href="<c:url value='/loginpage' />" id="loginButton">Log In</a> <br />
-	<a href="<c:url value='/register' />">Create New Account</a>
-</article>
-
-<a href="<c:url value='/reset' />">Reset Password</a>
-<br />
-<div id="aa-booking-module"
-	class="ui-tabs-panel ui-widget-content ui-corner-bottom">
-	<form name="reservationFlightSearchForm"
-		id="reservationFlightSearchForm" method="POST"
-		modelAttribute="flightroute" action="flightSearchResult" class="zeta">
-		<input type="hidden" id="showMoreOptions" name="showMoreOptions"
-			value="false" /> <input type="hidden" id="fromSearchPage"
-			name="fromSearchPage" value="true" />
-		<div class="row-form">
-			<%--<div class="span7">
-            <ul role="radiogroup">
-                <li class="customComponent" role="radio" aria-checked="true">
-                    <input type="radio" name="tripType" value="roundTrip" id="flightSearchForm.tripType.roundTrip" checked />
-                    <label for="flightSearchForm.tripType.roundTrip" class="pillbox">
-                        <span class="hidden-accessible">Search flights round trip</span>
-                    </label>
-                </li>
-                <li class="customComponent" role="radio" aria-checked="false">
-                    <input type="radio" name="tripType" value="oneWay" id="flightSearchForm.tripType.oneWay"  >
-                    <label for="flightSearchForm.tripType.oneWay" class="pillbox">
-                        <span class="hidden-accessible">Search flights one way</span>
-                    </label>
-                </li>
-                
-            </ul>
-        </div>--%>
-		</div>
-		<div class="row-form">
-			<div class="span12">
-				<small>( <span class="icon-required" aria-hidden="true"></span>
-					Required<span class="hidden-accessible">dot indicates
-						required</span>)
-				</small>
-			</div>
-		</div>
-		<div class="row-form">
-			<div class="span4">
-				<div class="position-relative margin-bottom">
-					<label for="origin"> From <span class="icon-required"
-						aria-hidden="true"></span><span class="hidden-accessible">
-							(required)</span> <select name="origin" id="origin"
-						onchange="checkDest(this.value)">
-							<option disabled selected>Depart From</option>
-							<option value="CID">CID</option>
-							<option value="ORD">ORD</option>
-							<option value="ATL">ATL</option>
-							<option value="SFO">SFO</option>
-							<option value="LCY">LCY</option>
-					</select>
-					</label>
-					<%--<a data-for="reservationFlightSearchForm.originAirport" class="widget aaAirportLookup" href="javascript:void(0);">
-                    <span class="icon icon-search" aria-hidden="true"></span> <span class="hidden-accessible">From airport look up</span>
-                </a>--%>
-				</div>
-			</div>
-			<div class="span4">
-				<div class="position-relative margin-bottom">
-					<label for="destination"> To <span class="icon-required"
-						aria-hidden="true"></span><span class="hidden-accessible">(required)</span>
-						<select name="destination" id="destination">
-							<option disabled selected>Destination</option>
-					</select>
-					</label>
-					<%--<a data-for="reservationFlightSearchForm.destinationAirport" class="widget aaAirportLookup" href="javascript:void(0);">
-                    <span class="icon icon-search" aria-hidden="true"></span> <span class="hidden-accessible">To airport look up</span>
-                </a>--%>
-				</div>
-			</div>
-			<div class="span4">
-				<div class="margin-bottom">
-					<label for="seats"> Number of passengers <select
-						name="seats" onchange="calcTotalNoOfPsgrsOnHomePage('')"
-						id="seats">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-					</select>
-					</label>
-
-
-				</div>
-			</div>
-		</div>
-		<div class="row-form aa-flightSearchForm-datesRow">
-			<div class="span4">
-				<div>
-					<!--
-                                    <label for="aa-leavingOn"> Depart <span
-						class="icon-required" aria-hidden="true"></span><span
-						class="hidden-accessible">, required.</span> <span
-						class="datePicker">(date format mm/dd/yyyy)</span> <input
-						id="startTime" name="departDate" type="date" />
-                                    </label>
-                                    -->
-					<label for="date"> Depart <span class="icon-required"
-						aria-hidden="true"></span><span class="hidden-accessible">,
-							optional.</span> <input id="dateInput" name="date"
-						placeholder="yyyy-mm-dd" readonly />
-					</label>
-				</div>
-			</div>
-			<div class="span4">
-				<%--<div>
-                <label for="aa-returningFrom" >
-                    Return <span class="icon-required" aria-hidden="true"></span><span class="hidden-accessible">, required.</span>
-                    <span class="hidden-accessible">(date format mm/dd/yyyy)</span>
-                    <input class="aaDatePicker" id="aa-returningFrom" name="returnDate" type="text" value="" placeholder="mm/dd/yyyy" >
-                </label>
-            </div>--%>
-			</div>
-			<div class="span4">
-				<label for="flightClass" class="aa-display-none"> Fare
-					preference <select id="flightClass" name="flightClass">
-						<option selected="selected" value="Economy">Economy</option>
-						<option value="Business">Business</option>
-						<option value="First">First</option>
-				</select>
-				</label>
-			</div>
-			<div id="flightSearchFormSubmitButton" class="span4 ">
-				<div>
-					<input type="submit" value="Search"
-						id="flightSearchForm.button.reSubmit" class="btn btn-fullWidth">
-					<%--<button id="flightSearchForm.button.vacationSubmit" type="button" class="btn btn-fullWidth is-hidden">
-                    Search<span aria-hidden="true" class="icon-newpage"></span>
-                    <span class="hidden-accessible">, Opens another site in a new window that may not meet accessibility guidelines.</span>
-                </button>--%>
-				</div>
-			</div>
-		</div>
-	</form>
-</div>
-
-<script type="text/javascript"
-	src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-<script type="text/javascript">
 	function loadMap() {
 		var cen = new google.maps.LatLng(38.483924, -101.754673);
 		var latlng = new google.maps.LatLng(41.975736, -91.670641);
@@ -290,8 +137,100 @@ div#map_container {
 
 	}
 </script>
+</head>
+
 <body onload="loadMap()">
-	<div id="map_container"></div>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">Airline Reservation System</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="<c:url value='/home' />">Home</a></li>
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="<c:url value='/loginpage' />">Login</a></li>
+						<li><a href="<c:url value='/register' />">Create New
+								Account</a></li>
+						<li><a href="<c:url value='/reset' />">Reset Password</a></li>
+					</ul></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="<c:url value='/loginpage' />"><span
+						class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			</ul>
+		</div>
+	</nav>
+	<h1>Home</h1>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5 overlay">
+				<h2>Search Flights</h2>
+				<br>
+				<form name="reservationFlightSearchForm"
+					id="reservationFlightSearchForm" method="POST"
+					modelAttribute="flightroute" action="flightSearchResult"
+					class="zeta">
+					<input type="hidden" id="showMoreOptions" name="showMoreOptions"
+						value="false" /> <input type="hidden" id="fromSearchPage"
+						name="fromSearchPage" value="true" /> <label for="origin">
+						From <span class="icon-required" aria-hidden="true"></span><span
+						class="hidden-accessible"> (required)</span> <select name="origin"
+						id="origin" onchange="checkDest(this.value)">
+							<option disabled selected>Depart From</option>
+							<option value="CID">CID</option>
+							<option value="ORD">ORD</option>
+							<option value="ATL">ATL</option>
+							<option value="SFO">SFO</option>
+							<option value="LCY">LCY</option>
+					</select>
+					</label> <br /> <br /> <label for="destination"> To <span
+						class="icon-required" aria-hidden="true"></span><span
+						class="hidden-accessible">(required)</span> <select
+						name="destination" id="destination">
+							<option disabled selected>Destination</option>
+					</select>
+					</label> <br /> <br /> <label for="seats"> Number of passengers <select
+						name="seats" onchange="calcTotalNoOfPsgrsOnHomePage('')"
+						id="seats">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+					</select>
+					</label> <br /> <br /> <label for="date"> Depart<span
+						class="datePicker"></span> <input id="dateInput" name="date"
+						type="text" placeholder="yyyy-mm-dd" readonly />
+					</label> <br /> <br /> <label for="flightClass" class="aa-display-none">
+						Fare preference <select id="flightClass" name="flightClass">
+							<option selected="selected" value="Economy">Economy</option>
+							<option value="Business">Business</option>
+							<option value="First">First</option>
+					</select>
+					</label> <br /> <br /> <input type="submit" value="Search"
+						id="flightSearchForm.button.reSubmit" class="btn btn-primary">
+				</form>
+			</div>
+			<div class="col-md-2"></div>
+			<div class="col-md-5 overlay">
+				<h2>Serviced Locations</h2>
+				<div id="map_container"></div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<footer class="navbar navbar-inverse navbar-fixed-bottom">
+		<p class="copyRight">
+			Mallory Tollefson, Thomas Miksch, Peter Li<br />&#9400; Iowa Air
+			2017
+		</p>
+	</footer>
 </body>
 
 </html>

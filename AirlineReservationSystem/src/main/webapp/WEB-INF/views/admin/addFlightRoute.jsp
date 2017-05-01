@@ -13,8 +13,44 @@
 .error {
 	color: #ff0000;
 }
+
+h1 {
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+}
+
+h3 {
+	text-align: center;
+}
+
+font {
+	color: gray;
+}
+
+p.copyRight {
+	color: gray;
+	text-align: center;
+}
+
+tr.spaceUnder>td {
+	padding-bottom: 1em;
+}
 </style>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
@@ -104,77 +140,105 @@
 </head>
 
 <body>
-	<h2>Add Flight Route</h2>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">Airline Reservation System</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a
+					href="<c:url value='/admin/home' />?<c:out value = "${pageContext.request.queryString}" />">Home</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a>Hello, ${firstName}!</a></li>
+				<li><a href="<c:url value='/home' />"><span
+						class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+			</ul>
+		</div>
+	</nav>
+	<div class="jumbotron">
+		<div class="container">
+			<h2>Add Flight Route</h2>
+		</div>
+	</div>
 	<form:form method="POST" modelAttribute="flightRoute">
 		<form:input type="hidden" path="id" id="id" />
 		<table>
-			<tr>
+			<tr class="spaceUnder">
 				<td><label for="aircraft">Aircraft: </label></td>
 				<td><form:select path="aircraft" items="${aircrafts}" /></td>
 			</tr>
-			<tr>
+			<tr class="spaceUnder">
 				<td><label for="firstClassPrice">First Class Price: </label></td>
 				<td><form:input path="firstClassPrice" id="firstClassPrice" /></td>
 				<td><form:errors path="firstClassPrice" cssClass="error" /></td>
 			</tr>
-			<tr>
+			<tr class="spaceUnder">
 				<td><label for="businessClassPrice">Business Class
 						Price: </label></td>
 				<td><form:input path="businessClassPrice"
 						id="businessClassPrice" /></td>
 				<td><form:errors path="businessClassPrice" cssClass="error" /></td>
 			</tr>
-			<tr>
+			<tr class="spaceUnder">
 				<td><label for="economyClassPrice">Economy Class Price:
 				</label></td>
 				<td><form:input path="economyClassPrice" id="economyClassPrice" /></td>
 				<td><form:errors path="economyClassPrice" cssClass="error" /></td>
 			</tr>
-			<tr>
+			<tr class="spaceUnder">
 				<td><label for="origin">Origin: </label></td>
 				<td><form:select path="origin" id="origin" items="${airports}"
 						onchange="displayDestinations()" /></td>
 			</tr>
-			<tr>
+			<tr class="spaceUnder">
 				<td><label for="destination">Destination: </label></td>
 				<td><form:select path="destination" id="destination"
 						items="${airports}" /></td>
 				<td><form:errors path="destination" cssClass="error" /></td>
 			</tr>
-			<tr>
+			<tr class="spaceUnder">
 				<td><label for="startTime">Start Time: </label></td>
 				<td><form:select path="startTime" id="startTime"
 						onchange="displayFlightTimes()" /></td>
 			</tr>
-			<tr>
+			<tr class="spaceUnder">
 				<td><label for="endTime">End Time: </label></td>
 				<td><form:select path="endTime" id="endTime" /></td>
 				<td><form:errors path="endTime" cssClass="error" /></td>
 			</tr>
-			<tr>
+			<tr class="spaceUnder">
 				<td><label for="frequency">Frequency: </label></td>
 				<td><form:radiobuttons path="frequency" id="frequency"
 						items="${frequencies}" /></td>
 			</tr>
-			<tr>
-				<td><label for="beginDate">Beginning Date: </label></td>
+			<tr class="spaceUnder">
+				<td><label for="beginDate">Beginning Date: </label><span
+					class="datePicker"></span></td>
 				<td><form:input type="text" path="beginDate" id="beginDate"
 						placeholder="yyyy-mm-dd" readonly="true" /></td>
 				<td><form:errors path="beginDate" cssClass="error" /></td>
 			</tr>
-			<tr>
+			<tr class="spaceUnder">
 				<td><label for="endDate">End Date: </label></td>
 				<td><form:input type="text" path="endDate" id="endDate"
 						placeholder="yyyy-mm-dd" readonly="true" /></td>
 				<td><form:errors path="endDate" cssClass="error" /></td>
 			</tr>
-			<tr>
-				<td colspan="3"><input type="submit" value="Submit" /></td>
+			<tr class="spaceUnder">
+				<td><input class="btn btn-primary" type="submit" value="Submit" /></td>
 			</tr>
 		</table>
 	</form:form>
-	<br />
-	<br /> Go back to
-	<a href="<c:url value='home' />">home</a>
+	<br>
+	<br>
+	<br>
+	<br>
+	<footer class="navbar navbar-inverse navbar-fixed-bottom">
+		<p class="copyRight">
+			Mallory Tollefson, Thomas Miksch, Peter Li<br />&#9400; Iowa Air
+			2017
+		</p>
+	</footer>
 </body>
 </html>

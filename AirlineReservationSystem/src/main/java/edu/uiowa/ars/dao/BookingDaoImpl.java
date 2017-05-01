@@ -6,8 +6,6 @@ import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
 
 import edu.uiowa.ars.model.Booking;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
 
 @Repository("bookingDao")
 public final class BookingDaoImpl extends AbstractDao<Integer, Booking> implements BookingDao {
