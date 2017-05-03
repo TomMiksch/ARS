@@ -44,7 +44,17 @@ p.copyRight {
 				<a class="navbar-brand">Airline Reservation System</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="<c:url value='/admin/home' />?<c:out value = "${pageContext.request.queryString}" />">Home</a></li>
+				<li class="active"><a
+					href="<c:url value='../gohome' />?<c:out value = "${pageContext.request.queryString}" />">Home</a></li>
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="<c:url value='/home' />">Logout</a></li>
+						<li><a
+							href="<c:url value='addUser' />?<c:out value = "${pageContext.request.queryString}" />">Add
+								New User</a></li>
+						<li><a href="<c:url value='/reset' />?<c:out value = "${pageContext.request.queryString}" />">Reset Password</a></li>
+					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a>Hello, ${firstName}!</a></li>
@@ -98,7 +108,8 @@ p.copyRight {
 		</tbody>
 	</table>
 	<br />
-	<a class="btn btn-primary" href="<c:url value='addFlightRoute' />?<c:out value = "${pageContext.request.queryString}" />">Add
+	<a class="btn btn-primary"
+		href="<c:url value='addFlightRoute' />?<c:out value = "${pageContext.request.queryString}" />">Add
 		Flight Route</a>
 	<br>
 	<br>

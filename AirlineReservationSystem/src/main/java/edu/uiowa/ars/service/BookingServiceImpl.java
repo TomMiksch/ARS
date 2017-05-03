@@ -1,6 +1,5 @@
 package edu.uiowa.ars.service;
 
-import edu.uiowa.ars.SystemSupport;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +25,6 @@ public final class BookingServiceImpl implements BookingService {
 	public void deleteEntityById(final String id) {
 		dao.deleteEntityById(id);
 	}
-        
-        @Override
-	public void confirmEntityByEmail(final String email) {
-		SystemSupport.sendEmail(email, "Test Subject",
-				"Hello,<br>"
-					+ "Your flight has been confirmed.<br>"
-					+ "<br><br>Sincerely,<br>Iowa Air",
-				null, null);
-	}
 
 	@Override
 	public void updateEntity(final Booking booking) {
@@ -59,7 +49,5 @@ public final class BookingServiceImpl implements BookingService {
 	public List<Booking> findSelectedEntities(final Booking entity) {
 		return dao.findSelectedEntities(entity);
 	}
-        
-        
 
 }

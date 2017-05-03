@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import edu.uiowa.ars.SystemSupport;
 import edu.uiowa.ars.model.Aircraft;
 import edu.uiowa.ars.model.Aircraft.AircraftTypes;
 import edu.uiowa.ars.model.Booking;
@@ -328,11 +329,18 @@ public final class AdminTasks {
 			return "redirect:/loginpage";
 		}
 		bookingService.deleteEntityById(id);
+
+		SystemSupport.sendEmail(userService.getUserById(userId).getEmailAddress(), "Flight Booking Cancelled",
+				"Hello" + userService.getUserById(userId).getFirstName()
+						+ ",<br>Unfortunately, we have had to cancel your recent booking. "
+						+ "This can arise for many reasons, and we apologize for the inconvenience. "
+						+ "We hope that next time you choose to fly, you book with us again.<br><br>Thank You,<br>Iowa Air",
+				null, null);
 		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 		return "redirect:/admin/bookingList?userId=" + userId;
 	}
-        
-        @RequestMapping(value = { "/delete-{id}-flightRoute" }, method = RequestMethod.GET)
+
+	@RequestMapping(value = { "/delete-{id}-flightRoute" }, method = RequestMethod.GET)
 	public String deleteFlightGet(final ModelMap model, @PathVariable final String id,
 			@RequestParam(value = "userId", required = false) final String userId) {
 		if (!userService.isValidAdmin(userId)) {
@@ -342,8 +350,8 @@ public final class AdminTasks {
 		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 		return "redirect:/admin/flightRouteList?userId=" + userId;
 	}
-        
-        @RequestMapping(value = { "/delete-{id}-aircraft" }, method = RequestMethod.GET)
+
+	@RequestMapping(value = { "/delete-{id}-aircraft" }, method = RequestMethod.GET)
 	public String deleteAircraftGet(final ModelMap model, @PathVariable final String id,
 			@RequestParam(value = "userId", required = false) final String userId) {
 		if (!userService.isValidAdmin(userId)) {
@@ -361,7 +369,14 @@ public final class AdminTasks {
 		if (!userService.isValidAdmin(userId)) {
 			return "redirect:/loginpage";
 		}
-		bookingService.confirmEntityByEmail(email);
+
+		SystemSupport.sendEmail(email, "Check In Confirmed",
+				"Hello" + userService.getUserById(userId).getFirstName() + ",<br>"
+						+ "Your flight booking has been processed and you are now checked in. "
+						+ "Thank you again for choosing Iowa Air to book your flight!<br>"
+						+ "<br><br>Sincerely,<br>Iowa Air",
+				null, null);
+
 		bookingService.deleteEntityById(id);
 		model.addAttribute("firstName", userService.getUserById(userId).getFirstName());
 		return "redirect:/admin/bookingList?userId=" + userId;

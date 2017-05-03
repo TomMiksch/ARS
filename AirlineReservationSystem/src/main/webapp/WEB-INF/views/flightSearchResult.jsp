@@ -53,14 +53,14 @@ p.copyRight {
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a
-					href="<c:url value='/hellouser' />?<c:out value = "${pageContext.request.queryString}" />">Home</a></li>
+					href="<c:url value='/gohome' />?<c:out value = "${pageContext.request.queryString}" />">Home</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="<c:url value='/loginpage' />">Login</a></li>
 						<li><a href="<c:url value='/register' />">Create New
 								Account</a></li>
-						<li><a href="<c:url value='/reset' />">Reset Password</a></li>
+						<li><a href="<c:url value='/reset' />?<c:out value = "${pageContext.request.queryString}" />">Reset Password</a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

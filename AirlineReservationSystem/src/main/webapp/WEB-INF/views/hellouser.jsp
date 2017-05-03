@@ -59,15 +59,13 @@ p.copyRight {
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript"
-	src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCrAkKZHS_TwHiUgoZ7lPv7Rc3a5SZSpm4"></script>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 	window.onload = function() {
-		localStorage.clear();
 	}
 	var destinations = [ 'CID', 'ORD', 'ATL', 'SFO', 'LCY' ];
 
@@ -91,12 +89,52 @@ p.copyRight {
 		});
 	});
 
-	var today = new Date();
-	document.getElementsByName("departDate")[0].setAttribute('min', today);
+	function loadMap() {
+		var cen = new google.maps.LatLng(38.483924, -101.754673);
+		var latlng = new google.maps.LatLng(41.975736, -91.670641);
+		var latlng2 = new google.maps.LatLng(41.974185, -87.907171);
+		var latlng3 = new google.maps.LatLng(34.467355, -83.574585);
+		var latlng4 = new google.maps.LatLng(37.621355, -122.378730);
+		var latlng5 = new google.maps.LatLng(51.504817, 0.049550);
+		var myOptions = {
+			zoom : 4,
+			center : cen,
+			mapTypeId : google.maps.MapTypeId.ROADMAP
+		};
+		var map = new google.maps.Map(document.getElementById("map_container"),
+				myOptions);
+
+		var marker1 = new google.maps.Marker({
+			position : latlng,
+			map : map,
+			title : "CID"
+		});
+		var marker2 = new google.maps.Marker({
+			position : latlng2,
+			map : map,
+			title : "ORD"
+		});
+		var marker3 = new google.maps.Marker({
+			position : latlng3,
+			map : map,
+			title : "ALT"
+		});
+		var marker4 = new google.maps.Marker({
+			position : latlng4,
+			map : map,
+			title : "SFO"
+		});
+		var marker5 = new google.maps.Marker({
+			position : latlng5,
+			map : map,
+			title : "LCY"
+		});
+
+	}
 </script>
 </head>
 
-<body>
+<body onload="loadMap()">
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -104,14 +142,14 @@ p.copyRight {
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a
-					href="<c:url value='/home' />?<c:out value = "${pageContext.request.queryString}" />">Home</a></li>
+					href="<c:url value='/gohome' />?<c:out value = "${pageContext.request.queryString}" />">Home</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="<c:url value='/home' />">Logout</a></li>
 						<li><a href="<c:url value='/register' />">Create New
 								Account</a></li>
-						<li><a href="<c:url value='/reset' />">Reset Password</a></li>
+						<li><a href="<c:url value='/reset' />?<c:out value = "${pageContext.request.queryString}" />">Reset Password</a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -171,6 +209,11 @@ p.copyRight {
 					</label> <br /> <br /> <input type="submit" value="Search"
 						id="flightSearchForm.button.reSubmit" class="btn btn-primary">
 				</form>
+			</div>
+			<div class="col-md-2"></div>
+			<div class="col-md-5 overlay">
+				<h2>Serviced Locations</h2>
+				<div id="map_container"></div>
 			</div>
 		</div>
 	</div>

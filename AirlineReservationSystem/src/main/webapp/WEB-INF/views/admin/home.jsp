@@ -46,7 +46,18 @@ p.copyRight {
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a
-					href="<c:url value='/admin/home' />?<c:out value = "${pageContext.request.queryString}" />">Home</a></li>
+					href="<c:url value='../gohome' />?<c:out value = "${pageContext.request.queryString}" />">Home</a></li>
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="<c:url value='/home' />">Logout</a></li>
+						<li><a
+							href="<c:url value='addUser' />?<c:out value = "${pageContext.request.queryString}" />">Add
+								New User</a></li>
+						<li><a
+							href="<c:url value='/reset' />?<c:out value = "${pageContext.request.queryString}" />">Reset
+								Password</a></li>
+					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a>Hello, ${firstName}!</a></li>
@@ -127,8 +138,27 @@ p.copyRight {
 			</div>
 			<div class="panel">
 				<a class="btn btn-info btn-lg" data-toggle="collapse"
-					data-target="#collapsible-4" data-parent="mainView">Bookings</a>
+					data-target="#collapsible-4" data-parent="mainView">Flights</a>
 				<div id="collapsible-4" class="collapse">
+					<table class="table table-hover">
+						<tbody>
+							<tr>
+								<td><a
+									href="<c:url value='flightList' />?<c:out value = "${pageContext.request.queryString}" />"
+									role="button">List All Flights</a></td>
+							</tr>
+							<tr>
+								<td><a
+									href="../hellouser?<c:out value = "${pageContext.request.queryString}" />"
+									role="button">Search Flights</a></td>
+							</tr>
+					</table>
+				</div>
+			</div>
+			<div class="panel">
+				<a class="btn btn-info btn-lg" data-toggle="collapse"
+					data-target="#collapsible-5" data-parent="mainView">Bookings</a>
+				<div id="collapsible-5" class="collapse">
 					<table class="table table-hover">
 						<tbody>
 							<tr>

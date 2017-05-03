@@ -47,6 +47,22 @@ public final class AppController {
 
 	private static final String DEFAULT_MESSAGE_CODE = "SOME_DEFAULT";
 
+	@RequestMapping(value = { "/gohome" }, method = RequestMethod.GET)
+	public String goHomeGet(final ModelMap model,
+			@RequestParam(value = "userId", required = false) final String userId) {
+		final String url;
+		if (Strings.isNullOrEmpty(userId)) {
+			url = "/home";
+		} else if (userService.isValidAdmin(userId)) {
+			url = "/admin/home?userId=" + userId;
+		} else if (userService.isValidId(userId)) {
+			url = "/hellouser?userId=" + userId;
+		} else {
+			url = "/loginpage";
+		}
+		return "redirect:" + url;
+	}
+
 	/**
 	 * This method links the register.jsp file to the /register URL. This page
 	 * is for customers to register for an account.
@@ -307,9 +323,9 @@ public final class AppController {
 
 		// Booking is saved, now send an email notification.
 		SystemSupport.sendEmail(currentUser.getEmailAddress(), "Flight Booked",
-				"Hello,<br>"
-						+ "Thank you for booking your flight!<br>An administrator will confirm your flight soon.<br>"
-						+ "<br>Thank You<br>Iowa Air",
+				"Hello" + userService.getUserById(userId).getFirstName() + ",<br>"
+						+ "Thank you for booking your flight!<br>We will process your booking and send another email once you have been checked in.<br>"
+						+ "<br>Thank You,<br>Iowa Air",
 				null, null);
 
 		model.addAttribute("userId", userId);

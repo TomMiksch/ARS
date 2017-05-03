@@ -78,14 +78,14 @@ label {
 				<a class="navbar-brand">Airline Reservation System</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="<c:url value='/home' />">Home</a></li>
+				<li class="active"><a href="<c:url value='/gohome' />">Home</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="<c:url value='/loginpage' />">Login</a></li>
 						<li><a href="<c:url value='/register' />">Create New
 								Account</a></li>
-						<li><a href="<c:url value='/reset' />">Reset Password</a></li>
+						<li><a href="<c:url value='/reset' />?<c:out value = "${pageContext.request.queryString}" />">Reset Password</a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -118,7 +118,7 @@ label {
 				</form:form>
 				<br /> <br /> <a class="black-link"
 					href="<c:url value='/register' />">Create New Account</a> <br /> <br />
-				<a class="black-link" href="<c:url value='/reset' />">Reset
+				<a class="black-link" href="<c:url value='/reset' />?<c:out value = "${pageContext.request.queryString}" />">Reset
 					Password</a>
 			</div>
 		</div>

@@ -59,16 +59,12 @@ p.copyRight {
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript"
-	src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCrAkKZHS_TwHiUgoZ7lPv7Rc3a5SZSpm4"></script>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-	window.onload = function() {
-		localStorage.clear();
-	}
 	var destinations = [ 'CID', 'ORD', 'ATL', 'SFO', 'LCY' ];
 
 	function checkDest(value) {
@@ -90,9 +86,6 @@ p.copyRight {
 			showOn : "button"
 		});
 	});
-
-	var today = new Date();
-	document.getElementsByName("departDate")[0].setAttribute('min', today);
 
 	function loadMap() {
 		var cen = new google.maps.LatLng(38.483924, -101.754673);
@@ -146,14 +139,14 @@ p.copyRight {
 				<a class="navbar-brand">Airline Reservation System</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="<c:url value='/home' />">Home</a></li>
+				<li class="active"><a href="<c:url value='/gohome' />">Home</a></li>
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="<c:url value='/loginpage' />">Login</a></li>
 						<li><a href="<c:url value='/register' />">Create New
 								Account</a></li>
-						<li><a href="<c:url value='/reset' />">Reset Password</a></li>
+						<li><a href="<c:url value='/reset' />?<c:out value = "${pageContext.request.queryString}" />">Reset Password</a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
