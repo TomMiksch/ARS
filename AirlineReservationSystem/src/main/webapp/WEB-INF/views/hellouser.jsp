@@ -65,8 +65,6 @@ p.copyRight {
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-	window.onload = function() {
-	}
 	var destinations = [ 'CID', 'ORD', 'ATL', 'SFO', 'LCY' ];
 
 	function checkDest(value) {
@@ -149,7 +147,9 @@ p.copyRight {
 						<li><a href="<c:url value='/home' />">Logout</a></li>
 						<li><a href="<c:url value='/register' />">Create New
 								Account</a></li>
-						<li><a href="<c:url value='/reset' />?<c:out value = "${pageContext.request.queryString}" />">Reset Password</a></li>
+						<li><a
+							href="<c:url value='/reset' />?<c:out value = "${pageContext.request.queryString}" />">Reset
+								Password</a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

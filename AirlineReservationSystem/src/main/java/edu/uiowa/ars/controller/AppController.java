@@ -324,7 +324,8 @@ public final class AppController {
 		// Booking is saved, now send an email notification.
 		SystemSupport.sendEmail(currentUser.getEmailAddress(), "Flight Booked",
 				"Hello" + userService.getUserById(userId).getFirstName() + ",<br>"
-						+ "Thank you for booking your flight!<br>We will process your booking and send another email once you have been checked in.<br>"
+						+ "Thank you for booking your flight!<br>We will process "
+						+ "your booking and send another email once you have been checked in.<br>"
 						+ "<br>Thank You,<br>Iowa Air",
 				null, null);
 
