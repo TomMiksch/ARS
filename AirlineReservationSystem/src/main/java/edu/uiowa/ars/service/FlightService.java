@@ -6,9 +6,9 @@ import edu.uiowa.ars.model.Flight;
 
 public interface FlightService extends EntityManagementService<Flight> {
 
-	void deleteAllFlightsFromRoute(final String id);
-        
-        void updateEntity(Flight entity);
+    void deleteAllFlightsFromRoute(final String id);
 
-		List<Flight> searchFlights(Flight flight, String parameter);
+    void updateEntity(Flight entity);
+
+    List<Flight> searchFlights(Flight flight, String parameter);
 }

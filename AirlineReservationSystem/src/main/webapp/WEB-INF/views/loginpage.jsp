@@ -85,7 +85,9 @@ label {
 						<li><a href="<c:url value='/loginpage' />">Login</a></li>
 						<li><a href="<c:url value='/register' />">Create New
 								Account</a></li>
-						<li><a href="<c:url value='/reset' />?<c:out value = "${pageContext.request.queryString}" />">Reset Password</a></li>
+						<li><a
+							href="<c:url value='/reset' />?<c:out value = "${pageContext.request.queryString}" />">Reset
+								Password</a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -118,7 +120,8 @@ label {
 				</form:form>
 				<br /> <br /> <a class="black-link"
 					href="<c:url value='/register' />">Create New Account</a> <br /> <br />
-				<a class="black-link" href="<c:url value='/reset' />?<c:out value = "${pageContext.request.queryString}" />">Reset
+				<a class="black-link"
+					href="<c:url value='/reset' />?<c:out value = "${pageContext.request.queryString}" />">Reset
 					Password</a>
 			</div>
 		</div>

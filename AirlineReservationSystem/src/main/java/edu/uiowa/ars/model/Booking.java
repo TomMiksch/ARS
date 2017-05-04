@@ -13,61 +13,61 @@ import javax.validation.constraints.Size;
 @Table(name = "BOOKING")
 public final class Booking {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-	@Size(min = 1, max = 50)
-	@Column(name = "USER_EMAIL", nullable = false)
-	private String userEmail;
+    @Size(min = 1, max = 50)
+    @Column(name = "USER_EMAIL", nullable = false)
+    private String userEmail;
 
-	@Column(name = "FLIGHT_NUMBER", nullable = false)
-	private int flightNumber;
+    @Column(name = "FLIGHT_NUMBER", nullable = false)
+    private int flightNumber;
 
-	@Column(name = "CLASS", nullable = false)
-	private String seatClass;
+    @Column(name = "CLASS", nullable = false)
+    private String seatClass;
 
-	@Min(value = 0)
-	@Column(name = "SEATS", nullable = false)
-	private int seats;
+    @Min(value = 0)
+    @Column(name = "SEATS", nullable = false)
+    private int seats;
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(final int id) {
-		this.id = id;
-	}
+    public void setId(final int id) {
+        this.id = id;
+    }
 
-	public String getUserEmail() {
-		return userEmail;
-	}
+    public String getUserEmail() {
+        return userEmail;
+    }
 
-	public void setUserEmail(final String userEmail) {
-		this.userEmail = userEmail;
-	}
+    public void setUserEmail(final String userEmail) {
+        this.userEmail = userEmail;
+    }
 
-	public int getFlightNumber() {
-		return flightNumber;
-	}
+    public int getFlightNumber() {
+        return flightNumber;
+    }
 
-	public void setFlightNumber(final int flightNumber) {
-		this.flightNumber = flightNumber;
-	}
+    public void setFlightNumber(final int flightNumber) {
+        this.flightNumber = flightNumber;
+    }
 
-	public String getSeatClass() {
-		return seatClass;
-	}
+    public String getSeatClass() {
+        return seatClass;
+    }
 
-	public void setSeatClass(final String seatClass) {
-		this.seatClass = seatClass;
-	}
+    public void setSeatClass(final String seatClass) {
+        this.seatClass = seatClass;
+    }
 
-	public int getSeats() {
-		return seats;
-	}
+    public int getSeats() {
+        return seats;
+    }
 
-	public void setSeats(final int seats) {
-		this.seats = seats;
-	}
+    public void setSeats(final int seats) {
+        this.seats = seats;
+    }
 }

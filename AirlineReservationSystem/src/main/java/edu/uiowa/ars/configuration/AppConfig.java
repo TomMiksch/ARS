@@ -15,20 +15,20 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = "edu.uiowa.ars")
 public class AppConfig {
 
-	@Bean
-	public ViewResolver viewResolver() {
-		final InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/WEB-INF/views/");
-		viewResolver.setSuffix(".jsp");
+    @Bean
+    public ViewResolver viewResolver() {
+        final InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setViewClass(JstlView.class);
+        viewResolver.setPrefix("/WEB-INF/views/");
+        viewResolver.setSuffix(".jsp");
 
-		return viewResolver;
-	}
+        return viewResolver;
+    }
 
-	@Bean
-	public MessageSource messageSource() {
-		final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		messageSource.setBasename("messages");
-		return messageSource;
-	}
+    @Bean
+    public MessageSource messageSource() {
+        final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages");
+        return messageSource;
+    }
 }

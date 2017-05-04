@@ -2,90 +2,90 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Admin Login</title>
+<meta charset="UTF-8">
+<title>Admin Login</title>
 
 
-    <style>
-        body{
-            position: fixed;
-            overflow-y: scroll;
-            width: 100%;
-                top: 20px;
-                left: 20px;
-                right: 40px;
-                bottom: 40px;
-                width: auto;
-                height: auto;
-            background-image: url("https://www.scienceabc.com/wp-content/uploads/2015/10/airplane.jpg");
-            background-size: cover;
-        }
+<style>
+body {
+	position: fixed;
+	overflow-y: scroll;
+	width: 100%;
+	top: 20px;
+	left: 20px;
+	right: 40px;
+	bottom: 40px;
+	width: auto;
+	height: auto;
+	background-image:
+		url("https://www.scienceabc.com/wp-content/uploads/2015/10/airplane.jpg");
+	background-size: cover;
+}
 
-        login{
-            position: absolute;
-            top: calc(50%-75px);
-            left: calc(50%-50px);
-            height: 150px;
-            width: 350px;
-            padding: 10px;
-        }
+login {
+	position: absolute;
+	top: calc(50% -75px);
+	left: calc(50% -50px);
+	height: 150px;
+	width: 350px;
+	padding: 10px;
+}
 
-        login input [type=text]{
-            width: 250px;
-            height: 30px;
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.6);
-            border-radius: 2px;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 400;
-            padding: 4px;
-        }
+login input [type=text] {
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	border: 1px solid rgba(255, 255, 255, 0.6);
+	border-radius: 2px;
+	color: #fff;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+}
 
-        login input [type=password]{
-            width: 250px;
-            height: 30px;
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.6);
-            border-radius: 2px;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 400;
-            padding: 4px;
-        }
+login input [type=password] {
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	border: 1px solid rgba(255, 255, 255, 0.6);
+	border-radius: 2px;
+	color: #fff;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+}
 
-        login input [type=button]{
-            width: 250px;
-            height: 30px;
-            background: #fff;
-            border: 1px solid #fff;
-            border-radius: 2px;
-            color: #a18d6c;
-            font-size: 16px;
-            font-weight: 400;
-            padding: 6px;
-            margin-top: 10px;
-        }
+login input [type=button] {
+	width: 250px;
+	height: 30px;
+	background: #fff;
+	border: 1px solid #fff;
+	border-radius: 2px;
+	color: #a18d6c;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 10px;
+}
 
-        h1{
-            color: white;
-        }
-
-    </style>
+h1 {
+	color: white;
+}
+</style>
 
 </head>
 <body>
-    <div class="body"></div>
-    <h1>Login</h1>
-    <form name="login">
-    <div class="login">
-        <input type="text" placeholder="username" name="userid"><br>
-        <input type="password" placeholder="password" name="pswrd"><br>
-        <input type="button" onclick="check(this.form)" value="login"/>
-    </div>
-    </form>
+	<div class="body"></div>
+	<h1>Login</h1>
+	<form name="login">
+		<div class="login">
+			<input type="text" placeholder="username" name="userid"><br>
+			<input type="password" placeholder="password" name="pswrd"><br>
+			<input type="button" onclick="check(this.form)" value="login" />
+		</div>
+	</form>
 
-    <script>
+	<script>
 function check(form)
 {
 

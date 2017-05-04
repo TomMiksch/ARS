@@ -53,7 +53,9 @@ p.copyRight {
 						<li><a
 							href="<c:url value='addUser' />?<c:out value = "${pageContext.request.queryString}" />">Add
 								New User</a></li>
-						<li><a href="<c:url value='/reset' />?<c:out value = "${pageContext.request.queryString}" />">Reset Password</a></li>
+						<li><a
+							href="<c:url value='/reset' />?<c:out value = "${pageContext.request.queryString}" />">Reset
+								Password</a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

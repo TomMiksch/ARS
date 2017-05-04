@@ -4,5 +4,5 @@ import edu.uiowa.ars.model.User;
 
 public interface UserDao extends EntityDao<User> {
 
-	User findById(int id);
+    User findById(int id);
 }

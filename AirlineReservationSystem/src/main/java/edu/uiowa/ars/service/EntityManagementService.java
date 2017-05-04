@@ -4,17 +4,17 @@ import java.util.List;
 
 public interface EntityManagementService<T> {
 
-	void saveEntity(T entity);
+    void saveEntity(T entity);
 
-	void updateEntity(T entity);
+    void updateEntity(T entity);
 
-	void deleteEntityById(String id);
+    void deleteEntityById(String id);
 
-	List<T> findAllEntities();
+    List<T> findAllEntities();
 
-	T getStoredEntity(T enteredEntity);
+    T getStoredEntity(T enteredEntity);
 
-	List<T> findSelectedEntities(T entity);
+    List<T> findSelectedEntities(T entity);
 
-	boolean isEquivalentInDb(T entered, T db);
+    boolean isEquivalentInDb(T entered, T db);
 }
