@@ -78,7 +78,7 @@ public final class SystemSupport {
 			message.setContent(multipart);
 			Transport.send(message);
 		} catch (final Exception e) {
-			System.out.println("Error occured. Please try again later.");
+			System.err.println("Error occured. Please try again later.");
 		}
 	}
 }

@@ -13,8 +13,8 @@ public interface EntityManagementService<T> {
 	List<T> findAllEntities();
 
 	T getStoredEntity(T enteredEntity);
-        
-        List<T> findSelectedEntities(T entity);
+
+	List<T> findSelectedEntities(T entity);
 
 	boolean isEquivalentInDb(T entered, T db);
 }

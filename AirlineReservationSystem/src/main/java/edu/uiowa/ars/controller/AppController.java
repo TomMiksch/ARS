@@ -2,6 +2,7 @@ package edu.uiowa.ars.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,7 +153,7 @@ public final class AppController {
 
 	@RequestMapping(value = { "/hellouser" }, method = RequestMethod.POST)
 	public String userHomePost(@Valid final Flight flight, final BindingResult result, final ModelMap model,
-			@RequestParam(value = "userId", required = false) final String userId) {
+			@RequestParam(value = "userId", required = false) final String userId, final HttpServletRequest request) {
 		if (!userService.isValidId(userId)) {
 			return "redirect:/loginpage";
 		} else if (result.hasErrors()) {
@@ -165,7 +166,8 @@ public final class AppController {
 			return "hellouser";
 		}
 
-		final List<Flight> flights = flightService.findSelectedEntities(flight);
+		flight.setDate(request.getParameter("departureDate"));
+		final List<Flight> flights = flightService.searchFlights(flight, request.getParameter("returnDate"));
 		// Map each of the possible flights to have the selected seats and seat
 		// assignment.
 		flights.forEach(currentFlight -> {
@@ -296,11 +298,14 @@ public final class AppController {
 	}
 
 	@RequestMapping(value = { "/flightSearchResult" }, method = RequestMethod.POST)
-	public String searchFlights(@Valid final Flight flight, final BindingResult result, final ModelMap model) {
+	public String searchFlights(@Valid final Flight flight, final BindingResult result, final ModelMap model,
+			final HttpServletRequest request) {
 		if (flight.getDestination() == null) {
 			return "home";
 		}
-		final List<Flight> flights = flightService.findSelectedEntities(flight);
+
+		flight.setDate(request.getParameter("departureDate"));
+		final List<Flight> flights = flightService.searchFlights(flight, request.getParameter("returnDate"));
 		model.addAttribute("flightRoutes", flights);
 		return "flightSearchResult";
 	}

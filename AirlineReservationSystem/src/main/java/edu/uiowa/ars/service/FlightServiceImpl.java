@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.base.Strings;
+
 import edu.uiowa.ars.dao.FlightDao;
 import edu.uiowa.ars.model.Flight;
 
@@ -42,7 +44,6 @@ public final class FlightServiceImpl implements FlightService {
 
 	@Override
 	public Flight getStoredEntity(final Flight enteredEntity) {
-		// TODO
 		return null;
 	}
 
@@ -53,6 +54,33 @@ public final class FlightServiceImpl implements FlightService {
 	@Override
 	public void deleteAllFlightsFromRoute(final String id) {
 		dao.deleteAllFlightsFromRoute(id);
+	}
+
+	@Override
+	public List<Flight> searchFlights(final Flight flight, final String returnDate) {
+		// Start by finding one way flights.
+		final List<Flight> there = findSelectedEntities(flight);
+
+		if (!Strings.isNullOrEmpty(returnDate)) {
+			// Modify the existing flight to find the route back.
+			flight.setDate(returnDate);
+			final String temp = flight.getDestination();
+			flight.setDestination(flight.getOrigin());
+			flight.setOrigin(temp);
+			final List<Flight> back = findSelectedEntities(flight);
+
+			if (back.size() > 0) {
+				back.forEach(entry -> {
+					if (!there.contains(entry)) {
+						there.add(entry);
+					}
+				});
+			} else {
+				there.clear();
+			}
+
+		}
+		return there;
 	}
 
 }

@@ -92,8 +92,6 @@ public final class FlightDaoImpl extends AbstractDao<Integer, Flight> implements
 		int id = entity.getId();
 		String flightClass = entity.getFlightClass();
 		int seats = entity.getEconomyClassPrice();
-		System.out.println(
-				"UPDATE flight SET flight_class = '" + flightClass + "', seats = " + seats + " WHERE id = " + id);
 		getSession()
 				.createSQLQuery(
 						"UPDATE flight SET flight_class = " + flightClass + ", seats = " + seats + " WHERE id = " + id)

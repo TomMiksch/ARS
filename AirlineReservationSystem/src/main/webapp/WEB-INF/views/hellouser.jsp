@@ -79,7 +79,18 @@ p.copyRight {
 	}
 
 	$(function() {
-		$("#dateInput").datepicker({
+		$("#departureDate").datepicker(
+				{
+					dateFormat : "yy-mm-d",
+					minDate : 0,
+					maxDate : 365,
+					showOn : "button",
+					onSelect : function(dateText, inst) {
+						$("#returnDate").datepicker("option", "minDate",
+								$("#departureDate").datepicker("getDate"));
+					}
+				});
+		$("#returnDate").datepicker({
 			dateFormat : "yy-mm-dd",
 			minDate : 0,
 			maxDate : 365,
@@ -129,10 +140,33 @@ p.copyRight {
 		});
 
 	}
+
+	window.onload = function() {
+		loadMap();
+
+		document.getElementById('oneWayRadioButton').checked = true;
+		flightTypeChanged(document.getElementById('oneWayRadioButton'));
+	}
+
+	function flightTypeChanged(button) {
+		var returnInfo = document.getElementById('returnInfo');
+		if (button.value === 'One Way') {
+			returnInfo.style.display = 'none';
+			$("#returnDate").datepicker("destroy");
+		} else {
+			returnInfo.style.display = '';
+			$("#returnDate").datepicker({
+				dateFormat : "yy-mm-dd",
+				minDate : 0,
+				maxDate : 365,
+				showOn : "button"
+			});
+		}
+	}
 </script>
 </head>
 
-<body onload="loadMap()">
+<body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -170,8 +204,15 @@ p.copyRight {
 					modelAttribute="flightroute" class="zeta">
 					<input type="hidden" id="showMoreOptions" name="showMoreOptions"
 						value="false" /> <input type="hidden" id="fromSearchPage"
-						name="fromSearchPage" value="true" /> <label for="origin">
-						From <span class="icon-required" aria-hidden="true"></span><span
+						name="fromSearchPage" value="true" /> <label class="radio-inline">
+						<input type="radio" name="flightType"
+						onclick="flightTypeChanged(this);" value="One Way"
+						id="oneWayRadioButton">One Way
+					</label> <label class="radio-inline"> <input type="radio"
+						name="flightType" onclick="flightTypeChanged(this);"
+						value="Round Trip">Round Trip
+					</label> <br /> <br /> <label for="origin"> From <span
+						class="icon-required" aria-hidden="true"></span><span
 						class="hidden-accessible"> (required)</span> <select name="origin"
 						id="origin" onchange="checkDest(this.value)">
 							<option disabled selected>Depart From</option>
@@ -197,11 +238,17 @@ p.copyRight {
 							<option value="5">5</option>
 							<option value="6">6</option>
 					</select>
-					</label> <br /> <br /> <label for="date"> Depart<span
-						class="datePicker"></span> <input id="dateInput" name="date"
-						type="text" placeholder="yyyy-mm-dd" readonly />
-					</label> <br /> <br /> <label for="flightClass" class="aa-display-none">
-						Fare preference <select id="flightClass" name="flightClass">
+					</label> <br /> <br /> <label for="departureDate"> Depart <input
+						id="departureDate" name="departureDate" type="text"
+						placeholder="yyyy-mm-dd" readonly />
+					</label><br /> <br />
+					<div id="returnInfo">
+						<label for="returnDate"> Return <input id="returnDate"
+							name="returnDate" type="text" placeholder="yyyy-mm-dd" readonly />
+						</label> <br /> <br />
+					</div>
+					<label for="flightClass" class="aa-display-none"> Fare
+						preference <select id="flightClass" name="flightClass">
 							<option selected="selected" value="Economy">Economy</option>
 							<option value="Business">Business</option>
 							<option value="First">First</option>
