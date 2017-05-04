@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 
 import edu.uiowa.ars.SystemSupport;
@@ -153,7 +154,8 @@ public final class AppController {
 
     @RequestMapping(value = { "/hellouser" }, method = RequestMethod.POST)
     public String userHomePost(@Valid final Flight flight, final BindingResult result, final ModelMap model,
-            @RequestParam(value = "userId", required = false) final String userId, final HttpServletRequest request) {
+            @RequestParam(value = "userId", required = false) final String userId, final HttpServletRequest request)
+                    throws Exception {
         if (!userService.isValidId(userId)) {
             return "redirect:/loginpage";
         } else if (result.hasErrors()) {
@@ -175,6 +177,9 @@ public final class AppController {
             currentFlight.setFlightClass(flight.getFlightClass());
         });
         model.addAttribute("flightRoutes", flights);
+
+        final ObjectMapper om = new ObjectMapper();
+        model.addAttribute("flightInfo", om.writeValueAsString(flights));
         return "userFlightSearch";
     }
 
@@ -299,7 +304,7 @@ public final class AppController {
 
     @RequestMapping(value = { "/flightSearchResult" }, method = RequestMethod.POST)
     public String searchFlights(@Valid final Flight flight, final BindingResult result, final ModelMap model,
-            final HttpServletRequest request) {
+            final HttpServletRequest request) throws Exception {
         if (flight.getDestination() == null) {
             return "home";
         }
@@ -307,6 +312,9 @@ public final class AppController {
         flight.setDate(request.getParameter("departureDate"));
         final List<Flight> flights = flightService.searchFlights(flight, request.getParameter("returnDate"));
         model.addAttribute("flightRoutes", flights);
+
+        final ObjectMapper om = new ObjectMapper();
+        model.addAttribute("flightInfo", om.writeValueAsString(flights));
         return "flightSearchResult";
     }
 

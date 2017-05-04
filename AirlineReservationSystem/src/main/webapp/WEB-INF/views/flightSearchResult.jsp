@@ -86,21 +86,26 @@ p.copyRight {
 		map = new google.maps.Map(document.getElementById("map_container"),
 				myOptions);
 
-		var flights = "${flightRoutes}";
-		alert(flights);
-	}
+		var flightInfo = ${flightInfo};
+		$.each(flightInfo, function(index, flight) {
+			var lineSymbol = {
+				path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+			};
+			var flightPlanCoordinates = [ placeToCoords(flight.origin), placeToCoords(flight.destination) ];
+			var flightPath = new google.maps.Polyline({
+				path : flightPlanCoordinates,
+				geodesic : true,
+				strokeColor : '#FF0000',
+				strokeOpacity : 1.0,
+				strokeWeight : 2,
+				icons: [{
+				    icon: lineSymbol,
+				    offset: '100%'
+				  }]
+			});
 
-	function addFlightPath(orig, dest) {
-		var flightPlanCoordinates = [ CID, SFO ];
-		var flightPath = new google.maps.Polyline({
-			path : flightPlanCoordinates,
-			geodesic : true,
-			strokeColor : '#FF0000',
-			strokeOpacity : 1.0,
-			strokeWeight : 2
+			flightPath.setMap(map);
 		});
-
-		flightPath.setMap(map);
 	}
 
 	function placeToCoords(location) {

@@ -23,6 +23,10 @@ h3 {
 	text-align: center;
 }
 
+div#map_container {
+	height: 400px;
+}
+
 font {
 	color: gray;
 }
@@ -43,6 +47,86 @@ p.copyRight {
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCrAkKZHS_TwHiUgoZ7lPv7Rc3a5SZSpm4"></script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+	var map;
+	var CID = {
+		lat : 41.975736,
+		lng : -91.670641
+	};
+	var ORD = {
+		lat : 41.974185,
+		lng : -87.907171
+	};
+	var ALT = {
+		lat : 34.467355,
+		lng : -83.574585
+	};
+	var SFO = {
+		lat : 37.621355,
+		lng : -122.378730
+	};
+	var LCY = {
+		lat : 51.504817,
+		lng : 0.049550
+	};
+
+	function loadMap() {
+		var cen = new google.maps.LatLng(38.483924, -101.754673);
+		var myOptions = {
+			zoom : 4,
+			center : cen,
+			mapTypeId : google.maps.MapTypeId.ROADMAP
+		};
+		map = new google.maps.Map(document.getElementById("map_container"),
+				myOptions);
+
+		var flightInfo = ${flightInfo};
+		$.each(flightInfo, function(index, flight) {
+			var lineSymbol = {
+				path : google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+			};
+			var flightPlanCoordinates = [ placeToCoords(flight.origin),
+					placeToCoords(flight.destination) ];
+			var flightPath = new google.maps.Polyline({
+				path : flightPlanCoordinates,
+				geodesic : true,
+				strokeColor : '#FF0000',
+				strokeOpacity : 1.0,
+				strokeWeight : 2,
+				icons : [ {
+					icon : lineSymbol,
+					offset : '100%'
+				} ]
+			});
+
+			flightPath.setMap(map);
+		});
+	}
+
+	function placeToCoords(location) {
+		if (location === "CID") {
+			return CID;
+		} else if (location === "ORD") {
+			return ORD;
+		} else if (location === "ATL") {
+			return ATL;
+		} else if (location === "SFO") {
+			return SFO;
+		} else {
+			return LCY;
+		}
+	}
+
+	window.onload = function() {
+		loadMap();
+	}
+</script>
 </head>
 
 <body>
@@ -103,6 +187,14 @@ p.copyRight {
 			</c:forEach>
 		</tbody>
 	</table>
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8 overlay">
+			<br />
+			<div id="map_container"></div>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
 	<br>
 	<br>
 	<br>
