@@ -245,6 +245,17 @@ tr.spaceUnder>td {
 	<br>
 	<br>
 	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 	<footer class="navbar navbar-inverse navbar-fixed-bottom">
 		<p class="copyRight">
 			Mallory Tollefson, Thomas Miksch, Peter Li<br />&#9400; Iowa Air
