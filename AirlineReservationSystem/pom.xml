@@ -120,6 +120,19 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.0.pr3</version>
 		</dependency>
+
+		<!-- iText for writing PDFs. -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.0.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>4.2.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

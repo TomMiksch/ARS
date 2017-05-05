@@ -11,4 +11,6 @@ public interface FlightService extends EntityManagementService<Flight> {
     void updateEntity(Flight entity);
 
     List<Flight> searchFlights(Flight flight, String parameter);
+    
+    Flight getFlightById(final String id);
 }

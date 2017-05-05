@@ -83,4 +83,20 @@ public final class FlightServiceImpl implements FlightService {
         return there;
     }
 
+    @Override
+    public Flight getFlightById(final String flightId) {
+        if ((flightId == null) || flightId.isEmpty()) {
+            System.err.println("User id is not set. Requesting login.");
+            return null;
+        } else {
+            final int usrId;
+            try {
+                usrId = Integer.parseInt(flightId);
+            } catch (final Exception e) {
+                return null;
+            }
+            return findAllEntities().stream().filter(user -> user.getId() == usrId).findAny().orElse(null);
+        }
+    }
+
 }

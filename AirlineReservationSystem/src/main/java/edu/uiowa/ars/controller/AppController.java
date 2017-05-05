@@ -1,5 +1,9 @@
 package edu.uiowa.ars.controller;
 
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -321,7 +325,8 @@ public final class AppController {
     @RequestMapping(value = { "/book-{id}-booking/{flight_class}/{seats}" }, method = RequestMethod.GET)
     public String deleteBookingGet(@PathVariable("id") final String id,
             @PathVariable("flight_class") final String flightClass, @PathVariable("seats") final String seats,
-            @RequestParam(value = "userId", required = false) final String userId, final ModelMap model) {
+            @RequestParam(value = "userId", required = false) final String userId, final ModelMap model)
+                    throws Exception {
         if (!userService.isValidId(userId)) {
             return "redirect:/loginpage";
         }
@@ -334,13 +339,24 @@ public final class AppController {
         booking.setSeats(Integer.parseInt(seats));
         bookingService.saveEntity(booking);
 
+        // Generate a PDF to attach as an email.
+        System.out.println(System.getProperty("java.class.path"));
+        final InputStream pdf = SystemSupport.writePdf(flightService.getFlightById(id),
+                userService.getUserById(userId));
+
+        // Create a temporary file containing this date which will be attached
+        // to the email.
+        final File attachment = File.createTempFile("tmp", "pdf");
+        attachment.deleteOnExit();
+        Files.copy(pdf, attachment.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
         // Booking is saved, now send an email notification.
         SystemSupport.sendEmail(currentUser.getEmailAddress(), "Flight Booked",
-                "Hello" + userService.getUserById(userId).getFirstName() + ",<br>"
+                "Hello " + userService.getUserById(userId).getFirstName() + ",<br>"
                         + "Thank you for booking your flight!<br>We will process "
                         + "your booking and send another email once you have been checked in.<br>"
                         + "<br>Thank You,<br>Iowa Air",
-                null, null);
+                attachment, "booking.pdf");
 
         model.addAttribute("userId", userId);
         return "hellouser";
